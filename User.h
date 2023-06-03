@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include"Card.h"
 using namespace std;
 class User
 {
@@ -12,11 +13,10 @@ private:
 	string password;
 	string phoneNumber;
 	string money;
-	//list<Card> cards;
+	list<Card> cards;
 	int total_wins;
 	int total_lose;
 	//vector<History> all_games;
-	vector<int> a;
 public:
 	User();
 	User(string given_name, string given_userName, string given_password, string given_phoneNumber, string given_money);
@@ -28,6 +28,5 @@ public:
 	string& set_get_phoneNumber();
 	string& set_get_money();
 	//vector<History>& set_get_History();
-	//list<Card>& set_get_cards();
+	list<Card>& set_get_cards();
 };
-

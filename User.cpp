@@ -25,4 +25,4 @@ string& User::set_get_money() { return money; }
 int& User::set_get_total_win() { return total_wins; }
 int& User::set_get_total_lose() { return total_lose; }
 //vector<History>& User::set_get_History(){return all_games;}
-//list<Card>& User::set_get_cards(){return cards;}
+list<Card>& User::set_get_cards(){return cards;}
