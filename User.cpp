@@ -14,6 +14,7 @@ User::User(QString given_name, QString given_userName, QString given_password, Q
     name = given_name;
     userName = given_userName;
     password = given_password;
+    phoneNumber = given_money;
     phoneNumber = given_phoneNumber;
     money = given_money;
     total_wins = 0;

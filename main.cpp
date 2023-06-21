@@ -1,3 +1,12 @@
+
+#include "mainmenu.h"
+
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainMenu w;
 #include "mainwindow.h"
 #include"login.h"
 #include"signup.h"

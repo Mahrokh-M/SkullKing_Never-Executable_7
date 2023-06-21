@@ -9,6 +9,9 @@ private:
     QString userName;
     QString password;
     QString phoneNumber;
+    QString money;
+    int total_wins;
+    int total_lose;
     QString email;
     QString money;
     int total_wins;
