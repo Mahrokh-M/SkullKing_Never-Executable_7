@@ -1,10 +1,13 @@
 <RCC>
     <qresource prefix="/new/prefix1">
-        <file>Game name2.png</file>
-        <file>Game name3.png</file>
         <file>Skull.jpg</file>
-        <file>Skull2.jpg</file>
         <file>Skull4.png</file>
         <file>wooden-barrel.jpg</file>
+        <file>avatar1.png</file>
+        <file>avatar2.png</file>
+        <file>avatar3.png</file>
+        <file>avatar4.png</file>
+        <file>oldmap.jpg</file>
+        <file>transparent.png</file>
     </qresource>
 </RCC>

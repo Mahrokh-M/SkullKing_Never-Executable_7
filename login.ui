@@ -87,15 +87,30 @@
      <height>30</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>High Tower Text</family>
+     <pointsize>20</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius:10px;
+font:  20pt &quot;High Tower Text&quot;;
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="placeholderText">
     <string>Username</string>
@@ -116,12 +131,27 @@ background-color: rgb(255, 255, 255);</string>
      <height>30</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>High Tower Text</family>
+     <pointsize>20</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">border-radius:10px;
+font:  20pt &quot;High Tower Text&quot;;
 background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="placeholderText">
     <string>Password</string>
@@ -131,7 +161,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>380</y>
+     <y>390</y>
      <width>471</width>
      <height>50</height>
     </rect>
@@ -155,8 +185,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QCommandLinkButton" name="commandLinkButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>460</y>
+     <x>120</x>
+     <y>470</y>
      <width>271</width>
      <height>41</height>
     </rect>
@@ -233,12 +263,44 @@ background-color: rgb(255, 255, 255);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QCommandLinkButton" name="commandLinkButton_2">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>350</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string>Forgot Password?</string>
+   </property>
+   <property name="icon">
+    <iconset resource="pictures.qrc">
+     <normaloff>:/new/prefix1/transparent.png</normaloff>:/new/prefix1/transparent.png</iconset>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>UserName</zorder>
   <zorder>Password</zorder>
   <zorder>Login_2</zorder>
   <zorder>commandLinkButton</zorder>
+  <zorder>commandLinkButton_2</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

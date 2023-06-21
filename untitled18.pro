@@ -9,15 +9,25 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    avatar.cpp \
+    forgotpassword.cpp \
+    globals.cpp \
     login.cpp \
     main.cpp \
-    signup.cpp
+    signup.cpp \
+    user.cpp
 
 HEADERS += \
+    avatar.h \
+    forgotpassword.h \
+    globals.h \
     login.h \
-    signup.h
+    signup.h \
+    user.h
 
 FORMS += \
+    avatar.ui \
+    forgotpassword.ui \
     login.ui \
     signup.ui
 

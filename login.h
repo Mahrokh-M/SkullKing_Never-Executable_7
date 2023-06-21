@@ -19,6 +19,10 @@ public:
 private slots:
     void on_commandLinkButton_clicked();
 
+    void on_commandLinkButton_2_clicked();
+
+    void on_Login_2_clicked();
+
 private:
     Ui::Login *ui;
 };
