@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>981.jpg</file>
+        <file>push button background.jpg</file>
+        <file>edit-profile-background.jpg</file>
+        <file>nutshell-boats-near-maps.jpg</file>
+    </qresource>
+    <qresource prefix="/new/prefix2/avatars">
+        <file>avatar2.png</file>
+        <file>avatar3.png</file>
+        <file>avatar4.png</file>
+        <file>avatar1.png</file>
+    </qresource>
+</RCC>

@@ -23,8 +23,13 @@ private slots:
 
     void on_pushButton_cancel_clicked();
 
+    void on_pushButton_confirm_clicked();
+
+    void on_pushButton_change_avatar_clicked();
+
 private:
     Ui::Edit_Information *ui;
 };
 
 #endif // EDIT_INFORMATION_H
+

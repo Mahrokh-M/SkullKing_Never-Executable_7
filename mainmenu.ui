@@ -7,52 +7,92 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainMenu</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-image: url(:/new/prefix1/981.jpg);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QPushButton" name="pushButton_edit">
     <property name="geometry">
      <rect>
-      <x>258</x>
-      <y>130</y>
-      <width>241</width>
-      <height>241</height>
+      <x>290</x>
+      <y>200</y>
+      <width>211</width>
+      <height>61</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Start</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_edit">
-       <property name="text">
-        <string>Edit profile</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_history">
-       <property name="text">
-        <string>History</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_exit">
-       <property name="text">
-        <string>Exit</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
+color: rgb(255, 255, 255);
+font: 20pt &quot;Lucida Calligraphy&quot;;
+border-radius: 25px;
+padding: 1px;</string>
+    </property>
+    <property name="text">
+     <string>Edit profile</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_start">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>110</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
+color: rgb(255, 255, 255);
+font: 20pt &quot;Lucida Calligraphy&quot;;
+border-radius: 25px;</string>
+    </property>
+    <property name="text">
+     <string>Start</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_history">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>290</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
+font: 20pt &quot;Lucida Calligraphy&quot;;
+color: rgb(255, 255, 255);
+border-radius: 25px;</string>
+    </property>
+    <property name="text">
+     <string>History</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_exit">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>380</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
+font: 20pt &quot;Lucida Calligraphy&quot;;
+color: rgb(255, 255, 255);
+border-radius: 25px;</string>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

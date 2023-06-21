@@ -9,17 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    avatar.cpp \
     edit_information.cpp \
     main.cpp \
     mainmenu.cpp \
     user.cpp
 
 HEADERS += \
+    avatar.h \
     edit_information.h \
     mainmenu.h \
     user.h
 
 FORMS += \
+    avatar.ui \
     edit_information.ui \
     mainmenu.ui
 
@@ -27,3 +30,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    main_menu.qrc
