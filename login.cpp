@@ -11,6 +11,11 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
   ui->Login_2->setStyleSheet("QPushButton {background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFD700, stop: 1 #FFA500); color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 20px; } QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFDF7F, stop: 1 #FFB37F); } QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFC87F, stop: 1 #FF8C7F); }");
 
+  connect(ui->UserName, &QLineEdit::returnPressed, [=]() {
+      ui->Password->setFocus();
+  });
+  connect(ui->Password, &QLineEdit::returnPressed, ui->Login_2, &QPushButton::click);
+
 }
 
 Login::~Login()

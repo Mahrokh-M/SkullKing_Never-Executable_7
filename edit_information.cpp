@@ -13,6 +13,19 @@ Edit_Information::Edit_Information(QWidget *parent) :
     QLabel *myLabel=ui->label_background;
     myLabel->lower();
     Person=new User; //This is temporary
+    ui->pushButton_confirm->setStyleSheet(""
+                                          "QPushButton {background-color: rgb(85, 57, 37);"
+                                          "color: rgb(255, 242, 193);"
+                                          "border-radius: 10px;"
+                                          "font: 700 italic 12pt Calibri; }"
+                                          "QPushButton:hover { outline: 3px solid black;color: black;background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFDF7F, stop: 1 #FFB37F)};");
+    ui->pushButton_cancel->setStyleSheet(""
+                                          "QPushButton {background-color: rgb(85, 57, 37);"
+                                          "color: rgb(255, 242, 193);"
+                                          "border-radius: 10px;"
+                                          "font: 700 italic 12pt Calibri; }"
+                                          "QPushButton:hover { outline: 3px solid black;color: black;background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFDF7F, stop: 1 #FFB37F)};"
+                                          "QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFC87F, stop: 1 #FF8C7F); }");
     ui->lineEdit_repeatPassword->setVisible(false);
     ui->lineEdit_name->setPlaceholderText(Person->set_get_name());
     ui->lineEdit_username->setPlaceholderText(Person->set_get_userName());
@@ -32,112 +45,23 @@ Edit_Information::Edit_Information(QWidget *parent) :
         ui->label_icon->setStyleSheet("QLabel { "
                                       "border-image: url(:/new/prefix2/avatars/avatar4.png); }");
     }
-//    ui->label_border->setStyleSheet("QLabel { "
-//                                  "color: #333333; "
-//                                  //"border: 4px solid #d9c8a9;"
-//                                  "border-radius: 10px;"
-//                                  "margin-bottom: 5px; }");
-//    ui->label_name->setStyleSheet("QLabel { "
-//                                  "font: 14pt Segoe Print;"
-//                                  " font-weight: bold; "
-//                                  "color: white; "
-//                                  "margin-bottom: 5px; }");
-//    ui->lineEdit_name->setStyleSheet("QLineEdit { "
-//                                     "font-size: 14px;"
-//                                     " border: 2px solid #402f0f;"
-//                                     " border-radius: 10px;"
-//                                     "background-color: qlineargradient(spread:pad, x1:0.849019, y1:0.272, x2:0, y2:1, stop:0 rgba(92, 60, 30, 249), stop:1 rgba(255, 255, 255, 255));"
-//                                     " padding: 5px;"
-//                                     " }"
-//                                     " QLineEdit:focus { border-color: #CCCCCC; }");
-//    ui->label_phoneNumber->setStyleSheet("QLabel { "
-//                                  "font: 14pt Segoe Print;"
-//                                  " font-weight: bold; "
-//                                  " font-weight: bold; "
-//                                  "color: white; "
-//                                  "margin-bottom: 5px; }");
-//    ui->lineEdit_phoneNumber->setStyleSheet("QLineEdit { "
-//                                     "font-size: 14px;"
-//                                     " border: 2px solid #402f0f;"
-//                                     " border-radius: 10px;"
-//                                     "background-color: qlineargradient(spread:pad, x1:0.849019, y1:0.272, x2:0, y2:1, stop:0 rgba(92, 60, 30, 249), stop:1 rgba(255, 255, 255, 255));"
-//                                     " padding: 5px;"
-//                                     " }"
-//                                     " QLineEdit:focus { border-color: #CCCCCC; }");
-//    ui->label_username->setStyleSheet("QLabel { "
-//                                  "font: 14pt Segoe Print;"
-//                                  " font-weight: bold; "
-//                                  "color: white; "
-//                                  "margin-bottom: 5px; }");
-//    ui->lineEdit_username->setStyleSheet("QLineEdit { "
-//                                     "font-size: 14px;"
-//                                     " border: 2px solid #402f0f;"
-//                                     " border-radius: 10px;"
-//                                     "background-color: qlineargradient(spread:pad, x1:0.849019, y1:0.272, x2:0, y2:1, stop:0 rgba(92, 60, 30, 249), stop:1 rgba(255, 255, 255, 255));"
-//                                     " padding: 5px;"
-//                                     //"margin-bottom: 35px;"
-//                                     " }"
-//                                     " QLineEdit:focus { border-color: #CCCCCC; }");
-//    ui->label_password->setStyleSheet("QLabel { "
-//                                  "font: 14pt Segoe Print;"
-//                                  " font-weight: bold; "
-//                                  "color: white; "
-//                                  "margin-bottom: 5px; }");
-//    ui->lineEdit_password->setStyleSheet("QLineEdit { "
-//                                     "font-size: 14px;"
-//                                     " border: 2px solid #402f0f;"
-//                                     " border-radius: 10px;"
-//                                     "background-color: qlineargradient(spread:pad, x1:0.849019, y1:0.272, x2:0, y2:1, stop:0 rgba(92, 60, 30, 249), stop:1 rgba(255, 255, 255, 255));"
-//                                     " padding: 5px;"
-//                                     " }"
-//                                     " QLineEdit:focus { border-color: #CCCCCC; }");
-//    ui->lineEdit_repeatPassword->setStyleSheet("QLineEdit { "
-//                                     "font-size: 14px;"
-//                                     " border: 2px solid #402f0f;"
-//                                     " border-radius: 10px;"
-//                                     "background-color: qlineargradient(spread:pad, x1:0.849019, y1:0.272, x2:0, y2:1, stop:0 rgba(92, 60, 30, 249), stop:1 rgba(255, 255, 255, 255));"
-//                                     " padding: 5px;"
-//                                     " }"
-//                                     " QLineEdit:focus { border-color: #CCCCCC; }");
-// ui->pushButton_confirm->setStyleSheet("QPushButton {"
-//                                       "background-color: #d9c8a9; "
-//                                       "border: none;"
-//                                       "color: black;"
-//                                       "border-radius: 7px;"
-//                                       "font: 700 10pt Segoe Print;"
-//                                       "padding: 10px 20px;"
-//                                       "text-align: center;"
-//                                       "text-decoration: none;"
-//                                       "display: inline-block;"
-//                                       "font-size: 16px;"
-//                                       "margin: 4px 2px;"
-//                                       "cursor: pointer;"
-//                                       "border-radius: 5px;"
+
+    //These lines are here to when the user press enter, it goes to next line edit
+    connect(ui->lineEdit_name, &QLineEdit::returnPressed, [=]() {
+        ui->lineEdit_username->setFocus();
+    });
+    connect(ui->lineEdit_username, &QLineEdit::returnPressed, [=]() {
+        ui->lineEdit_password->setFocus();
+    });
+    connect(ui->lineEdit_password, &QLineEdit::returnPressed, [=]() {
+        ui->lineEdit_repeatPassword->setFocus();
+    });
+    connect(ui->lineEdit_repeatPassword, &QLineEdit::returnPressed, [=]() {
+        ui->lineEdit_phoneNumber->setFocus();
+    });
+    connect(ui->lineEdit_phoneNumber, &QLineEdit::returnPressed, ui->pushButton_confirm, &QPushButton::click);
 
 
-//                                  "QPushButton:hover{"
-//                                       "background-color: #3e8e41; Darker green }");
-// ui->pushButton_cancel->setStyleSheet("QPushButton {"
-//                                       "background-color: #d9c8a9; "
-//                                       "border: none;"
-//                                       "color: black;"
-//                                       "border-radius: 7px;"
-//                                       "font: 900 10pt Segoe Print;"
-//                                       "padding: 10px 20px;"
-//                                       "text-align: center;"
-//                                       "text-decoration: none;"
-//                                       "display: inline-block;"
-//                                       "font-size: 16px;"
-//                                       "margin: 4px 2px;"
-//                                       "cursor: pointer;"
-//                                       "border-radius: 5px;"
-//                                       "}");
-//   ui->pushButton_change_avatar->setStyleSheet("QPushButton{"
-//                                               "background-color: qconicalgradient(cx:0.472, cy:0.511364, angle:357.9, stop:0 rgba(35, 40, 3, 255), stop:0.16 rgba(98, 36, 108, 255), stop:0.225 rgba(95, 57, 166, 255), stop:0.285 rgba(74, 74, 204, 255), stop:0.345 rgba(52, 145, 211, 255), stop:0.41784 rgba(112, 217, 245, 255), stop:0.52 rgba(110, 205, 113, 255), stop:0.57 rgba(88, 205, 129, 255), stop:0.635 rgba(45, 179, 156, 255), stop:0.695 rgba(38, 133, 104, 255), stop:0.75 rgba(45, 113, 92, 255), stop:0.807512 rgba(208, 103, 161, 255), stop:0.88 rgba(155, 14, 146, 255), stop:0.934272 rgba(117, 54, 137, 255), stop:1 rgba(35, 40, 3, 255));"
-//                                               "border-radius: 10px;"
-//                                               "color: white;"
-//                                               "font: 700 9pt Segoe Print;"
-//                                               "}");
 }
 
 Edit_Information::~Edit_Information()
@@ -159,7 +83,14 @@ void Edit_Information::on_pushButton_confirm_clicked()
     if(!ui->lineEdit_password->text().isEmpty()){
         Person->set_get_password()=ui->lineEdit_name->text();
     }
-    QMessageBox::information(this, "", "The user's profile has been successfully updated!", QMessageBox::Ok);
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Edit profile");
+    messageBox.setText("The user's profile has been successfully updated!");
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setStyleSheet("QMessageBox { background-color: #3297a8; font-size: 16px; font-weight: bold; }");
+    QAbstractButton* okButton = messageBox.addButton("Ok", QMessageBox::AcceptRole);
+    okButton->setStyleSheet("background-color: #262e66; color: white;; font-size: 16px; font-weight: bold;");
+messageBox.exec();
     MainMenu *main_page=new MainMenu;
     main_page->show();
     this->close();

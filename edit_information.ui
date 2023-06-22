@@ -56,34 +56,48 @@
   <widget class="QLineEdit" name="lineEdit_password">
    <property name="geometry">
     <rect>
-     <x>411</x>
+     <x>471</x>
      <y>306</y>
-     <width>281</width>
+     <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 10px;
+background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
+font: 700 italic 14pt &quot;Calibri&quot;;
+padding: 5px;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_username">
    <property name="geometry">
     <rect>
-     <x>411</x>
+     <x>471</x>
      <y>232</y>
-     <width>281</width>
+     <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 10px;
+background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
+font: 700 italic 14pt &quot;Calibri&quot;;
+padding: 5px;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_password">
    <property name="geometry">
     <rect>
-     <x>411</x>
-     <y>267</y>
-     <width>61</width>
+     <x>470</x>
+     <y>270</y>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">font: 700 italic 14pt &quot;Calibri&quot;;
+color: rgb(255, 255, 255);
+</string>
    </property>
    <property name="text">
     <string>Password</string>
@@ -92,21 +106,33 @@
   <widget class="QLineEdit" name="lineEdit_repeatPassword">
    <property name="geometry">
     <rect>
-     <x>411</x>
+     <x>471</x>
      <y>341</y>
-     <width>281</width>
+     <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 10px;
+background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
+font: 700 italic 14pt &quot;Calibri&quot;;
+padding: 5px;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_phoneNumber">
    <property name="geometry">
     <rect>
-     <x>411</x>
+     <x>471</x>
      <y>416</y>
-     <width>281</width>
+     <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
+border-radius: 10px;
+font: 700 italic 14pt &quot;Calibri&quot;;
+padding: 5px;</string>
    </property>
    <property name="inputMethodHints">
     <set>Qt::ImhNone</set>
@@ -115,14 +141,16 @@
   <widget class="QLabel" name="label_phoneNumber">
    <property name="geometry">
     <rect>
-     <x>411</x>
-     <y>376</y>
-     <width>96</width>
+     <x>470</x>
+     <y>380</y>
+     <width>161</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">font: 700 italic 14pt &quot;Calibri&quot;;
+color: rgb(255, 255, 255);
+</string>
    </property>
    <property name="text">
     <string>Phone number</string>
@@ -131,10 +159,10 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>470</x>
      <y>450</y>
-     <width>80</width>
-     <height>29</height>
+     <width>111</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -144,11 +172,14 @@
   <widget class="QPushButton" name="pushButton_confirm">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>590</x>
      <y>450</y>
-     <width>80</width>
-     <height>29</height>
+     <width>101</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Confirm</string>
@@ -157,14 +188,16 @@
   <widget class="QLabel" name="label_username">
    <property name="geometry">
     <rect>
-     <x>411</x>
-     <y>192</y>
-     <width>66</width>
+     <x>470</x>
+     <y>200</y>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">font: 900 italic 14pt &quot;Calibri&quot;;
+color: rgb(255, 255, 255);
+</string>
    </property>
    <property name="text">
     <string>Username</string>
@@ -186,27 +219,32 @@
   <widget class="QLineEdit" name="lineEdit_name">
    <property name="geometry">
     <rect>
-     <x>411</x>
+     <x>471</x>
      <y>157</y>
-     <width>281</width>
-     <height>28</height>
+     <width>221</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
+border-radius: 10px;
+font: 700 italic 14pt &quot;Calibri&quot;;
+padding: 5px;
+</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_name">
    <property name="geometry">
     <rect>
-     <x>411</x>
-     <y>117</y>
-     <width>40</width>
-     <height>20</height>
+     <x>470</x>
+     <y>130</y>
+     <width>81</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">font: 700 italic 14pt &quot;Calibri&quot;;
+color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Name</string>
