@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainMenu</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pictures.qrc">
+    <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">border-image: url(:/new/prefix1/981.jpg);</string>
   </property>
@@ -27,11 +31,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
-color: rgb(255, 255, 255);
-font: 20pt &quot;Lucida Calligraphy&quot;;
-border-radius: 25px;
-padding: 1px;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Edit profile</string>
@@ -47,10 +47,7 @@ padding: 1px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
-color: rgb(255, 255, 255);
-font: 20pt &quot;Lucida Calligraphy&quot;;
-border-radius: 25px;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Start</string>
@@ -66,10 +63,7 @@ border-radius: 25px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
-font: 20pt &quot;Lucida Calligraphy&quot;;
-color: rgb(255, 255, 255);
-border-radius: 25px;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>History</string>
@@ -85,10 +79,7 @@ border-radius: 25px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/new/prefix1/push button background.jpg);
-font: 20pt &quot;Lucida Calligraphy&quot;;
-color: rgb(255, 255, 255);
-border-radius: 25px;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Exit</string>
@@ -107,6 +98,8 @@ border-radius: 25px;</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

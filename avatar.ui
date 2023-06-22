@@ -6,34 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>381</width>
+    <height>452</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
+  <property name="minimumSize">
+   <size>
+    <width>381</width>
+    <height>452</height>
+   </size>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>260</y>
-     <width>381</width>
-     <height>451</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/new/prefix1/oldmap.jpg);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
+  <property name="maximumSize">
+   <size>
+    <width>381</width>
+    <height>452</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Skull King</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="pictures.qrc">
+    <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>270</y>
+     <x>10</x>
+     <y>10</y>
      <width>361</width>
      <height>401</height>
     </rect>
@@ -60,7 +63,7 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QRadioButton" name="Avatar2_3">
+     <widget class="QRadioButton" name="Avatar2">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
@@ -74,7 +77,7 @@ color: rgb(41, 110, 174);</string>
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QRadioButton" name="Avatar4_3">
+     <widget class="QRadioButton" name="Avatar4">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
@@ -98,7 +101,7 @@ color: rgb(3, 141, 128);</string>
      </widget>
     </item>
     <item row="3" column="0">
-     <widget class="QRadioButton" name="Avatar3_3">
+     <widget class="QRadioButton" name="Avatar3">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
@@ -112,7 +115,7 @@ color: rgb(217, 58, 138);</string>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QRadioButton" name="Avatar1_3">
+     <widget class="QRadioButton" name="Avatar1">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
@@ -140,8 +143,8 @@ color: rgb(120, 50, 145);</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>670</y>
+     <x>150</x>
+     <y>410</y>
      <width>83</width>
      <height>29</height>
     </rect>
@@ -150,7 +153,28 @@ color: rgb(120, 50, 145);</string>
     <string>OK</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>381</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/new/prefix1/oldmap.jpg);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>gridLayoutWidget</zorder>
+  <zorder>pushButton</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

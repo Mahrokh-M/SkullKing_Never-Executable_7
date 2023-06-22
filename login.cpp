@@ -3,6 +3,7 @@
 #include"signup.h"
 #include"forgotpassword.h"
 #include <QMessageBox>
+#include"mainmenu.h"
 Login::Login(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Login)
@@ -63,13 +64,15 @@ void Login::on_Login_2_clicked()
                 errorLabel2->setVisible(true);
             }
         });
-        if(!ui->UserName->text().isEmpty()&&!ui->UserName->text().isEmpty()){
+        if(!ui->UserName->text().isEmpty()&&!ui->Password->text().isEmpty()){
             bool found=0;
             for (auto it = People.begin(); it != People.end(); ++it){
                 if(it->set_get_userName()==ui->UserName->text()&&it->set_get_password()==ui->Password->text()){
                     found=1;
                     this->close();
-                    //open the menu page
+                   // Person=*it;
+                    MainMenu*a=new MainMenu();
+                    a->show();
                     break;
                 }
             }

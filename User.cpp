@@ -28,5 +28,17 @@ QString& User::set_get_money() { return money; }
 int& User::set_get_total_win() { return total_wins; }
 int& User::set_get_total_lose() { return total_lose; }
 int& User::set_get_avatar() { return avatar; }
+
+void User::operator=(const User& given_user){
+    name = given_user.name;
+    userName = given_user.userName;
+    password = given_user.password;
+    phoneNumber = given_user.phoneNumber;
+    money = given_user.money;
+    total_wins = given_user.total_wins;
+    total_lose = given_user.total_lose;
+    avatar=given_user.avatar;
+}
+
 //vector<History>& User::set_get_History(){return all_games;}
 //list<Card>& User::set_get_cards(){return cards;}
