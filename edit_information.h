@@ -32,4 +32,3 @@ private:
 };
 
 #endif // EDIT_INFORMATION_H
-

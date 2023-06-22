@@ -4,6 +4,7 @@
 #include<user.h>
 using namespace std;
     extern list<User> People;
+    extern User*Person;
 class Globals
 {
 public:

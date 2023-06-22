@@ -1,7 +1,7 @@
 #include "forgotpassword.h"
 #include "ui_forgotpassword.h"
 #include"login.h"
-
+#include"globals.h"
 ForgotPassword::ForgotPassword(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ForgotPassword)

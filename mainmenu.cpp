@@ -1,7 +1,6 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 #include "edit_information.h"
-#include<QPropertyAnimation>
 
 MainMenu::MainMenu(QWidget *parent)
     : QMainWindow(parent)
@@ -74,4 +73,3 @@ void MainMenu::on_pushButton_edit_clicked()
     a->show();
 
 }
-

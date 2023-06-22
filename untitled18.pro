@@ -10,25 +10,31 @@ CONFIG += c++17
 
 SOURCES += \
     avatar.cpp \
+    edit_information.cpp \
     forgotpassword.cpp \
     globals.cpp \
     login.cpp \
     main.cpp \
+    mainmenu.cpp \
     signup.cpp \
     user.cpp
 
 HEADERS += \
     avatar.h \
+    edit_information.h \
     forgotpassword.h \
     globals.h \
     login.h \
+    mainmenu.h \
     signup.h \
     user.h
 
 FORMS += \
     avatar.ui \
+    edit_information.ui \
     forgotpassword.ui \
     login.ui \
+    mainmenu.ui \
     signup.ui
 
 # Default rules for deployment.

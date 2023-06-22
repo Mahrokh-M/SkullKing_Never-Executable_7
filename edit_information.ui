@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>632</width>
-    <height>608</height>
+    <width>849</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit Information</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="pictures.qrc">
+    <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -21,157 +25,128 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>641</width>
-     <height>611</height>
+     <width>851</width>
+     <height>531</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/new/prefix1/nutshell-boats-near-maps.jpg);
-border-color: rgb(0, 0, 0);</string>
+    <string notr="true">border-image: url(:/new/prefix1/edit-profile-background.jpg);
+</string>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_border">
+  <widget class="QLabel" name="label_icon">
    <property name="geometry">
     <rect>
-     <x>321</x>
-     <y>30</y>
-     <width>271</width>
-     <height>541</height>
+     <x>591</x>
+     <y>71</y>
+     <width>16</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(170, 255, 255);</string>
+    <string notr="true">border-image: url(:/new/prefix2/avatars/avatar1.png);</string>
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_password">
-   <property name="geometry">
-    <rect>
-     <x>351</x>
-     <y>300</y>
-     <width>191</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Password</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_name">
-   <property name="geometry">
-    <rect>
-     <x>351</x>
-     <y>140</y>
-     <width>191</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Name</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_name">
-   <property name="geometry">
-    <rect>
-     <x>351</x>
-     <y>167</y>
-     <width>191</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_password">
    <property name="geometry">
     <rect>
-     <x>351</x>
-     <y>327</y>
-     <width>191</width>
-     <height>41</height>
+     <x>411</x>
+     <y>306</y>
+     <width>281</width>
+     <height>28</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_username">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>232</y>
+     <width>281</width>
+     <height>28</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_password">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>267</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Password</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_repeatPassword">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>379</y>
-     <width>191</width>
-     <height>41</height>
+     <x>411</x>
+     <y>341</y>
+     <width>281</width>
+     <height>28</height>
     </rect>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_phoneNumber">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>469</y>
-     <width>191</width>
-     <height>41</height>
+     <x>411</x>
+     <y>416</y>
+     <width>281</width>
+     <height>28</height>
     </rect>
    </property>
    <property name="inputMethodHints">
     <set>Qt::ImhNone</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_phoneNumber">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>376</y>
+     <width>96</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Phone number</string>
+   </property>
+  </widget>
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>518</y>
-     <width>91</width>
-     <height>31</height>
+     <x>460</x>
+     <y>450</y>
+     <width>80</width>
+     <height>29</height>
     </rect>
    </property>
    <property name="text">
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_username">
-   <property name="geometry">
-    <rect>
-     <x>351</x>
-     <y>247</y>
-     <width>191</width>
-     <height>41</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_phoneNumber">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>442</y>
-     <width>191</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Phone number</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_confirm">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>520</y>
-     <width>91</width>
+     <x>550</x>
+     <y>450</y>
+     <width>80</width>
      <height>29</height>
     </rect>
    </property>
@@ -182,64 +157,64 @@ border-color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="label_username">
    <property name="geometry">
     <rect>
-     <x>351</x>
-     <y>220</y>
-     <width>191</width>
+     <x>411</x>
+     <y>192</y>
+     <width>66</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Username</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_icon">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>40</y>
-     <width>111</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/new/prefix2/avatars/avatar1.png);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_change_avatar">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>100</y>
-     <width>101</width>
-     <height>31</height>
+     <x>546</x>
+     <y>81</y>
+     <width>106</width>
+     <height>29</height>
     </rect>
    </property>
    <property name="text">
     <string>Change Avatar</string>
    </property>
   </widget>
-  <zorder>label_border</zorder>
-  <zorder>label_background</zorder>
-  <zorder>label_password</zorder>
-  <zorder>label_name</zorder>
-  <zorder>lineEdit_name</zorder>
-  <zorder>lineEdit_password</zorder>
-  <zorder>lineEdit_repeatPassword</zorder>
-  <zorder>lineEdit_phoneNumber</zorder>
-  <zorder>pushButton_cancel</zorder>
-  <zorder>lineEdit_username</zorder>
-  <zorder>label_phoneNumber</zorder>
-  <zorder>pushButton_confirm</zorder>
-  <zorder>label_username</zorder>
-  <zorder>label_icon</zorder>
-  <zorder>pushButton_change_avatar</zorder>
+  <widget class="QLineEdit" name="lineEdit_name">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>157</y>
+     <width>281</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_name">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>117</y>
+     <width>40</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Name</string>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>
