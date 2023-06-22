@@ -28,6 +28,7 @@ QString& User::set_get_money() { return money; }
 int& User::set_get_total_win() { return total_wins; }
 int& User::set_get_total_lose() { return total_lose; }
 int& User::set_get_avatar() { return avatar; }
+
 void User::operator=(const User& given_user){
     name = given_user.name;
     userName = given_user.userName;
@@ -38,5 +39,6 @@ void User::operator=(const User& given_user){
     total_lose = given_user.total_lose;
     avatar=given_user.avatar;
 }
+
 //vector<History>& User::set_get_History(){return all_games;}
 //list<Card>& User::set_get_cards(){return cards;}
