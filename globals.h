@@ -4,7 +4,8 @@
 #include<user.h>
 using namespace std;
     extern list<User> People;
-    extern User*Person;
+    extern QString xUsername;
+    extern QString xPassword;
 class Globals
 {
 public:

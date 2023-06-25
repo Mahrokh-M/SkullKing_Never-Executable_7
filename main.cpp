@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
         file.close();
     }
     Login w;
+    w.setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     w.show();
     return a.exec();
 }

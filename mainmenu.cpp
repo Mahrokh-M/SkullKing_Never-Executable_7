@@ -70,6 +70,7 @@ void MainMenu::on_pushButton_edit_clicked()
 {
     this->close();
     Edit_Information *a=new Edit_Information();
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     a->show();
 
 }

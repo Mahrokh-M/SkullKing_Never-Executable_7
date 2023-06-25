@@ -1,6 +1,7 @@
 #include "globals.h"
 list<User> People;
-User*Person;
+QString xUsername;
+QString xPassword;
 Globals::Globals()
 {
 

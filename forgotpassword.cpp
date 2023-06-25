@@ -142,6 +142,7 @@ void ForgotPassword::on_pushButton_2_clicked()
 {
     this->close();
     Login*a=new Login();
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     a->show();
 }
 

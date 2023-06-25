@@ -17,7 +17,6 @@ public:
     ~Edit_Information();
 
 private slots:
-    void on_pushButton_save_clicked();
 
     void on_lineEdit_password_editingFinished();
 

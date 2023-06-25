@@ -23,6 +23,10 @@ private slots:
 
     void on_Login_2_clicked();
 
+    void on_Exit_clicked();
+
+    void on_Exit_pressed();
+
 private:
     Ui::Login *ui;
 };

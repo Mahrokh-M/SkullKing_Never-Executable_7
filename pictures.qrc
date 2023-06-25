@@ -13,5 +13,7 @@
         <file>edit-profile-background.jpg</file>
         <file>nutshell-boats-near-maps.jpg</file>
         <file>push button background.jpg</file>
+        <file>open_door.png</file>
+        <file>close_door.png</file>
     </qresource>
 </RCC>

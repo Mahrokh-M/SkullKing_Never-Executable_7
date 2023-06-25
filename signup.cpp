@@ -21,19 +21,6 @@ SignUp::SignUp(QWidget *parent) :
     QRegularExpression regex2("^0[1-9]\\d{9}$");
     QRegularExpressionValidator* validator = new QRegularExpressionValidator(regex2, ui->phoneNumber);
     ui->phoneNumber->setValidator(validator);
-    connect(ui->Name, &QLineEdit::returnPressed, [=]() {
-        ui->username->setFocus();
-    });
-    connect(ui->username, &QLineEdit::returnPressed, [=]() {
-       ui->phoneNumber->setFocus();
-    });
-    connect(ui->phoneNumber, &QLineEdit::returnPressed, [=]() {
-        ui->Email->setFocus();
-    });
-    connect(ui->Email, &QLineEdit::returnPressed, [=]() {
-        ui->Password->setFocus();
-    });
-    connect(ui->Password, &QLineEdit::returnPressed, ui->SignUp_2, &QPushButton::click);
 }
 
 
@@ -131,6 +118,7 @@ void SignUp::on_pushButton_clicked()
 {
     this->close();
     Login*a=new Login();
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     a->show();
 }
 

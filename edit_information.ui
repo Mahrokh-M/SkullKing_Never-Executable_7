@@ -40,10 +40,10 @@
   <widget class="QLabel" name="label_icon">
    <property name="geometry">
     <rect>
-     <x>591</x>
-     <y>71</y>
-     <width>16</width>
-     <height>20</height>
+     <x>460</x>
+     <y>40</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -54,6 +54,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_password">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>471</x>
@@ -61,6 +64,9 @@
      <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius: 10px;
@@ -77,6 +83,9 @@ padding: 5px;</string>
      <width>221</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius: 10px;
@@ -112,6 +121,9 @@ color: rgb(255, 255, 255);
      <height>28</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">border-radius: 10px;
 background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
@@ -128,6 +140,9 @@ padding: 5px;</string>
      <height>28</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0.00469484 rgba(107, 132, 149, 69), stop:0.220657 rgba(158, 222, 255, 69), stop:0.389671 rgba(38, 93, 107, 145), stop:0.45 rgba(51, 205, 189, 208), stop:0.488263 rgba(93, 205, 182, 220), stop:0.518717 rgba(207, 255, 177, 211), stop:0.549296 rgba(142, 186, 174, 255), stop:0.57754 rgba(40, 177, 163, 130), stop:0.624413 rgba(50, 122, 122, 69), stop:1 rgba(255, 255, 0, 69));
 border-radius: 10px;
@@ -136,6 +151,9 @@ padding: 5px;</string>
    </property>
    <property name="inputMethodHints">
     <set>Qt::ImhNone</set>
+   </property>
+   <property name="maxLength">
+    <number>11</number>
    </property>
   </widget>
   <widget class="QLabel" name="label_phoneNumber">
@@ -195,7 +213,7 @@ color: rgb(255, 255, 255);
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 900 italic 14pt &quot;Calibri&quot;;
+    <string notr="true">font: 700 italic 14pt &quot;Calibri&quot;;
 color: rgb(255, 255, 255);
 </string>
    </property>
@@ -206,8 +224,8 @@ color: rgb(255, 255, 255);
   <widget class="QPushButton" name="pushButton_change_avatar">
    <property name="geometry">
     <rect>
-     <x>546</x>
-     <y>81</y>
+     <x>570</x>
+     <y>80</y>
      <width>106</width>
      <height>29</height>
     </rect>

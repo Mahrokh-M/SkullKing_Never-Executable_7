@@ -2,6 +2,7 @@
 #include "ui_login.h"
 #include"signup.h"
 #include"forgotpassword.h"
+#include"globals.h"
 #include <QMessageBox>
 #include"mainmenu.h"
 Login::Login(QWidget *parent) :
@@ -10,12 +11,11 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
   ui->Login_2->setStyleSheet("QPushButton {background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFD700, stop: 1 #FFA500); color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 20px; } QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFDF7F, stop: 1 #FFB37F); } QPushButton:pressed { background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FFC87F, stop: 1 #FF8C7F); }");
-
   connect(ui->UserName, &QLineEdit::returnPressed, [=]() {
       ui->Password->setFocus();
   });
-  connect(ui->Password, &QLineEdit::returnPressed, ui->Login_2, &QPushButton::click);
-
+      connect(ui->Password, &QLineEdit::returnPressed, ui->Login_2, &QPushButton::click);
+      ui->Exit->setStyleSheet(QString("QWidget { border-image: url(%1); }").arg(":/new/prefix1/close_door.png"));
 }
 
 Login::~Login()
@@ -29,6 +29,7 @@ Login::~Login()
 void Login::on_commandLinkButton_clicked()
 {
      SignUp*a=new SignUp();
+     a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
      a->show();
      this->close();
 }
@@ -75,8 +76,10 @@ void Login::on_Login_2_clicked()
                 if(it->set_get_userName()==ui->UserName->text()&&it->set_get_password()==ui->Password->text()){
                     found=1;
                     this->close();
-                   // Person=*it;
+                    xUsername=it->set_get_userName();
+                    xPassword=it->set_get_password();
                     MainMenu*a=new MainMenu();
+                    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
                     a->show();
                     break;
                 }
@@ -111,5 +114,26 @@ void Login::on_Login_2_clicked()
                 msgBox.exec();
             }
         }
+}
+
+
+
+
+
+
+
+
+
+
+void Login::on_Exit_clicked()
+{
+    ui->Exit->setStyleSheet(QString("QWidget { border-image: url(%1); }").arg(":/new/prefix1/open_door.png"));
+    this->close();
+}
+
+
+void Login::on_Exit_pressed()
+{
+    ui->Exit->setStyleSheet(QString("QWidget { border-image: url(%1); }").arg(":/new/prefix1/open_door.png"));
 }
 

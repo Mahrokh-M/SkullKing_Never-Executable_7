@@ -29,7 +29,6 @@ public:
     QString& set_get_email();
     QString& set_get_money();
     void operator=(const User& given_user);
-
     //vector<History>& set_get_History();
     //list<Card>& set_get_cards();
 };
