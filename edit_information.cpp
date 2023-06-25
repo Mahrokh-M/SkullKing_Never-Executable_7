@@ -4,10 +4,9 @@
 #include "ui_mainmenu.h"
 #include "user.h"
 #include "avatar.h"
-#include"globals.h"
+#include <globals.h>
 #include"QFile"
 #include"QValidator"
-    list<User>::iterator Person;
 Edit_Information::Edit_Information(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Edit_Information)
@@ -18,12 +17,7 @@ Edit_Information::Edit_Information(QWidget *parent) :
     QString phoneRegex = ("^0[1-9]\\d{9}$");
     QRegularExpressionValidator* validator = new QRegularExpressionValidator(QRegularExpression(phoneRegex), ui->label_phoneNumber);
     ui->lineEdit_phoneNumber->setValidator(validator);
-    for (auto it = People.begin(); it != People.end(); ++it){
-         if(it->set_get_userName()==xUsername&&it->set_get_password()==xPassword){
-             Person=it;
-             ChosenAvatar=it->set_get_avatar();
-         }
-    }
+    ChosenAvatar=Person->set_get_avatar();
     ui->pushButton_confirm->setStyleSheet(""
                                           "QPushButton {background-color: rgb(85, 57, 37);"
                                           "color: rgb(255, 242, 193);"

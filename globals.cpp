@@ -1,7 +1,7 @@
 #include "globals.h"
 list<User> People;
-QString xUsername;
-QString xPassword;
+list<User>::iterator Person;
+QString chosen_game_id;
 Globals::Globals()
 {
 

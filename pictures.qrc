@@ -15,5 +15,6 @@
         <file>push button background.jpg</file>
         <file>open_door.png</file>
         <file>close_door.png</file>
+        <file>each_game_history_background.jpg</file>
     </qresource>
 </RCC>

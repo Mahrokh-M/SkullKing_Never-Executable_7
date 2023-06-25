@@ -2,10 +2,11 @@
 #define GLOBALS_H
 #include<list>
 #include<user.h>
+#include "history.h"
 using namespace std;
     extern list<User> People;
-    extern QString xUsername;
-    extern QString xPassword;
+    extern list<User>::iterator Person;
+    extern QString chosen_game_id;
 class Globals
 {
 public:

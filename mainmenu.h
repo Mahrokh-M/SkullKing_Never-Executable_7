@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include <QMainWindow>
+#include "history.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainMenu; }
@@ -17,6 +18,10 @@ public:
 
 private slots:
     void on_pushButton_edit_clicked();
+
+    void on_pushButton_exit_clicked();
+
+    void on_pushButton_history_clicked();
 
 private:
     Ui::MainMenu *ui;
