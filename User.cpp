@@ -38,5 +38,5 @@ void User::operator=(const User& given_user){
     total_lose = given_user.total_lose;
     avatar=given_user.avatar;
 }
-//vector<History>& User::set_get_History(){return all_games;}
+QVector<Game_history>& User::set_get_History(){return all_games;}
 //list<Card>& User::set_get_cards(){return cards;}

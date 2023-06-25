@@ -1,6 +1,7 @@
 #ifndef USER_H
 #define USER_H
 #include <Qstring>
+#include "history.h"
 
 class User
 {
@@ -14,7 +15,7 @@ private:
     int total_wins;
     int total_lose;
     int avatar;
-    //vector<History> all_games;
+    QVector<Game_history> all_games;
     //list<Card> cards;
 public:
     User();
@@ -29,7 +30,7 @@ public:
     QString& set_get_email();
     QString& set_get_money();
     void operator=(const User& given_user);
-    //vector<History>& set_get_History();
+    QVector<Game_history>& set_get_History();
     //list<Card>& set_get_cards();
 };
 

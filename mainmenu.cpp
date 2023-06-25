@@ -1,6 +1,7 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 #include "edit_information.h"
+#include "login.h"
 
 MainMenu::MainMenu(QWidget *parent)
     : QMainWindow(parent)
@@ -74,3 +75,19 @@ void MainMenu::on_pushButton_edit_clicked()
     a->show();
 
 }
+
+void MainMenu::on_pushButton_exit_clicked()
+{
+    this->close();
+    Login* prev_page=new Login;
+    prev_page->show();
+}
+
+
+void MainMenu::on_pushButton_history_clicked()
+{
+    this->close();
+    History* history_page=new History;
+    history_page->show();
+}
+

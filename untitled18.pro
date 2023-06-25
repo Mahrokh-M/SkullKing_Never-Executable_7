@@ -10,9 +10,11 @@ CONFIG += c++17
 
 SOURCES += \
     avatar.cpp \
+    each_game_history.cpp \
     edit_information.cpp \
     forgotpassword.cpp \
     globals.cpp \
+    history.cpp \
     login.cpp \
     main.cpp \
     mainmenu.cpp \
@@ -21,9 +23,11 @@ SOURCES += \
 
 HEADERS += \
     avatar.h \
+    each_game_history.h \
     edit_information.h \
     forgotpassword.h \
     globals.h \
+    history.h \
     login.h \
     mainmenu.h \
     signup.h \
@@ -31,8 +35,10 @@ HEADERS += \
 
 FORMS += \
     avatar.ui \
+    each_game_history.ui \
     edit_information.ui \
     forgotpassword.ui \
+    history.ui \
     login.ui \
     mainmenu.ui \
     signup.ui

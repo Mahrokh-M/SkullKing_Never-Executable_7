@@ -1,20 +1,73 @@
-#include "History.h"
-History::History() {
-	opponent_score = "";
-	user_score = "";
-	opponent_score = "";
+#include "history.h"
+#include "ui_history.h"
+#include <globals.h>
+#include<QPushButton>>
+History::History(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::History)
+{
+    ui->setupUi(this);
+//    Game_history a("Asghar", "1100", "1500", "lose", "ffffff");  //just for test
+//    Person->set_get_History().push_back(a);//
+//    Game_history b("Akbar", "1100", "1500", "win", "ssssssssssss");  //just for test
+//    Person->set_get_History().push_back(b);//
+    QVector<Game_history>::Iterator it=Person->set_get_History().begin();
+    for(int i=0, j=10; i<Person->set_get_History().size(); i++, j+=35){ //j specifies the distance of each button from top
+        QString button_name=it->set_get_game_id();
+        // Create a new push button
+        QPushButton *button = new QPushButton(button_name, this);
+        // Set the button's size and position
+        button->setGeometry(10, j, 300, 30);
+        // Connect the button's clicked() signal to a slot
+        connect(button, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
+        it++;
+    }
 }
-History::History(string opponent_username, string opponent_score, string user_score) {
-	this->opponent_username = opponent_username;
-	this->opponent_score = opponent_score;
-	this->user_score = user_score;
+
+History::~History()
+{
+    delete ui;
 }
-string History::get_opponent_username() {
-	return opponent_username;
+Game_history::Game_history() {
+    opponent_username = "";
+    user_score = "";
+    opponent_score = "";
+    result="";
+    game_id="";
 }
-string History::get_opponent_score() {
-	return opponent_score;
+Game_history::Game_history(QString opponent_username, QString opponent_score, QString user_score, QString result, QString game_id) {
+    this->opponent_username = opponent_username;
+    this->opponent_score = opponent_score;
+    this->user_score = user_score;
+    this->result=result;
+    this->game_id=game_id;
 }
-string History::get_user_score() {
-	return user_score;
+QString Game_history::set_get_opponent_username() {
+    return opponent_username;
+}
+QString Game_history::set_get_opponent_score() {
+    return opponent_score;
+}
+QString Game_history::set_get_user_score() {
+    return user_score;
+}
+QString Game_history::set_get_result() {
+    return result;
+}
+QString Game_history::set_get_game_id() {
+    return game_id;
+}
+void History::onButtonClicked() //All these pushbuttons have same slot, that gets the id of the selected game and then open the related ui
+{
+    // Get the button that was clicked
+   QPushButton *clicked_button = qobject_cast<QPushButton *>(sender()); //sender() function returns a pointer to the object that sent the signal that triggered the current slot
+
+    if (clicked_button) {
+        // Get the text on the button
+        QString clicked_buttonText = clicked_button->text(); //We need to understand which button was clicked to access the information of right gmae in the vector
+        chosen_game_id=clicked_buttonText;
+        this->close();
+        Each_game_history* a=new Each_game_history;
+        a->show();
+    }
 }

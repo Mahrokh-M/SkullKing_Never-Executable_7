@@ -76,8 +76,7 @@ void Login::on_Login_2_clicked()
                 if(it->set_get_userName()==ui->UserName->text()&&it->set_get_password()==ui->Password->text()){
                     found=1;
                     this->close();
-                    xUsername=it->set_get_userName();
-                    xPassword=it->set_get_password();
+                    Person=it;
                     MainMenu*a=new MainMenu();
                     a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
                     a->show();
