@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include "each_game_history.h"
+#include<QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QLabel>
 namespace Ui {
 class History;
 }
