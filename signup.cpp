@@ -121,6 +121,7 @@ void SignUp::on_SignUp_2_clicked()
         }
         this->close();
         Login*a=new Login();
+        a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         a->show();
     }
   }

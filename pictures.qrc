@@ -14,7 +14,8 @@
         <file>nutshell-boats-near-maps.jpg</file>
         <file>push button background.jpg</file>
         <file>open_door.png</file>
-        <file>close_door.png</file>
+        <file>closedoor.png</file>
         <file>each_game_history_background.jpg</file>
+        <file>choose_server_client.jpg</file>
     </qresource>
 </RCC>

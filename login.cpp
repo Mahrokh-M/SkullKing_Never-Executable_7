@@ -15,7 +15,7 @@ Login::Login(QWidget *parent) :
       ui->Password->setFocus();
   });
       connect(ui->Password, &QLineEdit::returnPressed, ui->Login_2, &QPushButton::click);
-      ui->Exit->setStyleSheet(QString("QWidget { border-image: url(%1); }").arg(":/new/prefix1/close_door.png"));
+      ui->Exit->setStyleSheet(QString("QWidget { border-image: url(%1); }").arg(":/new/prefix1/closedoor.png"));
 }
 
 Login::~Login()

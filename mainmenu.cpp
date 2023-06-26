@@ -2,7 +2,7 @@
 #include "ui_mainmenu.h"
 #include "edit_information.h"
 #include "login.h"
-
+#include"selection.h"
 MainMenu::MainMenu(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainMenu)
@@ -80,6 +80,7 @@ void MainMenu::on_pushButton_exit_clicked()
 {
     this->close();
     Login* prev_page=new Login;
+    prev_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     prev_page->show();
 }
 
@@ -91,3 +92,10 @@ void MainMenu::on_pushButton_history_clicked()
     history_page->show();
 }
 
+void MainMenu::on_pushButton_start_clicked()
+{
+    this->close();
+    Selection*a=new Selection;
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    a->show();
+}

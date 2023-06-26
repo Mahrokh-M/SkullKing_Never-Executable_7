@@ -18,6 +18,7 @@ SOURCES += \
     login.cpp \
     main.cpp \
     mainmenu.cpp \
+    selection.cpp \
     signup.cpp \
     user.cpp
 
@@ -30,6 +31,7 @@ HEADERS += \
     history.h \
     login.h \
     mainmenu.h \
+    selection.h \
     signup.h \
     user.h
 
@@ -41,6 +43,7 @@ FORMS += \
     history.ui \
     login.ui \
     mainmenu.ui \
+    selection.ui \
     signup.ui
 
 # Default rules for deployment.

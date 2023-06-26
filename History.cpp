@@ -7,8 +7,8 @@ History::History(QWidget *parent) :
     ui(new Ui::History)
 {
     ui->setupUi(this);
-//    Game_history a("Asghar", "1100", "1500", "lose", "ffffff");  //just for test
-//    Person->set_get_History().push_back(a);//
+    Game_history a("Asghar", "1100", "1500", "lose", "ffffff");  //just for test
+    Person->set_get_History().push_back(a);//
 //    Game_history b("Akbar", "1100", "1500", "win", "ssssssssssss");  //just for test
 //    Person->set_get_History().push_back(b);//
     QVector<Game_history>::Iterator it=Person->set_get_History().begin();
