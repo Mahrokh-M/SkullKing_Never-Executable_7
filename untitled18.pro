@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,6 +20,7 @@ SOURCES += \
     maingame.cpp \
     mainmenu.cpp \
     selection.cpp \
+    server.cpp \
     signup.cpp \
     user.cpp
 
@@ -34,6 +35,7 @@ HEADERS += \
     maingame.h \
     mainmenu.h \
     selection.h \
+    server.h \
     signup.h \
     user.h
 
@@ -47,6 +49,7 @@ FORMS += \
     maingame.ui \
     mainmenu.ui \
     selection.ui \
+    server.ui \
     signup.ui
 
 # Default rules for deployment.
