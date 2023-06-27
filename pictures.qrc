@@ -17,5 +17,7 @@
         <file>closedoor.png</file>
         <file>each_game_history_background.jpg</file>
         <file>choose_server_client.jpg</file>
+        <file>Field Background_dark.jpg</file>
+        <file>Field Background_light.jpg</file>
     </qresource>
 </RCC>

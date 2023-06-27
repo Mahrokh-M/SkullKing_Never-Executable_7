@@ -1,5 +1,6 @@
 #include "selection.h"
 #include "ui_selection.h"
+#include "maingame.h"
 Selection::Selection(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Selection)
@@ -39,4 +40,14 @@ Selection::~Selection()
 }
 
 
+
+
+void Selection::on_pushButton_clicked()
+{
+    this->close();
+    mainGame* a=new mainGame;
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    a->show();
+
+}
 
