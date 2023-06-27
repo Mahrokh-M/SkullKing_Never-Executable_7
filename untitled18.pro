@@ -17,6 +17,7 @@ SOURCES += \
     history.cpp \
     login.cpp \
     main.cpp \
+    maingame.cpp \
     mainmenu.cpp \
     selection.cpp \
     signup.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     globals.h \
     history.h \
     login.h \
+    maingame.h \
     mainmenu.h \
     selection.h \
     signup.h \
@@ -42,6 +44,7 @@ FORMS += \
     forgotpassword.ui \
     history.ui \
     login.ui \
+    maingame.ui \
     mainmenu.ui \
     selection.ui \
     signup.ui
