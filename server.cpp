@@ -51,12 +51,6 @@ void Server::readSocket()
     socketStream.startTransaction();
     socketStream >> buffer;
 
-    if(!socketStream.commitTransaction())
-    {
-        QString message = QString("%1 :: Waiting for more data to come..").arg(socket->socketDescriptor());
-        emit newMessage(message);
-        return;
-    }
 
     QString header = buffer.mid(0,128);
     QString fileType = header.split(",")[0].split(":")[1];
@@ -74,9 +68,8 @@ void Server::discardSocket()
     QTcpSocket* socket = reinterpret_cast<QTcpSocket*>(sender());
     QSet<QTcpSocket*>::iterator it = connection_set.find(socket);
     if (it != connection_set.end()){
-        displayMessage(QString("INFO :: A client has just left the room").arg(socket->socketDescriptor()));
+        //displayMessage(QString("INFO :: A client has just left the room").arg(socket->socketDescriptor()));
         //wait for 60 sec
-        //try connecting again
         connection_set.remove(*it);
     }
 
