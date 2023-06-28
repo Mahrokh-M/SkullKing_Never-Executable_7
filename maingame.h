@@ -11,6 +11,8 @@
 #include <QTcpSocket>
 
 
+
+
 namespace Ui {
 class mainGame;
 }
@@ -22,6 +24,8 @@ class mainGame : public QWidget
 
 public:
     explicit mainGame(QWidget *parent = nullptr);
+
+
     ~mainGame();
 signals:
     void newMessage(QString);

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     avatar.cpp \
+    card.cpp \
     each_game_history.cpp \
     edit_information.cpp \
     forgotpassword.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     avatar.h \
+    card.h \
     each_game_history.h \
     edit_information.h \
     forgotpassword.h \

@@ -1,10 +1,26 @@
-#include "Card.h"
-Card::Card():topCard() {
-	number = 0;
+#include "card.h"
+
+Card::Card() {
+    type = "";
+    value = 0;
+    isReserved = false;
+    number = 0;
 }
-Card::Card(string type, int number, int value, bool isReserved):topCard(type, value, isReserved) {
-	this->number = number;
+Card::Card(QString type, int number, int value, bool isReserved) {
+    this->type = type;
+    this->value = value;
+    this->isReserved = isReserved;
+    this->number = number;
 }
-int&Card::get_number() {
-	return number;
+int& Card::get_number() {
+    return number;
+}
+bool& Card::set_get_isReserved() {
+    return isReserved;
+}
+QString& Card::get_type() {
+    return type;
+}
+int& Card::get_value() {
+    return value;
 }
