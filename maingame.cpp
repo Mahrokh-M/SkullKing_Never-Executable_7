@@ -64,14 +64,15 @@ void mainGame::readSocket()
 
     socketStream.startTransaction();
     socketStream >> buffer;
-    if(QString::fromUtf8(buffer)=="Hide widgets"){
+   QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
+    if(str=="Hide widgets"){
         ui->label_Loading->hide();
         ui->IP->hide();
         ui->IP_show->hide();
         ui->OK->hide();
         ui->lineEdit_enter_IP->hide();
     }
-
+    else{
     QString header = buffer.mid(0,128);
     QString fileType = header.split(",")[0].split(":")[1];
 
@@ -81,6 +82,7 @@ void mainGame::readSocket()
         QString message = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
         emit newMessage(message);
     }
+  }
 }
 
 void mainGame::discardSocket()

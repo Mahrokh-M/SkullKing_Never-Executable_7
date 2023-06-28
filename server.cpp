@@ -51,23 +51,28 @@ void Server::readSocket()
 
     socketStream.startTransaction();
     socketStream >> buffer;
-    if(QString::fromUtf8(buffer)=="Client connected"){
+    QString client_masasage="Client connected";
+    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
+    qDebug()<<str;
+    if(str==client_masasage){
         socket->reset();
             if(socket->isOpen())
             {
                 QString str = "Hide widgets";
+                foreach (QTcpSocket* sockett,connection_set)
+                {
+                    if(sockett->socketDescriptor() != socket->socketDescriptor())
+                    {
+                        QDataStream socketStream(sockett);
+                        socketStream.setVersion(QDataStream::Qt_5_15);
+                        QByteArray byteArray = str.toUtf8();
+                        socketStream << byteArray;
+                        break;
+                 }
 
-                QDataStream socketStream(socket);
-                socketStream.setVersion(QDataStream::Qt_5_15);
-
-                QByteArray byteArray = str.toUtf8();
-
-                socketStream.setVersion(QDataStream::Qt_5_15);
-                socketStream << byteArray;
             }
-            else
-                QMessageBox::critical(this,"QTCPServer","Socket doesn't seem to be opened");
     }
+}
     else{
     QString header = buffer.mid(0,128);
     QString fileType = header.split(",")[0].split(":")[1];
@@ -80,7 +85,6 @@ void Server::readSocket()
     }
     }
 }
-
 void Server::discardSocket()
 {
     QTcpSocket* socket = reinterpret_cast<QTcpSocket*>(sender());

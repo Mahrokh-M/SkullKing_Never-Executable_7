@@ -20,5 +20,40 @@
         <file>Field Background_dark.jpg</file>
         <file>Field Background_light.jpg</file>
         <file>Loading.gif</file>
+        <file>Flag1.png</file>
+        <file>Flag2.png</file>
+        <file>Flag3.png</file>
+        <file>Flag4.png</file>
+        <file>Flag5.png</file>
+        <file>Flag6.png</file>
+        <file>Flag7.png</file>
+        <file>Flag8.png</file>
+        <file>King.png</file>
+        <file>Map1.png</file>
+        <file>Map2.png</file>
+        <file>Map3.png</file>
+        <file>Map4.png</file>
+        <file>Map5.png</file>
+        <file>Map6.png</file>
+        <file>Map7.png</file>
+        <file>Map8.png</file>
+        <file>Parrot1.png</file>
+        <file>Parrot2.png</file>
+        <file>Parrot3.png</file>
+        <file>Parrot4.png</file>
+        <file>Parrot5.png</file>
+        <file>Parrot6.png</file>
+        <file>Parrot7.png</file>
+        <file>Parrot8.png</file>
+        <file>Pirate.png</file>
+        <file>Queen.png</file>
+        <file>Treasure1.png</file>
+        <file>Treasure2.png</file>
+        <file>Treasure3.png</file>
+        <file>Treasure4.png</file>
+        <file>Treasure5.png</file>
+        <file>Treasure6.png</file>
+        <file>Treasure7.png</file>
+        <file>Treasure8.png</file>
     </qresource>
 </RCC>

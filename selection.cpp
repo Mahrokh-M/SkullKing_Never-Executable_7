@@ -62,6 +62,7 @@ void Selection::on_Client_clicked()
     server_or_client=2;
     this->close();
     mainGame*a=new mainGame();
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     a->show();
 }
 
