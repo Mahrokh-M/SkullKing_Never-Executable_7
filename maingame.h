@@ -32,6 +32,8 @@ private slots:
 
     void displayMessage(const QString& str);
 
+    void on_OK_clicked();
+
 private:
     Ui::mainGame *ui;
 

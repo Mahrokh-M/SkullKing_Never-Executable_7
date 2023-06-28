@@ -1,12 +1,14 @@
 #include "server.h"
 #include "ui_server.h"
 
+#include"globals.h"
 Server::Server(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Server)
 {
 
     ui->setupUi(this);
+
     m_server = new QTcpServer();
 
     if(m_server->listen(QHostAddress::Any, 8080))
@@ -36,7 +38,6 @@ void Server::appendToSocketList(QTcpSocket* socket)
     connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &Server::displayError);
     //ui->comboBox_receiver->addItem(QString::number(socket->socketDescriptor()));
-    displayMessage(QString("Client with socket:%1 has just entered the room").arg(socket->socketDescriptor()));
 }
 
 void Server::readSocket()
@@ -94,13 +95,6 @@ void Server::displayError(QAbstractSocket::SocketError socketError)
     }
 }
 
-
-
-
-void Server::displayMessage(const QString& str)
-{
-    ui->connected_client->setText(str);
-}
 
 
 

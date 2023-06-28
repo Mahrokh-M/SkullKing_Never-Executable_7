@@ -21,7 +21,6 @@ class Server : public QWidget
 
 public:
     explicit Server(QWidget *parent = nullptr);
-    void displayMessage(const QString& str);
     ~Server();
 
 signals:

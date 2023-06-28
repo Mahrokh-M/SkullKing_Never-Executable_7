@@ -1,21 +1,47 @@
 #include "maingame.h"
 #include "ui_maingame.h"
-
+#include"QMovie"
+#include <QHostAddress>
+#include <QHostInfo>
+#include"globals.h"
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::mainGame)
 {
-    ui->setupUi(this);
     //show loading gif
-    socket = new QTcpSocket(this);
+    ui->setupUi(this);
+    QMovie *gifMovie = new QMovie(":/new/prefix1/Loading.gif");
+    ui->label_Loading->setScaledContents(true);
+    ui->label_Loading->setMovie(gifMovie);
+    gifMovie->start();
+    if(server_or_client==1){
+        QString IP;
+          foreach(const QHostAddress &address, QHostInfo::fromName(QHostInfo::localHostName()).addresses()) {
+              if(address.protocol() == QAbstractSocket::IPv4Protocol) {
+                  IP = address.toString();
+                  break;
+              }
+          }
 
+     QString server_IP=IP;
+      ui->lineEdit_enter_IP->hide();
+      ui->IP_show->setText(server_IP);
+      ui->OK->hide();
+    }
+    else if(server_or_client==2){
+       //ui->IP->show();
+       ui->IP_show->hide();
+   }
+    socket = new QTcpSocket(this);
     connect(this, &mainGame::newMessage, this, &mainGame::displayMessage);
     connect(socket, &QTcpSocket::readyRead, this, &mainGame::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &mainGame::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &mainGame::displayError);
 
     //socket->connectToHost("server_ip",8080);
-    socket->connectToHost("192.168.43.216",8080);
+    if(server_or_client==1){
+    socket->connectToHost("127.0.0.1",8080);}
+
     // based on server ip
     if(socket->waitForConnected()){
      //hide loading gif
@@ -88,3 +114,9 @@ void mainGame::displayMessage(const QString& str)
 {
     //set label and compare
 }
+
+void mainGame::on_OK_clicked()
+{
+  socket->connectToHost(ui->lineEdit_enter_IP->text(),8080);
+}
+

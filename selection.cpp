@@ -1,6 +1,8 @@
 #include "selection.h"
 #include "ui_selection.h"
 #include "maingame.h"
+#include"server.h"
+#include"globals.h"
 Selection::Selection(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Selection)
@@ -41,13 +43,28 @@ Selection::~Selection()
 
 
 
-
-void Selection::on_pushButton_clicked()
+void Selection::on_Server_clicked()
 {
-    this->close();
-    mainGame* a=new mainGame;
+    server_or_client=1;
+    Server*a=new Server();
     a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     a->show();
-
+    a->hide();
+    this->close();
+    mainGame*b=new mainGame();
+    b->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    b->show();
 }
+
+
+void Selection::on_Client_clicked()
+{
+    server_or_client=2;
+    this->close();
+    mainGame*a=new mainGame();
+    a->show();
+}
+
+
+
 

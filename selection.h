@@ -16,7 +16,10 @@ public:
     ~Selection();
 
 private slots:
-    void on_pushButton_clicked();
+
+    void on_Server_clicked();
+
+    void on_Client_clicked();
 
 private:
     Ui::Selection *ui;

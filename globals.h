@@ -7,6 +7,7 @@ using namespace std;
     extern list<User> People;
     extern list<User>::iterator Person;
     extern QString chosen_game_id;
+    extern int server_or_client;
 class Globals
 {
 public:
