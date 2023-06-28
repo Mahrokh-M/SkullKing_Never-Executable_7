@@ -25,6 +25,7 @@ public:
 
 signals:
     void newMessage(QString);
+    //void hide_items();
 private slots:
     void newConnection();
     void appendToSocketList(QTcpSocket* socket);
@@ -32,6 +33,7 @@ private slots:
     void readSocket();
     void discardSocket();
     void displayError(QAbstractSocket::SocketError socketError);
+    //void clientConnected();
    // void sendMessage(QTcpSocket* socket);
 
 

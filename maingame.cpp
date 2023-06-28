@@ -14,6 +14,7 @@ mainGame::mainGame(QWidget *parent) :
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gifMovie);
     gifMovie->start();
+    //connect(ui->lineEdit_enter_IP, &QLineEdit::returnPressed, ui->OK, &QPushButton::click);
     if(server_or_client==1){
         QString IP;
           foreach(const QHostAddress &address, QHostInfo::fromName(QHostInfo::localHostName()).addresses()) {
@@ -37,20 +38,14 @@ mainGame::mainGame(QWidget *parent) :
     connect(socket, &QTcpSocket::readyRead, this, &mainGame::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &mainGame::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &mainGame::displayError);
+    //connect(this, SIGNAL(client_connected()), Ser)
 
     //socket->connectToHost("server_ip",8080);
     if(server_or_client==1){
     socket->connectToHost("127.0.0.1",8080);}
 
     // based on server ip
-    if(socket->waitForConnected()){
-     //hide loading gif
-    }
-    else{
-        //design
-        QMessageBox::critical(this,"QTCPClient", QString("The following error occurred: %1.").arg(socket->errorString()));
-        exit(EXIT_FAILURE);
-    }
+
 }
 
 mainGame::~mainGame()
@@ -69,6 +64,13 @@ void mainGame::readSocket()
 
     socketStream.startTransaction();
     socketStream >> buffer;
+    if(QString::fromUtf8(buffer)=="Hide widgets"){
+        ui->label_Loading->hide();
+        ui->IP->hide();
+        ui->IP_show->hide();
+        ui->OK->hide();
+        ui->lineEdit_enter_IP->hide();
+    }
 
     QString header = buffer.mid(0,128);
     QString fileType = header.split(",")[0].split(":")[1];
@@ -109,7 +111,6 @@ void mainGame::displayError(QAbstractSocket::SocketError socketError)
     }
 }
 
-
 void mainGame::displayMessage(const QString& str)
 {
     //set label and compare
@@ -118,5 +119,26 @@ void mainGame::displayMessage(const QString& str)
 void mainGame::on_OK_clicked()
 {
   socket->connectToHost(ui->lineEdit_enter_IP->text(),8080);
+  if(socket->waitForConnected()){
+   ui->label_Loading->hide();
+   ui->IP->hide();
+   ui->IP_show->hide();
+   ui->OK->hide();
+   ui->lineEdit_enter_IP->hide();
+
+
+   QString str = "Client connected";
+   QDataStream socketStream(socket);
+   socketStream.setVersion(QDataStream::Qt_5_15);
+   QByteArray byteArray = str.toUtf8();
+   socketStream << byteArray;
+
 }
+  else{
+      //design
+      QMessageBox::critical(this,"QTCPClient", QString("The following error occurred: %1.").arg(socket->errorString()));
+      exit(EXIT_FAILURE);
+  }
+}
+
 
