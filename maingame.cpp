@@ -178,6 +178,16 @@ void mainGame::readSocket()
         opponent_avatar=opponent_information[1].split(",")[1].toInt();
         card2=opponent_information[1].split(",")[2].toInt();
         card1=opponent_information[1].split(",")[3].toInt();
+        QMovie *gif;
+        if(card1>card2)
+         gif = new QMovie(":/new/prefix1/you start.gif");
+        else
+         gif = new QMovie(":/new/prefix1/you're second.gif");
+
+        ui->Who_starts->setScaledContents(true);
+        ui->Who_starts->setMovie(gif);
+        ui->Who_starts->show();
+        gif->start();
         QString avatar_path_opponent;
         if(opponent_avatar==1)
             avatar_path_opponent=":/new/prefix1/avatar1.png";
@@ -307,19 +317,20 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     ui->pushButton_13->hide();
     ui->pushButton_14->hide();
     str1+= QString::number(card1)+","+QString::number(card2);
+    send_message(str1);
     QMovie *gif;
     if(card1>card2)
      gif = new QMovie(":/new/prefix1/you start.gif");
     else
-     gif = new QMovie(":/new/prefix1/you start.gif");
+     gif = new QMovie(":/new/prefix1/you're second.gif");
 
     ui->Who_starts->setScaledContents(true);
     ui->Who_starts->setMovie(gif);
     ui->Who_starts->show();
     gif->start();
-    send_message(str1);
-    QThread::msleep(1000);
-    ui->Who_starts->hide();
+
+    //QThread::msleep(1000);
+    //ui->Who_starts->hide();
 }
 
 void mainGame::send_message(QString input_message){ //This function recieves a messgae and send it to server

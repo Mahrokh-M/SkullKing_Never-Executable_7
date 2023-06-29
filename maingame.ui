@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 85, 127);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -231,7 +231,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 0);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -289,7 +289,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-30</y>
      <width>981</width>
      <height>681</height>
     </rect>
@@ -393,7 +393,7 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 0);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -452,7 +452,7 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 85, 127);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -492,12 +492,12 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
   <zorder>name_you</zorder>
   <zorder>name_opppnent</zorder>
   <zorder>Avatar_opponent</zorder>
-  <zorder>label_Loading</zorder>
-  <zorder>OK</zorder>
-  <zorder>IP_show</zorder>
-  <zorder>IP</zorder>
-  <zorder>lineEdit_enter_IP</zorder>
   <zorder>Who_starts</zorder>
+  <zorder>label_Loading</zorder>
+  <zorder>IP</zorder>
+  <zorder>IP_show</zorder>
+  <zorder>OK</zorder>
+  <zorder>lineEdit_enter_IP</zorder>
  </widget>
  <resources/>
  <connections/>
