@@ -26,6 +26,7 @@ public:
     explicit mainGame(QWidget *parent = nullptr);
     void who_start();
     void send_message(QString);
+    void show_opponent_avatar();
 
     ~mainGame();
 signals:

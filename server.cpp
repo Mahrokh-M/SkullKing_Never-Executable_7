@@ -1,6 +1,5 @@
 #include "server.h"
 #include "ui_server.h"
-
 #include"globals.h"
 Server::Server(QWidget *parent) :
     QWidget(parent),
@@ -37,7 +36,7 @@ void Server::appendToSocketList(QTcpSocket* socket)
     connect(socket, &QTcpSocket::readyRead, this, &Server::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &Server::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &Server::displayError);
-    //ui->comboBox_receiver->addItem(QString::number(socket->socketDescriptor()));
+
 }
 
 void Server::readSocket()
@@ -63,19 +62,8 @@ void Server::readSocket()
                         socketStream << buffer;
                         break;
                   }
-      }
+            }
 
-}
-    else{
-    QString header = buffer.mid(0,128);
-    QString fileType = header.split(",")[0].split(":")[1];
-
-    buffer = buffer.mid(128);
-
-    if(fileType=="message"){
-        QString message = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
-       //send to the other client
-    }
     }
 }
 void Server::discardSocket()

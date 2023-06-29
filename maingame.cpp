@@ -6,6 +6,7 @@
 #include"globals.h"
 #include "card.h"
 #include <time.h>
+#include<QThread>
 //#include <cstdlib>
 
 Card all_cards[42]; //An array of all cards we have in the game
@@ -20,7 +21,7 @@ mainGame::mainGame(QWidget *parent) :
     ui(new Ui::mainGame)
 {
     ui->setupUi(this);
-
+    ui->Who_starts->hide();
     QString avatar_path;
     if(Person->set_get_avatar()==1)
         avatar_path=":/new/prefix1/avatar1.png";
@@ -117,7 +118,6 @@ mainGame::mainGame(QWidget *parent) :
        ui->IP->hide();
    }
     socket = new QTcpSocket(this);
-    connect(this, &mainGame::newMessage, this, &mainGame::displayMessage);
     connect(socket, &QTcpSocket::readyRead, this, &mainGame::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &mainGame::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &mainGame::displayError);
@@ -148,7 +148,21 @@ void mainGame::readSocket()
     socketStream.startTransaction();
     socketStream >> buffer;
    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
-    if(str=="Client connected"){
+    if(str.split(" ")[0]=="Clientconnected"){
+        QStringList opponent_information=str.split(" ");
+        opponent_name=opponent_information[1].split(",")[0];
+        opponent_avatar=opponent_information[1].split(",")[1].toInt();
+        QString avatar_path_opponent;
+        if(opponent_avatar==1)
+            avatar_path_opponent=":/new/prefix1/avatar1.png";
+        if(opponent_avatar==2)
+            avatar_path_opponent=":/new/prefix1/avatar2.png";
+        if(opponent_avatar==3)
+            avatar_path_opponent=":/new/prefix1/avatar3.png";
+        if(opponent_avatar==4)
+            avatar_path_opponent=":/new/prefix1/avatar4.png";
+        ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
+        ui->name_opppnent->setText(opponent_name);
         ui->label_Loading->hide();
         ui->IP->hide();
         ui->IP_show->hide();
@@ -156,10 +170,25 @@ void mainGame::readSocket()
         ui->lineEdit_enter_IP->hide();
         who_start();
     }
-    else if(str.split(" ")[0]=="Showcards"){
-        QStringList center_cards=str.split(" ");
-        card2=center_cards[1].split(",")[0].toInt();
-        card1=center_cards[1].split(",")[1].toInt();
+
+
+    else if(str.split(" ")[0]=="OpponentInformation"){
+        QStringList opponent_information=str.split(" ");
+        opponent_name=opponent_information[1].split(",")[0];
+        opponent_avatar=opponent_information[1].split(",")[1].toInt();
+        card2=opponent_information[1].split(",")[2].toInt();
+        card1=opponent_information[1].split(",")[3].toInt();
+        QString avatar_path_opponent;
+        if(opponent_avatar==1)
+            avatar_path_opponent=":/new/prefix1/avatar1.png";
+        if(opponent_avatar==2)
+            avatar_path_opponent=":/new/prefix1/avatar2.png";
+        if(opponent_avatar==3)
+            avatar_path_opponent=":/new/prefix1/avatar3.png";
+        if(opponent_avatar==4)
+            avatar_path_opponent=":/new/prefix1/avatar4.png";
+        ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
+        ui->name_opppnent->setText(opponent_name);
         ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card1]));
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card2]));
         ui->pushButton_1->hide();
@@ -176,22 +205,6 @@ void mainGame::readSocket()
         ui->pushButton_12->hide();
         ui->pushButton_13->hide();
         ui->pushButton_14->hide();
-    }
-    else if(str.split(" ")[0]=="OpponentInformation"){
-        QStringList opponent_information=str.split(" ");
-        opponent_name=opponent_information[1].split(",")[0];
-        opponent_avatar=opponent_information[1].split(",")[1].toInt();
-        QString avatar_path_opponent;
-        if(opponent_avatar==1)
-            avatar_path_opponent=":/new/prefix1/avatar1.png";
-        if(opponent_avatar==2)
-            avatar_path_opponent=":/new/prefix1/avatar2.png";
-        if(opponent_avatar==3)
-            avatar_path_opponent=":/new/prefix1/avatar3.png";
-        if(opponent_avatar==4)
-            avatar_path_opponent=":/new/prefix1/avatar4.png";
-        ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
-        ui->name_opppnent->setText(opponent_name);
     }
 }
 
@@ -239,7 +252,7 @@ void mainGame::on_OK_clicked()
    ui->lineEdit_enter_IP->hide();
 
 
-   QString str = "Client connected";
+   QString str = "Clientconnected "+Person->set_get_name()+","+QString::number(Person->set_get_avatar());
    QDataStream socketStream(socket);
    socketStream.setVersion(QDataStream::Qt_5_15);
    QByteArray byteArray = str.toUtf8();
@@ -253,13 +266,13 @@ void mainGame::on_OK_clicked()
   }
 }
 
+
+
 void mainGame::who_start(){ //This funcion gives each player a random card to specify the beginner of the round
-    QString str1 = Person->set_get_name()+","+QString::number(Person->set_get_avatar());
+    QString str1 = Person->set_get_name()+","+QString::number(Person->set_get_avatar())+",";
     str1.prepend("OpponentInformation ");
-    send_message(str1); //Each client shold send his information to server and then, server sends this to his opponent
     int random_index;
     while(true){
-    if (server_or_client==1){
         random_index = rand() % 8+16;
         if (all_cards[random_index].set_get_isReserved() == false) //if the card is not already given to annother person
         {
@@ -268,7 +281,6 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
             ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[random_index]));
             break;
         }
-    }
     }
         while(true){
        random_index = rand() % 8+16;
@@ -294,9 +306,20 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     ui->pushButton_12->hide();
     ui->pushButton_13->hide();
     ui->pushButton_14->hide();
-    QString str2 = QString::number(card1)+","+QString::number(card2);
-    str2.prepend("Showcards ");
-    send_message(str2);
+    str1+= QString::number(card1)+","+QString::number(card2);
+    QMovie *gif;
+    if(card1>card2)
+     gif = new QMovie(":/new/prefix1/you start.gif");
+    else
+     gif = new QMovie(":/new/prefix1/you start.gif");
+
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+    gif->start();
+    send_message(str1);
+    QThread::msleep(1000);
+    ui->Who_starts->hide();
 }
 
 void mainGame::send_message(QString input_message){ //This function recieves a messgae and send it to server
@@ -304,6 +327,7 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
     socketStream.setVersion(QDataStream::Qt_5_15);
     QByteArray byteArray = input_message.toUtf8();
     socketStream << byteArray;
+
 }
 
 void initializing_paths(){
