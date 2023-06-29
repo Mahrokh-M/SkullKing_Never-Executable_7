@@ -55,5 +55,7 @@
         <file>Treasure6.png</file>
         <file>Treasure7.png</file>
         <file>Treasure8.png</file>
+        <file>server loading gif.gif</file>
+        <file>client loading gif.gif</file>
     </qresource>
 </RCC>

@@ -51,27 +51,20 @@ void Server::readSocket()
 
     socketStream.startTransaction();
     socketStream >> buffer;
-    QString client_masasage="Client connected";
-    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
-    qDebug()<<str;
-    if(str==client_masasage){
-        socket->reset();
-            if(socket->isOpen())
-            {
-                QString str = "Hide widgets";
-                foreach (QTcpSocket* sockett,connection_set)
-                {
-                    if(sockett->socketDescriptor() != socket->socketDescriptor())
-                    {
+       if(socket->isOpen())
+       {
+
+           foreach (QTcpSocket* sockett,connection_set)
+              {
+                  if(sockett->socketDescriptor() != socket->socketDescriptor())
+                  {
                         QDataStream socketStream(sockett);
                         socketStream.setVersion(QDataStream::Qt_5_15);
-                        QByteArray byteArray = str.toUtf8();
-                        socketStream << byteArray;
+                        socketStream << buffer;
                         break;
-                 }
+                  }
+      }
 
-            }
-    }
 }
     else{
     QString header = buffer.mid(0,128);

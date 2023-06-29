@@ -32,8 +32,8 @@
   <widget class="QLabel" name="Avatar_you">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>70</y>
+     <x>220</x>
+     <y>60</y>
      <width>81</width>
      <height>81</height>
     </rect>
@@ -231,33 +231,17 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="Card_you">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>160</y>
-     <width>181</width>
-     <height>251</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>Card1</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="Card_opponent">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>150</y>
-     <width>171</width>
-     <height>271</height>
+     <x>640</x>
+     <y>140</y>
+     <width>191</width>
+     <height>251</height>
     </rect>
    </property>
    <property name="text">
-    <string>Card2</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_12">
@@ -311,10 +295,10 @@
   <widget class="QLabel" name="label_Loading">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>130</y>
-     <width>261</width>
-     <height>221</height>
+     <x>0</x>
+     <y>-30</y>
+     <width>981</width>
+     <height>681</height>
     </rect>
    </property>
    <property name="text">
@@ -324,61 +308,122 @@
   <widget class="QLabel" name="IP_show">
    <property name="geometry">
     <rect>
-     <x>422</x>
-     <y>289</y>
-     <width>141</width>
-     <height>31</height>
+     <x>400</x>
+     <y>20</y>
+     <width>191</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(255, 255, 255);
+font: 700 24pt &quot;Tw Cen MT&quot;;
+border-radius:10px;
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="IP">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>290</y>
-     <width>31</width>
-     <height>31</height>
+     <x>320</x>
+     <y>20</y>
+     <width>71</width>
+     <height>51</height>
     </rect>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(255, 255, 255);
+font: 700 24pt &quot;Tw Cen MT&quot;;
+border-radius:10px;
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));</string>
    </property>
    <property name="text">
     <string>IP:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_enter_IP">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>300</y>
-     <width>113</width>
-     <height>28</height>
+     <x>320</x>
+     <y>10</y>
+     <width>271</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">color: rgb(255, 255, 255);
+font: 700 24pt &quot;Tw Cen MT&quot;;
+border-radius:10px;
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));</string>
+   </property>
+   <property name="placeholderText">
+    <string>Enter Server IP</string>
    </property>
   </widget>
   <widget class="QPushButton" name="OK">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>340</y>
-     <width>83</width>
-     <height>29</height>
+     <x>600</x>
+     <y>10</y>
+     <width>71</width>
+     <height>61</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>OK</string>
    </property>
   </widget>
+  <widget class="QLabel" name="Card_you">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>140</y>
+     <width>191</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label_background</zorder>
+  <zorder>Avatar_you</zorder>
+  <zorder>Avatar_opponent</zorder>
+  <zorder>pushButton_1</zorder>
+  <zorder>pushButton_2</zorder>
+  <zorder>pushButton_3</zorder>
+  <zorder>pushButton_4</zorder>
+  <zorder>pushButton_5</zorder>
+  <zorder>pushButton_6</zorder>
+  <zorder>pushButton_7</zorder>
+  <zorder>pushButton_8</zorder>
+  <zorder>pushButton_9</zorder>
+  <zorder>pushButton_10</zorder>
+  <zorder>pushButton_11</zorder>
+  <zorder>Card_opponent</zorder>
+  <zorder>pushButton_12</zorder>
+  <zorder>pushButton_13</zorder>
+  <zorder>pushButton_14</zorder>
+  <zorder>Card_you</zorder>
+  <zorder>label_Loading</zorder>
+  <zorder>IP</zorder>
+  <zorder>IP_show</zorder>
+  <zorder>OK</zorder>
+  <zorder>lineEdit_enter_IP</zorder>
  </widget>
  <resources/>
  <connections/>

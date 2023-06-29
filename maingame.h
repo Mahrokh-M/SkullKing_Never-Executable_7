@@ -24,7 +24,8 @@ class mainGame : public QWidget
 
 public:
     explicit mainGame(QWidget *parent = nullptr);
-
+    void who_start();
+    void send_center_cards();
 
     ~mainGame();
 signals:

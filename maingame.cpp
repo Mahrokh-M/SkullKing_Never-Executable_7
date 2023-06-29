@@ -10,8 +10,9 @@
 
 Card all_cards[42]; //An array of all cards we have in the game
 QString all_paths[42];
+int card1;
+int card2;
 void initializing_paths();
-void who_start();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::mainGame)
@@ -55,8 +56,11 @@ mainGame::mainGame(QWidget *parent) :
         all_cards[i].get_number() = 0;
         all_cards[i].get_value() = 40;
     }
-
-    QMovie *gifMovie = new QMovie(":/new/prefix1/Loading.gif");
+     QMovie *gifMovie;
+    if(server_or_client==1)
+   gifMovie = new QMovie(":/new/prefix1/server loading gif.gif");
+    else if(server_or_client==2)
+    gifMovie = new QMovie(":/new/prefix1/client loading gif.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gifMovie);
     gifMovie->start();
@@ -77,7 +81,26 @@ mainGame::mainGame(QWidget *parent) :
     }
     else if(server_or_client==2){
        //ui->IP->show();
+        ui->OK->setStyleSheet("QPushButton {"
+                              "background: qlineargradient(spread: repeat, x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(184, 121, 255, 255), stop: 1 rgba(143, 255, 236, 255));"
+                              "border: none;"
+                              "border-radius: 5px;"
+                              "color: white;"
+                              "font-size: 16px;"
+                              "padding: 10px 20px;"
+                              "font: 700 16pt Times New Roman;"
+                              "border-radius:15px"
+                          "}"
+
+                          "QPushButton:hover {"
+                              "background: qlineargradient(spread: repeat, x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(163, 101, 235, 255), stop: 1 rgba(122, 235, 216, 255));"
+                          "}"
+
+                          "QPushButton:pressed {"
+                              "background: qlineargradient(spread: repeat, x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(143, 81, 215, 255), stop: 1 rgba(102, 215, 196, 255));"
+                          "}");
        ui->IP_show->hide();
+       ui->IP->hide();
    }
     socket = new QTcpSocket(this);
     connect(this, &mainGame::newMessage, this, &mainGame::displayMessage);
@@ -111,12 +134,13 @@ void mainGame::readSocket()
     socketStream.startTransaction();
     socketStream >> buffer;
    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
-    if(str=="Hide widgets"){
+    if(str=="Client connected"){
         ui->label_Loading->hide();
         ui->IP->hide();
         ui->IP_show->hide();
         ui->OK->hide();
         ui->lineEdit_enter_IP->hide();
+        who_start();
     }
     else{
     QString header = buffer.mid(0,128);
@@ -189,14 +213,53 @@ void mainGame::on_OK_clicked()
   }
 }
 
-void who_start(){ //This funcion gives each player a random card to specify the beginner of the round
+void mainGame::who_start(){ //This funcion gives each player a random card to specify the beginner of the round
+     int random_index;
+    while(true){
     if (server_or_client==1){
-        int random_index = rand() % 42;
+        random_index = rand() % 8+16;
         if (all_cards[random_index].set_get_isReserved() == false) //if the card is not already given to annother person
         {
-            //ui->Card_you
+            card1=random_index;
+            all_cards[random_index].set_get_isReserved()=true;
+            ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[random_index]));
+            break;
         }
     }
+    }
+        while(true){
+       random_index = rand() % 8+16;
+        if (all_cards[random_index].set_get_isReserved() == false) //if the card is not already given to annother person
+        {
+            card2=random_index;
+            all_cards[random_index].set_get_isReserved()=true;
+            ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[random_index]));
+            break;
+        }
+        }
+    ui->pushButton_1->hide();
+    ui->pushButton_2->hide();
+    ui->pushButton_3->hide();
+    ui->pushButton_4->hide();
+    ui->pushButton_5->hide();
+    ui->pushButton_6->hide();
+    ui->pushButton_7->hide();
+    ui->pushButton_8->hide();
+    ui->pushButton_9->hide();
+    ui->pushButton_10->hide();
+    ui->pushButton_11->hide();
+    ui->pushButton_12->hide();
+    ui->pushButton_13->hide();
+    ui->pushButton_14->hide();
+
+}
+void mainGame::send_center_cards(){
+    QString str = QString::number(card1)+","+QString::number(card2);
+    QDataStream socketStream(socket);
+    socketStream.setVersion(QDataStream::Qt_5_15);
+    QByteArray byteArray = str.toUtf8();
+    socketStream << byteArray;
+
 }
 void initializing_paths(){
     all_paths[0]=":/new/prefix1/Treasure1.png";
