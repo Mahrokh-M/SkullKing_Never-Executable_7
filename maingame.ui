@@ -32,27 +32,17 @@
   <widget class="QLabel" name="Avatar_you">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>60</y>
+     <x>200</x>
+     <y>40</y>
      <width>81</width>
      <height>81</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Avatar 1</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Avatar_opponent">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>60</y>
-     <width>91</width>
-     <height>91</height>
-    </rect>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 85, 127);</string>
    </property>
    <property name="text">
-    <string>Avatar 2</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_1">
@@ -235,10 +225,13 @@
    <property name="geometry">
     <rect>
      <x>640</x>
-     <y>140</y>
+     <y>170</y>
      <width>191</width>
      <height>251</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 0);</string>
    </property>
    <property name="text">
     <string/>
@@ -296,7 +289,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>-30</y>
+     <y>0</y>
      <width>981</width>
      <height>681</height>
     </rect>
@@ -313,6 +306,9 @@
      <width>191</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(255, 255, 255);
@@ -391,10 +387,72 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>140</y>
+     <y>170</y>
      <width>191</width>
      <height>251</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="name_you">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>130</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 16pt &quot;Viner Hand ITC&quot;;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="name_opppnent">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>130</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);
+font: 16pt &quot;Viner Hand ITC&quot;;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Avatar_opponent">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>40</y>
+     <width>81</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 85, 127);</string>
    </property>
    <property name="text">
     <string/>
@@ -402,7 +460,6 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 
   </widget>
   <zorder>label_background</zorder>
   <zorder>Avatar_you</zorder>
-  <zorder>Avatar_opponent</zorder>
   <zorder>pushButton_1</zorder>
   <zorder>pushButton_2</zorder>
   <zorder>pushButton_3</zorder>
@@ -419,10 +476,13 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 
   <zorder>pushButton_13</zorder>
   <zorder>pushButton_14</zorder>
   <zorder>Card_you</zorder>
+  <zorder>name_you</zorder>
+  <zorder>name_opppnent</zorder>
+  <zorder>Avatar_opponent</zorder>
   <zorder>label_Loading</zorder>
-  <zorder>IP</zorder>
-  <zorder>IP_show</zorder>
   <zorder>OK</zorder>
+  <zorder>IP_show</zorder>
+  <zorder>IP</zorder>
   <zorder>lineEdit_enter_IP</zorder>
  </widget>
  <resources/>
