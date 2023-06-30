@@ -511,6 +511,47 @@ font: 700 17pt &quot;Segoe Script&quot;;</string>
     <string>OK</string>
    </property>
   </widget>
+  <widget class="QLabel" name="Point_you">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>60</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 22pt &quot;Segoe Print&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Point_opponent">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>60</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 22pt &quot;Segoe Print&quot;;
+color: rgb(255, 255, 255);
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
   <zorder>label_background</zorder>
   <zorder>Avatar_you</zorder>
   <zorder>pushButton_1</zorder>
@@ -532,14 +573,16 @@ font: 700 17pt &quot;Segoe Script&quot;;</string>
   <zorder>name_you</zorder>
   <zorder>name_opppnent</zorder>
   <zorder>Avatar_opponent</zorder>
+  <zorder>Who_starts</zorder>
+  <zorder>lineEdit_Enter_guess</zorder>
+  <zorder>OK_Guess</zorder>
+  <zorder>Point_opponent</zorder>
+  <zorder>Point_you</zorder>
   <zorder>label_Loading</zorder>
   <zorder>IP</zorder>
   <zorder>IP_show</zorder>
   <zorder>OK</zorder>
   <zorder>lineEdit_enter_IP</zorder>
-  <zorder>Who_starts</zorder>
-  <zorder>lineEdit_Enter_guess</zorder>
-  <zorder>OK_Guess</zorder>
  </widget>
  <resources/>
  <connections/>

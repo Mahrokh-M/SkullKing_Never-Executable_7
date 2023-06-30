@@ -28,6 +28,9 @@ int opponent_avatar;
 QStringList reserved_cards; //This list holds the opponent cards during each round
 int both_players_played=0; //To check if both players has played or not
 int compare_count=0;//number of times the compare function is called
+int Score_you=0;
+int Score_opponent=0;
+int special_points=0; //The extra point you get when you have King or Queen or Pirate
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -57,6 +60,8 @@ mainGame::mainGame(QWidget *parent) :
                                 "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
                                 "border-color: #FF8C00;"
                             "}");
+    ui->Point_you->setText(QString::number(Score_you));
+    ui->Point_opponent->setText(QString::number(Score_opponent));
     QString avatar_path;
     if(Person->set_get_avatar()==1)
         avatar_path=":/new/prefix1/avatar1.png";
@@ -114,7 +119,6 @@ mainGame::mainGame(QWidget *parent) :
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gifMovie);
     gifMovie->start();
-    //connect(ui->lineEdit_enter_IP, &QLineEdit::returnPressed, ui->OK, &QPushButton::click);
     if(server_or_client==1){
         QString IP;
           foreach(const QHostAddress &address, QHostInfo::fromName(QHostInfo::localHostName()).addresses()) {
@@ -159,8 +163,9 @@ mainGame::mainGame(QWidget *parent) :
     connect(socket, &QTcpSocket::readyRead, this, &mainGame::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &mainGame::discardSocket);
     connect(socket, &QAbstractSocket::errorOccurred, this, &mainGame::displayError);
-    connect_pushbutton();
-    //connect(this, SIGNAL(client_connected()), Ser)
+    connect_pushbutton(); //Connect signal of all pushbuttons to one slot
+    connect(ui->lineEdit_enter_IP, &QLineEdit::returnPressed, ui->OK, &QPushButton::click);
+    connect(ui->lineEdit_Enter_guess, &QLineEdit::returnPressed, ui->OK_Guess, &QPushButton::click);
 
     //socket->connectToHost("server_ip",8080);
     if(server_or_client==1){
@@ -385,7 +390,7 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     ui->Who_starts->hide();
 
         QEventLoop loop;
-        QTimer::singleShot(1000, &loop, &QEventLoop::quit);
+        QTimer::singleShot(3500, &loop, &QEventLoop::quit);
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
@@ -665,6 +670,12 @@ void mainGame::on_OK_Guess_clicked()
 
 void mainGame::compare_cards(){
     if(all_cards[card1].get_value()>all_cards[card2].get_value()){
+        if(all_cards[card1].get_value()==all_cards[39].get_value() || all_cards[card2].get_value()==all_cards[39].get_value())
+            special_points+=20;
+        if(all_cards[card1].get_value()==all_cards[36].get_value() || all_cards[card2].get_value()==all_cards[36].get_value())
+            special_points+=15;
+        if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
+            special_points+=10;
         Person->set_get_num_win()++;
     }
     QEventLoop loop;
@@ -680,11 +691,28 @@ void mainGame::compare_cards(){
 
 void mainGame::end_of_round(){
        QMovie *gifMovie;
-    if(Person->set_get_num_win()==Guess)
+    if(Person->set_get_num_win()==Guess){
+        if(Guess==0){
+            Score_you+=Round*10;
+        }
+        else{
+            Score_you+=Guess*10;
+        }
        gifMovie = new QMovie(":/new/prefix1/one point.gif");
+    }
 
-    else
+    else{
+        if(Guess==0){
+            Score_you-=Round*10;
+        }
+        else{
+            Score_you-=Guess*10;
+        }
         gifMovie = new QMovie(":/new/prefix1/no point.gif");
+    }
+    Score_you+=special_points;
+    ui->Point_you->setText(QString::number(Score_you));
+    ui->Point_opponent->setText(QString::number(Score_opponent));
 
     ui->Who_starts->setScaledContents(true);
     ui->Who_starts->setMovie(gifMovie);
