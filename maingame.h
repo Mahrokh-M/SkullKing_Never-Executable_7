@@ -41,6 +41,8 @@ private slots:
     void on_OK_clicked();
     void onButtonClicked();
 
+    void on_OK_Guess_clicked();
+
 private:
     Ui::mainGame *ui;
 

@@ -12,8 +12,11 @@
 #include <QEventLoop>
 #include <QTimer>
 #include<QtAlgorithms>
+#include"QValidator"
 //#include <cstdlib>
-
+int Guess;
+int Round;
+bool has_clicked_OK=false;
 int is_turn=0; //Shows whose turn is it
 Card all_cards[42]; //An array of all cards we have in the game
 QString all_paths[42];
@@ -28,7 +31,29 @@ mainGame::mainGame(QWidget *parent) :
     ui(new Ui::mainGame)
 {
     ui->setupUi(this);
+    QIntValidator* validator = new QIntValidator();
+    ui->lineEdit_Enter_guess->setValidator(validator);
     ui->Who_starts->hide();
+    ui->OK_Guess->setStyleSheet("QPushButton {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
+                                "border-style: solid;"
+                                "border-width: 2px;"
+                                "border-radius: 10px;"
+                                "border-color: #FFA500;"
+                                "color: black;"
+                                "font-size: 18px;"
+                                "padding: 6px 12px;"
+                            "}"
+
+                            "QPushButton:hover {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFDAB9, stop:1 #FFA500);"
+                                "border-color: #FFA500;"
+                            "}"
+
+                            "QPushButton:pressed {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
+                                "border-color: #FF8C00;"
+                            "}");
     QString avatar_path;
     if(Person->set_get_avatar()==1)
         avatar_path=":/new/prefix1/avatar1.png";
@@ -121,26 +146,7 @@ mainGame::mainGame(QWidget *parent) :
                           "QPushButton:pressed {"
                               "background: qlineargradient(spread: repeat, x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(143, 81, 215, 255), stop: 1 rgba(102, 215, 196, 255));"
                           "}");
-       ui->OK_Guess->setStyleSheet("QPushButton {"
-                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
-                                   "border-style: solid;"
-                                   "border-width: 2px;"
-                                   "border-radius: 10px;"
-                                   "border-color: #FFA500;"
-                                   "color: black;"
-                                   "font-size: 18px;"
-                                   "padding: 6px 12px;"
-                               "}"
 
-                               "QPushButton:hover {"
-                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFDAB9, stop:1 #FFA500);"
-                                   "border-color: #FFA500;"
-                               "}"
-
-                               "QPushButton:pressed {"
-                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
-                                   "border-color: #FF8C00;"
-                               "}");
        ui->IP_show->hide();
        ui->IP->hide();
    }
@@ -388,7 +394,7 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
 }
 
 void mainGame::handing_out_cards(){
-    int round=1;
+   Round=1;
     //while (round != 8) {
             for(auto x:all_cards){
                 x.set_get_isReserved()=false;
@@ -398,7 +404,7 @@ void mainGame::handing_out_cards(){
                     all_cards[x.toInt()].set_get_isReserved()=true;
                 }
             }
-            for (int i = 0; i <2*round;) {
+            for (int i = 0; i <2*Round;) {
                 int random_index = rand() % 42;
                 if (all_cards[random_index].set_get_isReserved() == false) //if the card is not already in the list
                 {
@@ -599,7 +605,7 @@ void mainGame::connect_pushbutton(){
 }
 
 void mainGame::onButtonClicked(){ //delete chosen card from user's cards list and show it in center
-    if(is_turn==1){
+    if(is_turn==1&&has_clicked_OK==true){
          QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
          int chosen_card=clicked_button->text().toInt();
          int index=Person->set_get_cards().indexOf(chosen_card);
@@ -613,4 +619,29 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
     }
 }
 
+
+
+void mainGame::on_OK_Guess_clicked()
+{
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Error");
+    messageBox.setIcon(QMessageBox::Critical);
+    messageBox.setStyleSheet("QMessageBox { background-color: #c96f30; color: white; font-size: 16px; font-weight: bold; }");
+    QAbstractButton* okButton = messageBox.addButton("Ok", QMessageBox::AcceptRole);
+    okButton->setStyleSheet("background-color: #ff8b3d; color: black; font-size: 16px; font-weight: bold;");
+    if(!ui->lineEdit_Enter_guess->text().isEmpty()&&ui->lineEdit_Enter_guess->text().toInt()<=Round*2){
+        has_clicked_OK=true;
+        Guess=ui->lineEdit_Enter_guess->text().toInt();
+        ui->OK_Guess->hide();
+        ui->lineEdit_Enter_guess->hide();
+    }
+    else if(ui->lineEdit_Enter_guess->text().toInt()>Round*2){
+        messageBox.setText("Invalid Prediction!");
+        messageBox.exec();
+    }
+    else{
+        messageBox.setText("Enter Your Prediction!");
+        messageBox.exec();
+    }
+}
 
