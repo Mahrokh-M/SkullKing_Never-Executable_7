@@ -19,7 +19,6 @@
         <file>choose_server_client.jpg</file>
         <file>Field Background_dark.jpg</file>
         <file>Field Background_light.jpg</file>
-        <file>Loading.gif</file>
         <file>Flag1.png</file>
         <file>Flag2.png</file>
         <file>Flag3.png</file>
@@ -59,5 +58,7 @@
         <file>client loading gif.gif</file>
         <file>you start.gif</file>
         <file>you're second.gif</file>
+        <file>no point.gif</file>
+        <file>one point.gif</file>
     </qresource>
 </RCC>

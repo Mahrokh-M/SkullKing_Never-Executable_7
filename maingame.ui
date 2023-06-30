@@ -55,7 +55,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: transparent;</string>
+    <string notr="true">color: transparent;
+font: 0pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -151,7 +152,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: transparent;</string>
+    <string notr="true">color: transparent;
+font: 0pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -167,7 +169,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: transparent;</string>
+    <string notr="true">color: transparent;
+font: 0pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -462,9 +465,9 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>0</y>
+     <y>20</y>
      <width>221</width>
-     <height>91</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="styleSheet">

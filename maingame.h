@@ -32,6 +32,7 @@ public:
     void show_pushbuttons();
     void connect_pushbutton();
     void compare_cards();
+    void end_of_round();
     ~mainGame();
 signals:
     void newMessage(QString);

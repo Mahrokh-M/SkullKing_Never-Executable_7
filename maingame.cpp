@@ -27,6 +27,7 @@ QString opponent_name;
 int opponent_avatar;
 QStringList reserved_cards; //This list holds the opponent cards during each round
 int both_players_played=0; //To check if both players has played or not
+int compare_count=0;//number of times the compare function is called
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -514,6 +515,7 @@ void mainGame::show_pushbuttons(){
     int last_card_shown=0;
     qDebug()<<Person->set_get_cards().size();
     if(last_card_shown < Person->set_get_cards().size()){
+     // ui->pushButton_7->setStyleSheet("text-align: right;color:transparent;font-size:0px");
       ui->pushButton_7->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[0]]));
       ui->pushButton_7->setText(QString::number(Person->set_get_cards()[0]));
       ui->pushButton_7->show();
@@ -670,5 +672,29 @@ void mainGame::compare_cards(){
     loop.exec();
     ui->Card_you->hide();
     ui->Card_opponent->hide();
+    compare_count++;
+    if(compare_count==2*Round){
+        end_of_round();
+    }
 }
 
+void mainGame::end_of_round(){
+       QMovie *gifMovie;
+    if(Person->set_get_num_win()==Guess)
+       gifMovie = new QMovie(":/new/prefix1/one point.gif");
+
+    else
+        gifMovie = new QMovie(":/new/prefix1/no point.gif");
+
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gifMovie);
+    ui->Who_starts->show();
+    gifMovie->start();
+    QEventLoop loop;
+    QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+    loop.exec();
+    ui->Who_starts->hide();
+    ui->Card_you->hide();
+    ui->Card_opponent->hide();
+
+}
