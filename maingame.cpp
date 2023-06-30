@@ -17,6 +17,7 @@
 int Guess;
 int Round;
 bool has_clicked_OK=false;
+bool opponent_has_clicked_OK=false;
 int is_turn=0; //Shows whose turn is it
 Card all_cards[42]; //An array of all cards we have in the game
 QString all_paths[42];
@@ -25,6 +26,7 @@ int card2;
 QString opponent_name;
 int opponent_avatar;
 QStringList reserved_cards; //This list holds the opponent cards during each round
+int both_players_played=0; //To check if both players has played or not
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -213,7 +215,6 @@ void mainGame::readSocket()
         handing_out_cards();
     }
 
-
     else if(str.split(" ")[0]=="OpponentInformation"){
         QStringList opponent_information=str.split(" ");
         opponent_name=opponent_information[1].split(",")[0];
@@ -255,13 +256,26 @@ void mainGame::readSocket()
     }
 
     else if(str.split(" ")[0]=="Opponent_played_card"){
-        if(str.split(" ")[2].toInt()==1) //Specifying whose turn is it!
-            is_turn=0;
-        else
-            is_turn=1;
-        QString opponent_card=str.split(" ")[2];
+        is_turn=1;
+        both_players_played=str.split(" ")[2].toInt();
+        QString opponent_card=str.split(" ")[1];
+        card2=opponent_card.toInt();
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[opponent_card.toInt()]));
         ui->Card_opponent->show();
+        if(both_players_played==2){
+            both_players_played=0;
+            QString message="call compare function";
+            send_message(message);
+            compare_cards();
+        }
+    }
+
+    else if(str.split(" ")[0]=="Opponent_ok_clicked"){
+        opponent_has_clicked_OK=true; //Do not forget to make this false end of each round!
+    }
+
+    else if(str=="call compare function"){
+        compare_cards();
     }
 }
 
@@ -605,21 +619,21 @@ void mainGame::connect_pushbutton(){
 }
 
 void mainGame::onButtonClicked(){ //delete chosen card from user's cards list and show it in center
-    if(is_turn==1&&has_clicked_OK==true){
+    if(is_turn==1&&has_clicked_OK==true&&opponent_has_clicked_OK==true){
          QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
          int chosen_card=clicked_button->text().toInt();
+         card1=chosen_card;
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
          clicked_button->hide();
          ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[chosen_card]));
          ui->Card_you->show();
          is_turn=0;
-         QString message="Opponent_played_card "+QString::number(is_turn)+" "+QString::number(chosen_card);
+         both_players_played++;
+         QString message="Opponent_played_card "+QString::number(chosen_card)+" "+QString::number(both_players_played);
          send_message(message);
     }
 }
-
-
 
 void mainGame::on_OK_Guess_clicked()
 {
@@ -634,6 +648,8 @@ void mainGame::on_OK_Guess_clicked()
         Guess=ui->lineEdit_Enter_guess->text().toInt();
         ui->OK_Guess->hide();
         ui->lineEdit_Enter_guess->hide();
+        QString message="Opponent_ok_clicked"; //Telling other user has clicked
+        send_message(message);
     }
     else if(ui->lineEdit_Enter_guess->text().toInt()>Round*2){
         messageBox.setText("Invalid Prediction!");
@@ -643,5 +659,16 @@ void mainGame::on_OK_Guess_clicked()
         messageBox.setText("Enter Your Prediction!");
         messageBox.exec();
     }
+}
+
+void mainGame::compare_cards(){
+    if(all_cards[card1].get_value()>all_cards[card2].get_value()){
+        Person->set_get_num_win()++;
+    }
+    QEventLoop loop;
+    QTimer::singleShot(2500, &loop, &QEventLoop::quit);
+    loop.exec();
+    ui->Card_you->hide();
+    ui->Card_opponent->hide();
 }
 

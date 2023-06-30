@@ -15,6 +15,7 @@ private:
     int total_wins;
     int total_lose;
     int avatar;
+    int num_win; //Number of wins in each round
     QVector<Game_history> all_games;
     QVector<int> cards;
 public:
@@ -23,6 +24,7 @@ public:
     int& set_get_total_win();
     int& set_get_total_lose();
     int& set_get_avatar();
+    int& set_get_num_win();
     QString& set_get_name();
     QString& set_get_userName();
     QString& set_get_password();

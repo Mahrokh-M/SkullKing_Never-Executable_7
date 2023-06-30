@@ -9,6 +9,7 @@ User::User() {
     total_wins = 0;
     total_lose = 0;
     avatar= 0;
+    num_win=0;
 }
 User::User(QString given_name, QString given_userName, QString given_password, QString given_phoneNumber, QString given_money) {
     name = given_name;
@@ -28,6 +29,7 @@ QString& User::set_get_money() { return money; }
 int& User::set_get_total_win() { return total_wins; }
 int& User::set_get_total_lose() { return total_lose; }
 int& User::set_get_avatar() { return avatar; }
+int& User::set_get_num_win() { return num_win; }
 void User::operator=(const User& given_user){
     name = given_user.name;
     userName = given_user.userName;

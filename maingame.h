@@ -31,6 +31,7 @@ public:
     void hide_pushbuttons();
     void show_pushbuttons();
     void connect_pushbutton();
+    void compare_cards();
     ~mainGame();
 signals:
     void newMessage(QString);
