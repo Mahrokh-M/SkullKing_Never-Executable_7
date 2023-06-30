@@ -13,9 +13,10 @@
 #include <QTimer>
 #include<QtAlgorithms>
 #include"QValidator"
-//#include <cstdlib>
 int Guess;
-int Round;
+int Guess_opponent;
+int num_win_opponent=0;
+int Round=1;
 bool has_clicked_OK=false;
 bool opponent_has_clicked_OK=false;
 int is_turn=0; //Shows whose turn is it
@@ -207,7 +208,6 @@ void mainGame::readSocket()
             avatar_path_opponent=":/new/prefix1/avatar4.png";
         ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
         ui->name_opppnent->setText(opponent_name);
-        qDebug()<<"1";
         ui->label_Loading->hide();
         ui->IP->hide();
         ui->IP_show->hide();
@@ -270,7 +270,8 @@ void mainGame::readSocket()
         ui->Card_opponent->show();
         if(both_players_played==2){
             both_players_played=0;
-            QString message="call compare function";
+            QString message="call_compare_function ";
+            message+=QString::number(Guess_opponent);
             send_message(message);
             compare_cards();
         }
@@ -280,8 +281,12 @@ void mainGame::readSocket()
         opponent_has_clicked_OK=true; //Do not forget to make this false end of each round!
     }
 
-    else if(str=="call compare function"){
+    else if(str.split(" ")[0]=="call_compare_function"){
+        Guess_opponent=str.split(" ")[1].toInt();
         compare_cards();
+    }
+    else if(str.split(" ")[0]=="score_opponent"){
+        Score_opponent=str.split(" ")[1].toInt();
     }
 }
 
@@ -373,13 +378,11 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     }
     else
      gif = new QMovie(":/new/prefix1/you're second.gif");
-    qDebug()<<"2";
     ui->Who_starts->setScaledContents(true);
     ui->Who_starts->setMovie(gif);
     ui->Who_starts->show();
     ui->label_Loading->hide();
     gif->start();
-    qDebug()<<"3";
 
 // NOT Working
 //    QThread::msleep(2000);
@@ -390,7 +393,7 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     ui->Who_starts->hide();
 
         QEventLoop loop;
-        QTimer::singleShot(3500, &loop, &QEventLoop::quit);
+        QTimer::singleShot(1000, &loop, &QEventLoop::quit);
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
@@ -401,8 +404,6 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
 //    });
 
 
-
-    qDebug()<<"4";
 }
 
 void mainGame::send_message(QString input_message){ //This function recieves a messgae and send it to server
@@ -414,7 +415,6 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
 }
 
 void mainGame::handing_out_cards(){
-   Round=1;
     //while (round != 8) {
             for(auto x:all_cards){
                 x.set_get_isReserved()=false;
@@ -517,95 +517,93 @@ void mainGame::hide_pushbuttons(){
 
 void mainGame::show_pushbuttons(){
     //7,8,6,9,5,10,4,11,3,12,2,13,1,14 order of choosing pushbutton to show cards
-    int last_card_shown=0;
-    qDebug()<<Person->set_get_cards().size();
-    if(last_card_shown < Person->set_get_cards().size()){
-     // ui->pushButton_7->setStyleSheet("text-align: right;color:transparent;font-size:0px");
-      ui->pushButton_7->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[0]]));
-      ui->pushButton_7->setText(QString::number(Person->set_get_cards()[0]));
-      ui->pushButton_7->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_8->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[1]]));
-      ui->pushButton_8->setText(QString::number(Person->set_get_cards()[1]));
-      ui->pushButton_8->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_6->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[2]]));
-      ui->pushButton_6->setText(QString::number(Person->set_get_cards()[2]));
-      ui->pushButton_6->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_9->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[3]]));
-      ui->pushButton_9->setText(QString::number(Person->set_get_cards()[3]));
-      ui->pushButton_9->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_5->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[4]]));
-      ui->pushButton_5->setText(QString::number(Person->set_get_cards()[4]));
-      ui->pushButton_5->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_10->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[5]]));
-      ui->pushButton_10->setText(QString::number(Person->set_get_cards()[5]));
-      ui->pushButton_10->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_4->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[6]]));
-      ui->pushButton_4->setText(QString::number(Person->set_get_cards()[6]));
-      ui->pushButton_4->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_11->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[7]]));
-      ui->pushButton_11->setText(QString::number(Person->set_get_cards()[7]));
-      ui->pushButton_11->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_3->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[8]]));
-      ui->pushButton_3->setText(QString::number(Person->set_get_cards()[8]));
-      ui->pushButton_3->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_12->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[9]]));
-      ui->pushButton_12->setText(QString::number(Person->set_get_cards()[9]));
-      ui->pushButton_12->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_2->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[10]]));
-      ui->pushButton_2->setText(QString::number(Person->set_get_cards()[10]));
-      ui->pushButton_2->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_13->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[11]]));
-      ui->pushButton_13->setText(QString::number(Person->set_get_cards()[11]));
-      ui->pushButton_13->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_1->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[12]]));
-      ui->pushButton_1->setText(QString::number(Person->set_get_cards()[12]));
-      ui->pushButton_1->show();
-      last_card_shown++;
-    }
-    if(last_card_shown < Person->set_get_cards().size()){
-      ui->pushButton_14->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[13]]));
-      ui->pushButton_14->setText(QString::number(Person->set_get_cards()[13]));
-      ui->pushButton_14->show();
-      last_card_shown++;
-    }
-    ui->OK_Guess->show();
-    ui->lineEdit_Enter_guess->show();
+      int last_card_shown=0;
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_7->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[0]]));
+        ui->pushButton_7->setText(QString::number(Person->set_get_cards()[0]));
+        ui->pushButton_7->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_8->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[1]]));
+        ui->pushButton_8->setText(QString::number(Person->set_get_cards()[1]));
+        ui->pushButton_8->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_6->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[2]]));
+        ui->pushButton_6->setText(QString::number(Person->set_get_cards()[2]));
+        ui->pushButton_6->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_9->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[3]]));
+        ui->pushButton_9->setText(QString::number(Person->set_get_cards()[3]));
+        ui->pushButton_9->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_5->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[4]]));
+        ui->pushButton_5->setText(QString::number(Person->set_get_cards()[4]));
+        ui->pushButton_5->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_10->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[5]]));
+        ui->pushButton_10->setText(QString::number(Person->set_get_cards()[5]));
+        ui->pushButton_10->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_4->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[6]]));
+        ui->pushButton_4->setText(QString::number(Person->set_get_cards()[6]));
+        ui->pushButton_4->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_11->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[7]]));
+        ui->pushButton_11->setText(QString::number(Person->set_get_cards()[7]));
+        ui->pushButton_11->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_3->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[8]]));
+        ui->pushButton_3->setText(QString::number(Person->set_get_cards()[8]));
+        ui->pushButton_3->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_12->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[9]]));
+        ui->pushButton_12->setText(QString::number(Person->set_get_cards()[9]));
+        ui->pushButton_12->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_2->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[10]]));
+        ui->pushButton_2->setText(QString::number(Person->set_get_cards()[10]));
+        ui->pushButton_2->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_13->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[11]]));
+        ui->pushButton_13->setText(QString::number(Person->set_get_cards()[11]));
+        ui->pushButton_13->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_1->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[12]]));
+        ui->pushButton_1->setText(QString::number(Person->set_get_cards()[12]));
+        ui->pushButton_1->show();
+        last_card_shown++;
+      }
+      if(last_card_shown < Person->set_get_cards().size()){
+        ui->pushButton_14->setStyleSheet(QString("color:transparent; border-image: url(%1);").arg(all_paths[Person->set_get_cards()[13]]));
+        ui->pushButton_14->setText(QString::number(Person->set_get_cards()[13]));
+        ui->pushButton_14->show();
+        last_card_shown++;
+      }
+      ui->OK_Guess->show();
+      ui->lineEdit_Enter_guess->show();
 }
 
 void mainGame::connect_pushbutton(){
@@ -655,7 +653,9 @@ void mainGame::on_OK_Guess_clicked()
         Guess=ui->lineEdit_Enter_guess->text().toInt();
         ui->OK_Guess->hide();
         ui->lineEdit_Enter_guess->hide();
-        QString message="Opponent_ok_clicked"; //Telling other user has clicked
+        QString message="Opponent_ok_clicked "; //Telling other user has clicked
+        message+=QString::number(Guess);
+        ui->lineEdit_Enter_guess->clear();
         send_message(message);
     }
     else if(ui->lineEdit_Enter_guess->text().toInt()>Round*2){
@@ -678,8 +678,11 @@ void mainGame::compare_cards(){
             special_points+=10;
         Person->set_get_num_win()++;
     }
+    else{
+        num_win_opponent++;
+    }
     QEventLoop loop;
-    QTimer::singleShot(2500, &loop, &QEventLoop::quit);
+    QTimer::singleShot(1000, &loop, &QEventLoop::quit);
     loop.exec();
     ui->Card_you->hide();
     ui->Card_opponent->hide();
@@ -706,23 +709,52 @@ void mainGame::end_of_round(){
             Score_you-=Round*10;
         }
         else{
-            Score_you-=Guess*10;
+            Score_you-=Guess*10; //calculate special score for opponent
         }
         gifMovie = new QMovie(":/new/prefix1/no point.gif");
     }
-    Score_you+=special_points;
+    if(num_win_opponent==Guess_opponent){
+        if(Guess==0){
+            Score_opponent+=Round*10;
+        }
+        else{
+            Score_opponent+=Guess*10;
+        }
+    }
+
+    else{
+        if(Guess==0){
+            Score_opponent-=Round*10;
+        }
+        else{
+            Score_opponent-=Guess*10;
+        }
+    }
+    Score_opponent+=special_points;
     ui->Point_you->setText(QString::number(Score_you));
     ui->Point_opponent->setText(QString::number(Score_opponent));
-
     ui->Who_starts->setScaledContents(true);
     ui->Who_starts->setMovie(gifMovie);
     ui->Who_starts->show();
     gifMovie->start();
     QEventLoop loop;
-    QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+    QTimer::singleShot(1000, &loop, &QEventLoop::quit);
     loop.exec();
     ui->Who_starts->hide();
     ui->Card_you->hide();
     ui->Card_opponent->hide();
+
+//    QString message="score_opponent ";//send your score to other user
+//    message+=QString::number(Score_you);
+//    send_message(message);
+
+    if(Round!=7){
+    Round++;
+    compare_count=0;
+    Person->set_get_num_win()=0;
+    num_win_opponent=0;
+    opponent_has_clicked_OK=false;
+    if(server_or_client==2)
+    handing_out_cards();}
 
 }
