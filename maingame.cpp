@@ -14,6 +14,7 @@
 #include<QtAlgorithms>
 //#include <cstdlib>
 
+int is_turn=0; //Shows whose turn is it
 Card all_cards[42]; //An array of all cards we have in the game
 QString all_paths[42];
 int card1;
@@ -192,8 +193,10 @@ void mainGame::readSocket()
         card2=opponent_information[1].split(",")[2].toInt();
         card1=opponent_information[1].split(",")[3].toInt();
         QMovie *gif;
-        if(card1>card2)
-         gif = new QMovie(":/new/prefix1/you start.gif");
+        if(card1>card2){
+            is_turn=1;
+            gif = new QMovie(":/new/prefix1/you start.gif");
+        }
         else
          gif = new QMovie(":/new/prefix1/you're second.gif");
         ui->Who_starts->setScaledContents(true);
@@ -224,7 +227,11 @@ void mainGame::readSocket()
     }
 
     else if(str.split(" ")[0]=="Opponent_played_card"){
-        QString opponent_card=str.split(" ")[1];
+        if(str.split(" ")[2].toInt()==1) //Specifying whose turn is it!
+            is_turn=0;
+        else
+            is_turn=1;
+        QString opponent_card=str.split(" ")[2];
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[opponent_card.toInt()]));
         ui->Card_opponent->show();
     }
@@ -312,8 +319,10 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     str1+= QString::number(card1)+","+QString::number(card2);
     send_message(str1);
     QMovie *gif;
-    if(card1>card2)
-     gif = new QMovie(":/new/prefix1/you start.gif");
+    if(card1>card2){
+        is_turn=1;
+        gif = new QMovie(":/new/prefix1/you start.gif");
+    }
     else
      gif = new QMovie(":/new/prefix1/you're second.gif");
     qDebug()<<"2";
@@ -566,15 +575,18 @@ void mainGame::connect_pushbutton(){
 }
 
 void mainGame::onButtonClicked(){ //delete chosen card from user's cards list and show it in center
- QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
- int chosen_card=clicked_button->text().toInt();
- int index=Person->set_get_cards().indexOf(chosen_card);
- Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
- clicked_button->hide();
- ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[chosen_card]));
- ui->Card_you->show();
- QString message="Opponent_played_card "+QString::number(chosen_card);
- send_message(message);
+    if(is_turn==1){
+         QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
+         int chosen_card=clicked_button->text().toInt();
+         int index=Person->set_get_cards().indexOf(chosen_card);
+         Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
+         clicked_button->hide();
+         ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[chosen_card]));
+         ui->Card_you->show();
+         is_turn=0;
+         QString message="Opponent_played_card "+QString::number(is_turn)+" "+QString::number(chosen_card);
+         send_message(message);
+    }
 }
 
 
