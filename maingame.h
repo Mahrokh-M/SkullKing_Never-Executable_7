@@ -28,7 +28,8 @@ public:
     void send_message(QString);
     void show_opponent_avatar();
     void handing_out_cards();
-
+    void hide_pushbuttons();
+    void show_pushbuttons();
     ~mainGame();
 signals:
     void newMessage(QString);

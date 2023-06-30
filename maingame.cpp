@@ -19,6 +19,7 @@ int card1;
 int card2;
 QString opponent_name;
 int opponent_avatar;
+QStringList reserved_cards; //This list holds the opponent cards during each round
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -175,6 +176,10 @@ void mainGame::readSocket()
         ui->lineEdit_enter_IP->hide();
         who_start();
     }
+    else if(str.split(" ")[0]=="ReservedCards"){
+        reserved_cards=str.split(" ")[1].split(",");
+        handing_out_cards();
+    }
 
 
     else if(str.split(" ")[0]=="OpponentInformation"){
@@ -188,7 +193,6 @@ void mainGame::readSocket()
          gif = new QMovie(":/new/prefix1/you start.gif");
         else
          gif = new QMovie(":/new/prefix1/you're second.gif");
-
         ui->Who_starts->setScaledContents(true);
         ui->Who_starts->setMovie(gif);
         ui->Who_starts->show();
@@ -206,20 +210,7 @@ void mainGame::readSocket()
         ui->name_opppnent->setText(opponent_name);
         ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card1]));
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card2]));
-        ui->pushButton_1->hide();
-        ui->pushButton_2->hide();
-        ui->pushButton_3->hide();
-        ui->pushButton_4->hide();
-        ui->pushButton_5->hide();
-        ui->pushButton_6->hide();
-        ui->pushButton_7->hide();
-        ui->pushButton_8->hide();
-        ui->pushButton_9->hide();
-        ui->pushButton_10->hide();
-        ui->pushButton_11->hide();
-        ui->pushButton_12->hide();
-        ui->pushButton_13->hide();
-        ui->pushButton_14->hide();
+        hide_pushbuttons();
         QEventLoop loop;
         QTimer::singleShot(1000, &loop, &QEventLoop::quit);
         loop.exec();
@@ -307,20 +298,8 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
             break;
         }
         }
-    ui->pushButton_1->hide();
-    ui->pushButton_2->hide();
-    ui->pushButton_3->hide();
-    ui->pushButton_4->hide();
-    ui->pushButton_5->hide();
-    ui->pushButton_6->hide();
-    ui->pushButton_7->hide();
-    ui->pushButton_8->hide();
-    ui->pushButton_9->hide();
-    ui->pushButton_10->hide();
-    ui->pushButton_11->hide();
-    ui->pushButton_12->hide();
-    ui->pushButton_13->hide();
-    ui->pushButton_14->hide();
+
+    hide_pushbuttons();
     str1+= QString::number(card1)+","+QString::number(card2);
     send_message(str1);
     QMovie *gif;
@@ -371,9 +350,14 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
 void mainGame::handing_out_cards(){
     int round=1;
     //while (round != 8) {
-        for(auto x:all_cards){
-            x.set_get_isReserved()=false;
-           }
+            for(auto x:all_cards){
+                x.set_get_isReserved()=false;
+             }
+            if(server_or_client==1){
+                for(auto x:reserved_cards){
+                    all_cards[x.toInt()].set_get_isReserved()=true;
+                }
+            }
             for (int i = 0; i <2*round;) {
                 int random_index = rand() % 42;
                 if (all_cards[random_index].set_get_isReserved() == false) //if the card is not already in the list
@@ -382,88 +366,23 @@ void mainGame::handing_out_cards(){
                     all_cards[random_index].set_get_isReserved() = true;//the card can not be chosen anymore
                     i++;
                 }
-                sort( Person->set_get_cards().begin(),Person->set_get_cards().end());
-                //***sort the cards list so that in qt you can show them in order
             }
-            //7,8,6,9,5,10,4,11,3,12,2,13,1,14 order of choosing pushbutton to show cards
-            int last_card_shown=0;
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_7->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[0]]));
-              ui->pushButton_7->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_8->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[1]]));
-              ui->pushButton_8->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_6->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[2]]));
-              ui->pushButton_6->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_9->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[3]]));
-              ui->pushButton_9->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_5->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[4]]));
-              ui->pushButton_5->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_10->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[5]]));
-              ui->pushButton_10->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_4->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[6]]));
-              ui->pushButton_4->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_11->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[7]]));
-              ui->pushButton_11->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_3->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[8]]));
-              ui->pushButton_3->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_12->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[9]]));
-              ui->pushButton_12->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_2->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[10]]));
-              ui->pushButton_2->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_13->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[11]]));
-              ui->pushButton_13->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_1->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[12]]));
-              ui->pushButton_1->show();
-              last_card_shown++;
-            }
-            if(last_card_shown < Person->set_get_cards().size()){
-              ui->pushButton_14->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[13]]));
-              ui->pushButton_14->show();
-              last_card_shown++;
-            }
+            sort( Person->set_get_cards().begin(),Person->set_get_cards().end());
+            //***sort the cards list so that you can show them in order
+            show_pushbuttons();
 
-            QString message="";//sends one person cards to the other one so that she won't select it again
-            for(auto x: Person->set_get_cards()){
-                message+=QString::number(x);
+            if(server_or_client==2){
+               QString message="";//sends one person cards to the other one so that she won't select it again
+               bool flag=false;
+               for(auto x: Person->set_get_cards()){
+                   if(flag)
+                       message+=",";
+                   flag=true;
+                   message+=QString::number(x);
+               }
+               message.prepend("ReservedCards ");
+               send_message(message);
             }
-            message.prepend("ReservedCards ");
-            send_message(message);
        // }
 
 }
@@ -513,6 +432,98 @@ void initializing_paths(){
     all_paths[41]=":/new/prefix1/Queen.png";
 }
 
+void mainGame::hide_pushbuttons(){
+    ui->pushButton_1->hide();
+    ui->pushButton_2->hide();
+    ui->pushButton_3->hide();
+    ui->pushButton_4->hide();
+    ui->pushButton_5->hide();
+    ui->pushButton_6->hide();
+    ui->pushButton_7->hide();
+    ui->pushButton_8->hide();
+    ui->pushButton_9->hide();
+    ui->pushButton_10->hide();
+    ui->pushButton_11->hide();
+    ui->pushButton_12->hide();
+    ui->pushButton_13->hide();
+    ui->pushButton_14->hide();
+}
+
+void mainGame::show_pushbuttons(){
+    //7,8,6,9,5,10,4,11,3,12,2,13,1,14 order of choosing pushbutton to show cards
+    int last_card_shown=0;
+    qDebug()<<Person->set_get_cards().size();
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_7->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[0]]));
+      ui->pushButton_7->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_8->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[1]]));
+      ui->pushButton_8->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_6->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[2]]));
+      ui->pushButton_6->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_9->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[3]]));
+      ui->pushButton_9->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_5->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[4]]));
+      ui->pushButton_5->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_10->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[5]]));
+      ui->pushButton_10->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_4->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[6]]));
+      ui->pushButton_4->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_11->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[7]]));
+      ui->pushButton_11->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_3->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[8]]));
+      ui->pushButton_3->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_12->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[9]]));
+      ui->pushButton_12->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_2->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[10]]));
+      ui->pushButton_2->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_13->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[11]]));
+      ui->pushButton_13->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_1->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[12]]));
+      ui->pushButton_1->show();
+      last_card_shown++;
+    }
+    if(last_card_shown < Person->set_get_cards().size()){
+      ui->pushButton_14->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[Person->set_get_cards()[13]]));
+      ui->pushButton_14->show();
+      last_card_shown++;
+    }
+}
 
 
 
