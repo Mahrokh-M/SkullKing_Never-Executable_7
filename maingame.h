@@ -30,6 +30,7 @@ public:
     void handing_out_cards();
     void hide_pushbuttons();
     void show_pushbuttons();
+    void connect_pushbutton();
     ~mainGame();
 signals:
     void newMessage(QString);
@@ -38,6 +39,7 @@ private slots:
     void discardSocket();
     void displayError(QAbstractSocket::SocketError socketError);
     void on_OK_clicked();
+    void onButtonClicked();
 
 private:
     Ui::mainGame *ui;
