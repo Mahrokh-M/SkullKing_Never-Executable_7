@@ -474,6 +474,40 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLineEdit" name="lineEdit_Enter_guess">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>270</y>
+     <width>261</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(154, 57, 25, 255), stop:1 rgba(255, 242, 95, 255));
+border-radius:10px;
+font: 700 17pt &quot;Segoe Script&quot;;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>Your prediction</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="OK_Guess">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>270</y>
+     <width>81</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
   <zorder>label_background</zorder>
   <zorder>Avatar_you</zorder>
   <zorder>pushButton_1</zorder>
@@ -501,6 +535,8 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
   <zorder>OK</zorder>
   <zorder>lineEdit_enter_IP</zorder>
   <zorder>Who_starts</zorder>
+  <zorder>lineEdit_Enter_guess</zorder>
+  <zorder>OK_Guess</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -121,9 +121,31 @@ mainGame::mainGame(QWidget *parent) :
                           "QPushButton:pressed {"
                               "background: qlineargradient(spread: repeat, x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(143, 81, 215, 255), stop: 1 rgba(102, 215, 196, 255));"
                           "}");
+       ui->OK_Guess->setStyleSheet("QPushButton {"
+                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
+                                   "border-style: solid;"
+                                   "border-width: 2px;"
+                                   "border-radius: 10px;"
+                                   "border-color: #FFA500;"
+                                   "color: black;"
+                                   "font-size: 18px;"
+                                   "padding: 6px 12px;"
+                               "}"
+
+                               "QPushButton:hover {"
+                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFDAB9, stop:1 #FFA500);"
+                                   "border-color: #FFA500;"
+                               "}"
+
+                               "QPushButton:pressed {"
+                                   "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
+                                   "border-color: #FF8C00;"
+                               "}");
        ui->IP_show->hide();
        ui->IP->hide();
    }
+    ui->OK_Guess->hide();
+    ui->lineEdit_Enter_guess->hide();
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &mainGame::readSocket);
     connect(socket, &QTcpSocket::disconnected, this, &mainGame::discardSocket);
@@ -555,6 +577,8 @@ void mainGame::show_pushbuttons(){
       ui->pushButton_14->show();
       last_card_shown++;
     }
+    ui->OK_Guess->show();
+    ui->lineEdit_Enter_guess->show();
 }
 
 void mainGame::connect_pushbutton(){
