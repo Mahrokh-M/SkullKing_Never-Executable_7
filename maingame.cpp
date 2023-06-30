@@ -32,6 +32,7 @@ int compare_count=0;//number of times the compare function is called
 int Score_you=0;
 int Score_opponent=0;
 int special_points=0; //The extra point you get when you have King or Queen or Pirate
+int opponent_special_points=0;
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -270,8 +271,7 @@ void mainGame::readSocket()
         ui->Card_opponent->show();
         if(both_players_played==2){
             both_players_played=0;
-            QString message="call_compare_function ";
-            message+=QString::number(Guess_opponent);
+            QString message="call compare function";
             send_message(message);
             compare_cards();
         }
@@ -279,12 +279,13 @@ void mainGame::readSocket()
 
     else if(str.split(" ")[0]=="Opponent_ok_clicked"){
         opponent_has_clicked_OK=true; //Do not forget to make this false end of each round!
+        Guess_opponent=str.split(" ")[1].toInt();
     }
 
-    else if(str.split(" ")[0]=="call_compare_function"){
-        Guess_opponent=str.split(" ")[1].toInt();
+    else if(str=="call compare function"){
         compare_cards();
     }
+
     else if(str.split(" ")[0]=="score_opponent"){
         Score_opponent=str.split(" ")[1].toInt();
     }
@@ -415,7 +416,6 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
 }
 
 void mainGame::handing_out_cards(){
-    //while (round != 8) {
             for(auto x:all_cards){
                 x.set_get_isReserved()=false;
              }
@@ -449,7 +449,6 @@ void mainGame::handing_out_cards(){
                message.prepend("ReservedCards ");
                send_message(message);
             }
-       // }
 
 }
 
@@ -677,9 +676,18 @@ void mainGame::compare_cards(){
         if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
             special_points+=10;
         Person->set_get_num_win()++;
+        //is_turn=1;
     }
-    else{
+
+    else if(all_cards[card1].get_value()<all_cards[card2].get_value()){  //Counting opponent points
+        if(all_cards[card1].get_value()==all_cards[39].get_value() || all_cards[card2].get_value()==all_cards[39].get_value())
+            opponent_special_points+=20;
+        if(all_cards[card1].get_value()==all_cards[36].get_value() || all_cards[card2].get_value()==all_cards[36].get_value())
+             opponent_special_points+=15;
+        if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
+             opponent_special_points+=10;
         num_win_opponent++;
+        //is_turn=0;
     }
     QEventLoop loop;
     QTimer::singleShot(1000, &loop, &QEventLoop::quit);
@@ -718,19 +726,20 @@ void mainGame::end_of_round(){
             Score_opponent+=Round*10;
         }
         else{
-            Score_opponent+=Guess*10;
+            Score_opponent+=Guess_opponent*10;
         }
     }
 
     else{
-        if(Guess==0){
+        if(Guess_opponent==0){
             Score_opponent-=Round*10;
         }
         else{
-            Score_opponent-=Guess*10;
+            Score_opponent-=Guess_opponent*10;
         }
     }
-    Score_opponent+=special_points;
+    Score_you+=special_points;
+    Score_opponent+=opponent_special_points;
     ui->Point_you->setText(QString::number(Score_you));
     ui->Point_opponent->setText(QString::number(Score_opponent));
     ui->Who_starts->setScaledContents(true);
@@ -744,17 +753,27 @@ void mainGame::end_of_round(){
     ui->Card_you->hide();
     ui->Card_opponent->hide();
 
-//    QString message="score_opponent ";//send your score to other user
-//    message+=QString::number(Score_you);
-//    send_message(message);
 
     if(Round!=7){
-    Round++;
-    compare_count=0;
-    Person->set_get_num_win()=0;
-    num_win_opponent=0;
-    opponent_has_clicked_OK=false;
-    if(server_or_client==2)
-    handing_out_cards();}
+        Round++;
+        compare_count=0;
+        Person->set_get_num_win()=0;
+        num_win_opponent=0;
+        has_clicked_OK=false;
+        opponent_has_clicked_OK=false;
+        if(server_or_client==2)
+        handing_out_cards();
+    }
+    else if(Round==7){ //end of game :)
+        if(Score_you >Score_opponent){
+            //You won and opponent lost gif
+        }
+        else if(Score_opponent>Score_you){
+            //You lost and opponent won gif
+        }
+        else{
+            //no one win gif
+        }
+    }
 
 }
