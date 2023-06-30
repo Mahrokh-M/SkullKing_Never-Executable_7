@@ -461,11 +461,14 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
   <widget class="QLabel" name="Who_starts">
    <property name="geometry">
     <rect>
-     <x>402</x>
-     <y>199</y>
-     <width>181</width>
-     <height>161</height>
+     <x>370</x>
+     <y>0</y>
+     <width>221</width>
+     <height>91</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:10px;</string>
    </property>
    <property name="text">
     <string/>
@@ -492,12 +495,12 @@ font: 20pt &quot;Viner Hand ITC&quot;;</string>
   <zorder>name_you</zorder>
   <zorder>name_opppnent</zorder>
   <zorder>Avatar_opponent</zorder>
-  <zorder>Who_starts</zorder>
   <zorder>label_Loading</zorder>
   <zorder>IP</zorder>
   <zorder>IP_show</zorder>
   <zorder>OK</zorder>
   <zorder>lineEdit_enter_IP</zorder>
+  <zorder>Who_starts</zorder>
  </widget>
  <resources/>
  <connections/>

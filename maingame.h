@@ -27,6 +27,7 @@ public:
     void who_start();
     void send_message(QString);
     void show_opponent_avatar();
+    void handing_out_cards();
 
     ~mainGame();
 signals:
@@ -35,9 +36,6 @@ private slots:
     void readSocket();
     void discardSocket();
     void displayError(QAbstractSocket::SocketError socketError);
-
-    void displayMessage(const QString& str);
-
     void on_OK_clicked();
 
 private:

@@ -16,7 +16,7 @@ private:
     int total_lose;
     int avatar;
     QVector<Game_history> all_games;
-    //list<Card> cards;
+    QVector<int> cards;
 public:
     User();
     User(QString given_name, QString given_userName, QString given_password, QString given_phoneNumber, QString given_money);
@@ -31,7 +31,7 @@ public:
     QString& set_get_money();
     void operator=(const User& given_user);
     QVector<Game_history>& set_get_History();
-    //list<Card>& set_get_cards();
+    QVector<int>& set_get_cards();
 };
 
 #endif // USER_H
