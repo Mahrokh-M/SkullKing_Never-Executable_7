@@ -573,7 +573,6 @@ color: rgb(238, 214, 84);
   <zorder>name_you</zorder>
   <zorder>name_opppnent</zorder>
   <zorder>Avatar_opponent</zorder>
-  <zorder>Who_starts</zorder>
   <zorder>lineEdit_Enter_guess</zorder>
   <zorder>OK_Guess</zorder>
   <zorder>Point_opponent</zorder>
@@ -583,6 +582,7 @@ color: rgb(238, 214, 84);
   <zorder>IP_show</zorder>
   <zorder>OK</zorder>
   <zorder>lineEdit_enter_IP</zorder>
+  <zorder>Who_starts</zorder>
  </widget>
  <resources/>
  <connections/>

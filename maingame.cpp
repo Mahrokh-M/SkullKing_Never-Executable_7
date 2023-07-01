@@ -17,6 +17,7 @@ int Guess;
 int Guess_opponent;
 int num_win_opponent=0;
 int Round=1;
+bool begin_set=false;
 bool has_clicked_OK=false;
 bool opponent_has_clicked_OK=false;
 int is_turn=0; //Shows whose turn is it
@@ -254,7 +255,7 @@ void mainGame::readSocket()
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card2]));
         hide_pushbuttons();
         QEventLoop loop;
-        QTimer::singleShot(1000, &loop, &QEventLoop::quit);
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
@@ -394,7 +395,7 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     ui->Who_starts->hide();
 
         QEventLoop loop;
-        QTimer::singleShot(1000, &loop, &QEventLoop::quit);
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
@@ -624,10 +625,18 @@ void mainGame::connect_pushbutton(){
 }
 
 void mainGame::onButtonClicked(){ //delete chosen card from user's cards list and show it in center
+    QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
+    int chosen_card=clicked_button->text().toInt();
+    card1=chosen_card;
     if(is_turn==1&&has_clicked_OK==true&&opponent_has_clicked_OK==true){
-         QPushButton *clicked_button = qobject_cast<QPushButton *>(sender());
-         int chosen_card=clicked_button->text().toInt();
-         card1=chosen_card;
+       bool flag=false;
+       for(const auto&x:Person->set_get_cards()){
+         if(all_cards[card2].get_type()==all_cards[x].get_type()){
+             flag=true;
+             break;
+         }
+       }
+      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41)){
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
          clicked_button->hide();
@@ -636,8 +645,18 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
          is_turn=0;
          both_players_played++;
          QString message="Opponent_played_card "+QString::number(chosen_card)+" "+QString::number(both_players_played);
-         send_message(message);
+         send_message(message);}
+    else{
+        QMessageBox messageBox;
+        messageBox.setWindowTitle("Error");
+        messageBox.setIcon(QMessageBox::Warning);
+        messageBox.setStyleSheet("QMessageBox { background-color: #c96f30; color: white; font-size: 16px; font-weight: bold; }");
+        QAbstractButton* okButton = messageBox.addButton("Ok", QMessageBox::AcceptRole);
+        okButton->setStyleSheet("background-color: #ff8b3d; color: black; font-size: 16px; font-weight: bold;");
+        messageBox.setText("Wrong card played!");
+        messageBox.exec();
     }
+  }
 }
 
 void mainGame::on_OK_Guess_clicked()
@@ -689,6 +708,9 @@ void mainGame::compare_cards(){
              opponent_special_points+=10;
         num_win_opponent++;
         //is_turn=0;
+    }
+    else{
+        //tie situation
     }
     QEventLoop loop;
     QTimer::singleShot(1000, &loop, &QEventLoop::quit);

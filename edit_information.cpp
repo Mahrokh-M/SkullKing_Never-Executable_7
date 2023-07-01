@@ -129,6 +129,7 @@ void Edit_Information::on_pushButton_confirm_clicked()
     okButton->setStyleSheet("background-color: #262e66; color: white;; font-size: 16px; font-weight: bold;");
 messageBox.exec();
     MainMenu *main_page=new MainMenu;
+    main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     main_page->show();
     this->close();
     QString filePath = "Users.txt";
