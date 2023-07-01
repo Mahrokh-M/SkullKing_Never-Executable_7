@@ -188,11 +188,11 @@ void mainGame::readSocket()
 {
     QByteArray buffer;
 
-    QDataStream socketStream(socket);
-    socketStream.setVersion(QDataStream::Qt_5_15);
+//    QDataStream socketStream(socket);
+//    socketStream.setVersion(QDataStream::Qt_5_15);
 
-    socketStream.startTransaction();
-    socketStream >> buffer;
+//    socketStream.startTransaction();
+    buffer=socket->readAll();
    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
     if(str.split(" ")[0]=="Clientconnected"){
         QStringList opponent_information=str.split(" ");
@@ -331,10 +331,10 @@ void mainGame::on_OK_clicked()
 
 
    QString str = "Clientconnected "+Person->set_get_name()+","+QString::number(Person->set_get_avatar());
-   QDataStream socketStream(socket);
-   socketStream.setVersion(QDataStream::Qt_5_15);
+//   QDataStream socketStream(socket);
+//   socketStream.setVersion(QDataStream::Qt_5_15);
    QByteArray byteArray = str.toUtf8();
-   socketStream << byteArray;
+   socket->write(byteArray);
 
 }
   else{
@@ -408,17 +408,18 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
 }
 
 void mainGame::send_message(QString input_message){ //This function recieves a messgae and send it to server
-    QDataStream socketStream(socket);
-    socketStream.setVersion(QDataStream::Qt_5_15);
+//    QDataStream socketStream(socket);
+//    socketStream.setVersion(QDataStream::Qt_5_15);
     QByteArray byteArray = input_message.toUtf8();
-    socketStream << byteArray;
+    socket->write(byteArray);
+    socket->waitForBytesWritten();
 
 }
 
 void mainGame::handing_out_cards(){
-            for(auto x:all_cards){
-                x.set_get_isReserved()=false;
-             }
+          for(int i=0;i<42;i++){
+              all_cards[i].set_get_isReserved()=false;
+          }
             if(server_or_client==1){
                 for(auto x:reserved_cards){
                     all_cards[x.toInt()].set_get_isReserved()=true;
@@ -747,7 +748,7 @@ void mainGame::end_of_round(){
     ui->Who_starts->show();
     gifMovie->start();
     QEventLoop loop;
-    QTimer::singleShot(1000, &loop, &QEventLoop::quit);
+    QTimer::singleShot(3000, &loop, &QEventLoop::quit);
     loop.exec();
     ui->Who_starts->hide();
     ui->Card_you->hide();

@@ -45,11 +45,12 @@ void Server::readSocket()
 
     QByteArray buffer;
 
-    QDataStream socketStream(socket);
-    socketStream.setVersion(QDataStream::Qt_5_15);
+//    QDataStream socketStream(socket);
+//    socketStream.setVersion(QDataStream::Qt_5_15);
 
-    socketStream.startTransaction();
-    socketStream >> buffer;
+//    socketStream.startTransaction();
+//    socketStream >> buffer;
+    buffer=socket->readAll();
        if(socket->isOpen())
        {
 
@@ -57,9 +58,11 @@ void Server::readSocket()
               {
                   if(sockett->socketDescriptor() != socket->socketDescriptor())
                   {
-                        QDataStream socketStream(sockett);
-                        socketStream.setVersion(QDataStream::Qt_5_15);
-                        socketStream << buffer;
+//                        QDataStream socketStream(sockett);
+//                        socketStream.setVersion(QDataStream::Qt_5_15);
+//                        socketStream << buffer;
+                          sockett->write(buffer);
+                          sockett->waitForBytesWritten();
                         break;
                   }
             }
