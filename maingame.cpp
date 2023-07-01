@@ -17,7 +17,7 @@ int Guess;
 int Guess_opponent;
 int num_win_opponent=0;
 int Round=1;
-bool begin_set=false;
+bool begin_set=false; //CHecks who is the beginner of the set
 bool has_clicked_OK=false;
 bool opponent_has_clicked_OK=false;
 int is_turn=0; //Shows whose turn is it
@@ -231,6 +231,7 @@ void mainGame::readSocket()
         card1=opponent_information[1].split(",")[3].toInt();
         QMovie *gif;
         if(card1>card2){
+            begin_set=true;
             is_turn=1;
             gif = new QMovie(":/new/prefix1/you start.gif");
         }
@@ -272,6 +273,11 @@ void mainGame::readSocket()
         ui->Card_opponent->show();
         if(both_players_played==2){
             both_players_played=0;
+            if(card1>card2)
+                begin_set=true;
+            else
+                begin_set=false;
+
             QString message="call compare function";
             send_message(message);
             compare_cards();
@@ -284,7 +290,13 @@ void mainGame::readSocket()
     }
 
     else if(str=="call compare function"){
+        both_players_played=0;
+        if(card1>card2)
+            begin_set=true;
+        else
+            begin_set=false;
         compare_cards();
+
     }
 
     else if(str.split(" ")[0]=="score_opponent"){
@@ -377,6 +389,7 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
     if(card1>card2){
         is_turn=1;
         gif = new QMovie(":/new/prefix1/you start.gif");
+        begin_set=true;
     }
     else
      gif = new QMovie(":/new/prefix1/you're second.gif");
@@ -390,16 +403,12 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
 //    QThread::msleep(2000);
 //    std::this_thread::sleep_for(std::chrono::seconds(2));
 
-
-
-    ui->Who_starts->hide();
-
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
-        ui->Card_opponent->hide();
+        ui->Card_opponent->hide();       
 //    QTimer::singleShot(1000, this, [&]() {
 //            // code to be executed after the delay
 //        ui->Who_starts->hide();
@@ -636,7 +645,7 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
              break;
          }
        }
-      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41)){
+      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41) || (Person->set_get_num_win()==0 && num_win_opponent==0)){
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
          clicked_button->hide();
@@ -696,7 +705,7 @@ void mainGame::compare_cards(){
         if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
             special_points+=10;
         Person->set_get_num_win()++;
-        //is_turn=1;
+        is_turn=1;
     }
 
     else if(all_cards[card1].get_value()<all_cards[card2].get_value()){  //Counting opponent points
@@ -707,10 +716,13 @@ void mainGame::compare_cards(){
         if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
              opponent_special_points+=10;
         num_win_opponent++;
-        //is_turn=0;
+        is_turn=0;
     }
     else{
-        //tie situation
+        if(begin_set)
+            Person->set_get_num_win()++;
+        else
+            num_win_opponent++;
     }
     QEventLoop loop;
     QTimer::singleShot(1000, &loop, &QEventLoop::quit);
