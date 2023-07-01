@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>978</width>
+    <width>980</width>
     <height>649</height>
    </rect>
   </property>
@@ -291,8 +291,8 @@ font: 0pt &quot;Segoe UI&quot;;</string>
   <widget class="QLabel" name="label_Loading">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>-30</y>
+     <x>10</x>
+     <y>-20</y>
      <width>981</width>
      <height>681</height>
     </rect>
@@ -552,6 +552,56 @@ color: rgb(238, 214, 84);
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_result">
+   <property name="geometry">
+    <rect>
+     <x>2</x>
+     <y>-1</y>
+     <width>981</width>
+     <height>651</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_Num_win">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>211</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 10pt &quot;Segoe Print&quot;;
+color: rgb(216, 108, 33);</string>
+   </property>
+   <property name="text">
+    <string>Num Win in this round:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="num_win">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>0</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 12pt &quot;Segoe Print&quot;;
+color: rgb(254, 241, 91);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
   <zorder>label_background</zorder>
   <zorder>Avatar_you</zorder>
   <zorder>pushButton_1</zorder>
@@ -573,16 +623,19 @@ color: rgb(238, 214, 84);
   <zorder>name_you</zorder>
   <zorder>name_opppnent</zorder>
   <zorder>Avatar_opponent</zorder>
-  <zorder>lineEdit_Enter_guess</zorder>
-  <zorder>OK_Guess</zorder>
   <zorder>Point_opponent</zorder>
   <zorder>Point_you</zorder>
-  <zorder>label_Loading</zorder>
-  <zorder>IP</zorder>
-  <zorder>IP_show</zorder>
-  <zorder>OK</zorder>
-  <zorder>lineEdit_enter_IP</zorder>
   <zorder>Who_starts</zorder>
+  <zorder>label_result</zorder>
+  <zorder>label_Loading</zorder>
+  <zorder>OK</zorder>
+  <zorder>IP_show</zorder>
+  <zorder>IP</zorder>
+  <zorder>lineEdit_enter_IP</zorder>
+  <zorder>lineEdit_Enter_guess</zorder>
+  <zorder>OK_Guess</zorder>
+  <zorder>label_Num_win</zorder>
+  <zorder>num_win</zorder>
  </widget>
  <resources/>
  <connections/>

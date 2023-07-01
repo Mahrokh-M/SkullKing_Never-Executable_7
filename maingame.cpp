@@ -13,6 +13,7 @@
 #include <QTimer>
 #include<QtAlgorithms>
 #include"QValidator"
+#include"mainmenu.h"
 int Guess;
 int Guess_opponent;
 int num_win_opponent=0;
@@ -43,6 +44,9 @@ mainGame::mainGame(QWidget *parent) :
     QIntValidator* validator = new QIntValidator();
     ui->lineEdit_Enter_guess->setValidator(validator);
     ui->Who_starts->hide();
+    ui->label_result->hide();
+    ui->num_win->hide();
+    ui->label_Num_win->hide();
     ui->OK_Guess->setStyleSheet("QPushButton {"
                                 "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
                                 "border-style: solid;"
@@ -107,12 +111,12 @@ mainGame::mainGame(QWidget *parent) :
     for (int i = 36; i < 39; i++) {
         all_cards[i].get_type() = "king";
         all_cards[i].get_number() = 0;
-        all_cards[i].get_value() = 30;
+        all_cards[i].get_value() = 20;
     }
     for (int i = 39; i < 42; i++) {
         all_cards[i].get_type() = "queen";
         all_cards[i].get_number() = 0;
-        all_cards[i].get_value() = 40;
+        all_cards[i].get_value() = 20;
     }
      QMovie *gifMovie;
     if(server_or_client==1)
@@ -215,6 +219,8 @@ void mainGame::readSocket()
         ui->IP_show->hide();
         ui->OK->hide();
         ui->lineEdit_enter_IP->hide();
+        ui->num_win->show();
+        ui->label_Num_win->show();
         who_start();
     }
 
@@ -341,7 +347,8 @@ void mainGame::on_OK_clicked()
    ui->IP_show->hide();
    ui->OK->hide();
    ui->lineEdit_enter_IP->hide();
-
+   ui->num_win->show();
+   ui->label_Num_win->show();
 
    QString str = "Clientconnected "+Person->set_get_name()+","+QString::number(Person->set_get_avatar());
 //   QDataStream socketStream(socket);
@@ -645,7 +652,7 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
              break;
          }
        }
-      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41) || (Person->set_get_num_win()==0 && num_win_opponent==0)){
+      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41) || (Person->set_get_num_win()==0 && num_win_opponent==0)||(begin_set)){
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
          clicked_button->hide();
@@ -697,33 +704,64 @@ void mainGame::on_OK_Guess_clicked()
 }
 
 void mainGame::compare_cards(){
-    if(all_cards[card1].get_value()>all_cards[card2].get_value()){
-        if(all_cards[card1].get_value()==all_cards[39].get_value() || all_cards[card2].get_value()==all_cards[39].get_value())
-            special_points+=20;
-        if(all_cards[card1].get_value()==all_cards[36].get_value() || all_cards[card2].get_value()==all_cards[36].get_value())
-            special_points+=15;
-        if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
-            special_points+=10;
+    if(all_cards[card1].get_value()>all_cards[card2].get_value()){  //Counting opponent points
+            if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
+                    special_points+=10;}
+            if(all_cards[card1].get_type()=="king" || all_cards[card2].get_type()=="king"){
+                    special_points+=15;}
+            if(all_cards[card1].get_type()=="queen" || all_cards[card2].get_type()=="queen"){
+                    special_points+=20;}
         Person->set_get_num_win()++;
         is_turn=1;
     }
 
     else if(all_cards[card1].get_value()<all_cards[card2].get_value()){  //Counting opponent points
-        if(all_cards[card1].get_value()==all_cards[39].get_value() || all_cards[card2].get_value()==all_cards[39].get_value())
-            opponent_special_points+=20;
-        if(all_cards[card1].get_value()==all_cards[36].get_value() || all_cards[card2].get_value()==all_cards[36].get_value())
-             opponent_special_points+=15;
-        if(all_cards[card1].get_value()==all_cards[32].get_value() || all_cards[card2].get_value()==all_cards[32].get_value())
-             opponent_special_points+=10;
+        if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
+                 opponent_special_points+=10;}
+        if(all_cards[card1].get_type()=="king" || all_cards[card2].get_type()=="king"){
+                opponent_special_points+=15;}
+        if(all_cards[card1].get_type()=="queen" || all_cards[card2].get_type()=="queen"){
+                 opponent_special_points+=20;}
         num_win_opponent++;
         is_turn=0;
     }
-    else{
-        if(begin_set)
-            Person->set_get_num_win()++;
-        else
-            num_win_opponent++;
+    else if(all_cards[card1].get_value()==all_cards[card2].get_value()){
+            if(all_cards[card1].get_type()=="pirate" && all_cards[card2].get_type()=="pirate"){
+                if(begin_set){
+                    special_points+=20;
+                    Person->set_get_num_win()++;}
+                else{
+                       opponent_special_points+=20;
+                       num_win_opponent++;;}
+                    }
+            else if(all_cards[card1].get_type()=="king" && all_cards[card2].get_type()=="king"){
+                    if(begin_set){
+                        special_points+=30;
+                        Person->set_get_num_win()++;}
+                     else{
+                        opponent_special_points+=30;
+                        num_win_opponent++;}
+                    }
+            else  if(all_cards[card1].get_type()=="queen" && all_cards[card2].get_type()=="queen"){
+                     if(begin_set){
+                        special_points+=40;
+                        Person->set_get_num_win()++;}
+                     else{
+                        opponent_special_points+=40;
+                        num_win_opponent++;}
+                    }
+            else{
+                 if(begin_set)
+                     Person->set_get_num_win()++;
+                 else
+                     num_win_opponent++;
+       }
     }
+    Score_you+=special_points;
+    Score_opponent+=opponent_special_points;
+    ui->num_win->setText(QString::number(Person->set_get_num_win()));
+    ui->Point_you->setText(QString::number(Score_you));
+    ui->Point_opponent->setText(QString::number(Score_opponent));
     QEventLoop loop;
     QTimer::singleShot(1000, &loop, &QEventLoop::quit);
     loop.exec();
@@ -773,8 +811,8 @@ void mainGame::end_of_round(){
             Score_opponent-=Guess_opponent*10;
         }
     }
-    Score_you+=special_points;
-    Score_opponent+=opponent_special_points;
+//    Score_you+=special_points;
+//    Score_opponent+=opponent_special_points;
     ui->Point_you->setText(QString::number(Score_you));
     ui->Point_opponent->setText(QString::number(Score_opponent));
     ui->Who_starts->setScaledContents(true);
@@ -801,13 +839,42 @@ void mainGame::end_of_round(){
     }
     else if(Round==7){ //end of game :)
         if(Score_you >Score_opponent){
-            //You won and opponent lost gif
+          ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
+          ui->label_result->show();
+          QEventLoop loop;
+          QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+          loop.exec();
+          this->close();
+          MainMenu *main_page=new MainMenu();
+          main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+          main_page->show();
+
         }
         else if(Score_opponent>Score_you){
             //You lost and opponent won gif
+            ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
+            ui->label_result->show();
+            QEventLoop loop;
+            QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+            loop.exec();
+            this->close();
+            MainMenu *main_page=new MainMenu();
+            main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+            main_page->show();
+
         }
         else{
             //no one win gif
+            ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/Tie.png"));
+            ui->label_result->show();
+            QEventLoop loop;
+            QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+            loop.exec();
+            this->close();
+            MainMenu *main_page=new MainMenu();
+            main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+            main_page->show();
+
         }
     }
 

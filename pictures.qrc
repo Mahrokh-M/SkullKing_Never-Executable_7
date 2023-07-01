@@ -60,5 +60,8 @@
         <file>you're second.gif</file>
         <file>no point.gif</file>
         <file>one point.gif</file>
+        <file>Tie.png</file>
+        <file>You Lost.png</file>
+        <file>You Win.png</file>
     </qresource>
 </RCC>
