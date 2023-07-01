@@ -522,7 +522,7 @@ font: 700 17pt &quot;Segoe Script&quot;;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 700 22pt &quot;Segoe Print&quot;;
-color: rgb(255, 255, 255);</string>
+color: rgb(238, 214, 84);</string>
    </property>
    <property name="text">
     <string/>
@@ -542,7 +542,7 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 700 22pt &quot;Segoe Print&quot;;
-color: rgb(255, 255, 255);
+color: rgb(238, 214, 84);
 </string>
    </property>
    <property name="text">
