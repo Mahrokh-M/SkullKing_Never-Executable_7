@@ -331,6 +331,18 @@ void mainGame::readSocket()
             ui->label_Loading->hide();
         }
     }
+    else if(str=="Exit Button Clicked"){
+        ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
+        ui->label_result->raise();
+        ui->label_result->show();
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        this->close();
+        MainMenu *main_page=new MainMenu();
+        main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+        main_page->show();
+    }
 }
 
 void mainGame::discardSocket()
@@ -851,7 +863,6 @@ void mainGame::end_of_round(){
     ui->Card_you->hide();
     ui->Card_opponent->hide();
 
-
     if(Round!=7){
         Round++;
         compare_count=0;
@@ -859,13 +870,17 @@ void mainGame::end_of_round(){
         num_win_opponent=0;
         has_clicked_OK=false;
         opponent_has_clicked_OK=false;
+        ui->num_win->setText(QString::number(Person->set_get_num_win()));
         if(server_or_client==2)
         handing_out_cards();
     }
     else if(Round==7){ //end of game :)
         if(Score_you >Score_opponent){
           ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
+           ui->label_result->raise();
           ui->label_result->show();
+          ui->pushButton_Stop->hide();
+          ui->pushButton_Exit->hide();
           QEventLoop loop;
           QTimer::singleShot(3000, &loop, &QEventLoop::quit);
           loop.exec();
@@ -878,6 +893,7 @@ void mainGame::end_of_round(){
         else if(Score_opponent>Score_you){
             //You lost and opponent won gif
             ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
+            ui->label_result->raise();
             ui->label_result->show();
             QEventLoop loop;
             QTimer::singleShot(3000, &loop, &QEventLoop::quit);
@@ -891,6 +907,7 @@ void mainGame::end_of_round(){
         else{
             //no one win gif
             ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/Tie.png"));
+            ui->label_result->raise();
             ui->label_result->show();
             QEventLoop loop;
             QTimer::singleShot(3000, &loop, &QEventLoop::quit);
@@ -940,5 +957,21 @@ void mainGame::Resume(){
     ui->label_Loading->hide();
     ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
     ui->pushButton_Stop->setText("Pause");
+}
+
+
+void mainGame::on_pushButton_Exit_clicked()
+{
+    QString message="Exit Button Clicked";
+    send_message(message);
+    ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
+    ui->label_result->show();
+    QEventLoop loop;
+    QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+    loop.exec();
+    this->close();
+    MainMenu *main_page=new MainMenu();
+    main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    main_page->show();
 }
 

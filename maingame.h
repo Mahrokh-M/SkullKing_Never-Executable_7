@@ -48,6 +48,8 @@ private slots:
 
     void on_pushButton_Stop_clicked();
 
+    void on_pushButton_Exit_clicked();
+
 private:
     Ui::mainGame *ui;
 
