@@ -14,6 +14,8 @@
 #include<QtAlgorithms>
 #include"QValidator"
 #include"mainmenu.h"
+#include"thread"
+
 int Guess;
 int Guess_opponent;
 int num_win_opponent=0;
@@ -288,7 +290,7 @@ void mainGame::readSocket()
             both_players_played=0;
             if(card1>card2)
                 begin_set=true;
-            else
+            else if(card2>card1)
                 begin_set=false;
 
             QString message="call compare function";
@@ -306,7 +308,7 @@ void mainGame::readSocket()
         both_players_played=0;
         if(card1>card2)
             begin_set=true;
-        else
+        else if(card2>card1)
             begin_set=false;
         compare_cards();
 
@@ -386,7 +388,7 @@ void mainGame::on_OK_clicked()
    ui->lineEdit_enter_IP->hide();
    ui->num_win->show();
    ui->label_Num_win->show();
-
+   hide_pushbuttons();
    QString str = "Clientconnected "+Person->set_get_name()+","+QString::number(Person->set_get_avatar());
 //   QDataStream socketStream(socket);
 //   socketStream.setVersion(QDataStream::Qt_5_15);
@@ -425,10 +427,10 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
             break;
         }
         }
-
-    hide_pushbuttons();
     str1+= QString::number(card1)+","+QString::number(card2);
     send_message(str1);
+    if(server_or_client==1)
+        hide_pushbuttons();
     QMovie *gif;
     if(card1>card2){
         is_turn=1;
@@ -452,7 +454,7 @@ void mainGame::who_start(){ //This funcion gives each player a random card to sp
         loop.exec();
         ui->Who_starts->hide();
         ui->Card_you->hide();
-        ui->Card_opponent->hide();       
+        ui->Card_opponent->hide();
 //    QTimer::singleShot(1000, this, [&]() {
 //            // code to be executed after the delay
 //        ui->Who_starts->hide();
@@ -690,15 +692,15 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
          }
        }
       if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41) || (Person->set_get_num_win()==0 && num_win_opponent==0)||(begin_set)){
+         both_players_played++;
+         QString message="Opponent_played_card "+QString::number(chosen_card)+" "+QString::number(both_players_played);
+         send_message(message);
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
          clicked_button->hide();
          ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[chosen_card]));
          ui->Card_you->show();
-         is_turn=0;
-         both_players_played++;
-         QString message="Opponent_played_card "+QString::number(chosen_card)+" "+QString::number(both_players_played);
-         send_message(message);}
+         is_turn=0;}
     else{
         QMessageBox messageBox;
         messageBox.setWindowTitle("Error");
@@ -766,32 +768,40 @@ void mainGame::compare_cards(){
             if(all_cards[card1].get_type()=="pirate" && all_cards[card2].get_type()=="pirate"){
                 if(begin_set){
                     special_points+=20;
-                    Person->set_get_num_win()++;}
+                    Person->set_get_num_win()++;
+                    is_turn=1;}
                 else{
                        opponent_special_points+=20;
-                       num_win_opponent++;;}
+                       num_win_opponent++;
+                       is_turn=0;}
                     }
             else if(all_cards[card1].get_type()=="king" && all_cards[card2].get_type()=="king"){
                     if(begin_set){
                         special_points+=30;
-                        Person->set_get_num_win()++;}
+                        Person->set_get_num_win()++;
+                        is_turn=1;}
                      else{
                         opponent_special_points+=30;
-                        num_win_opponent++;}
+                        num_win_opponent++;
+                        is_turn=0;}
                     }
             else  if(all_cards[card1].get_type()=="queen" && all_cards[card2].get_type()=="queen"){
                      if(begin_set){
                         special_points+=40;
-                        Person->set_get_num_win()++;}
+                        Person->set_get_num_win()++;
+                        is_turn=1;}
                      else{
                         opponent_special_points+=40;
-                        num_win_opponent++;}
+                        num_win_opponent++;
+                        is_turn=0;}
                     }
             else{
-                 if(begin_set)
+                 if(begin_set){
                      Person->set_get_num_win()++;
-                 else
+                      is_turn=1;}
+                 else{
                      num_win_opponent++;
+                     is_turn=0;}
        }
     }
     Score_you+=special_points;
@@ -924,32 +934,11 @@ void mainGame::end_of_round(){
 
 void mainGame::on_pushButton_Stop_clicked()
 {
-    if(ui->pushButton_Stop->text()=="Pause"){
-       ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
-       ui->pushButton_Stop->setText("Resume");
-       QString message;
-       message="Stop_Resume show_gif"; //Tell the other user to to stop the game and show gif
-       send_message(message);
-       QMovie *gif;
-       gif = new QMovie(":/new/prefix1/Stop_gif.gif");
-       ui->label_Loading->setScaledContents(true);
-       ui->label_Loading->setMovie(gif);
-       ui->label_Loading->show();
-       ui->label_Loading->raise();
-       ui->pushButton_Stop->raise(); //This brings the button to front
-       ui->pushButton_Exit->raise();
-       connect(gif, &QMovie::frameChanged, [=](int frameNumber) {
-           if (frameNumber == gif->frameCount() - 1) {
-               if (gif->loopCount() == 1) {
-                   qDebug() << "Animation has played once!";
-               }
-           }
-       });
-       gif->start();
-    }
-    else if(ui->pushButton_Stop->text()=="Resume")
-        Resume();
+    thread_pause t;
+    t.start();
+
 }
+
 void mainGame::Resume(){
     QString message;
     message="Stop_Resume hide_gif"; //Tell the other user to to stop the pause and continue game
@@ -959,12 +948,12 @@ void mainGame::Resume(){
     ui->pushButton_Stop->setText("Pause");
 }
 
-
 void mainGame::on_pushButton_Exit_clicked()
 {
     QString message="Exit Button Clicked";
     send_message(message);
     ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
+    ui->label_result->raise();
     ui->label_result->show();
     QEventLoop loop;
     QTimer::singleShot(3000, &loop, &QEventLoop::quit);
@@ -975,3 +964,32 @@ void mainGame::on_pushButton_Exit_clicked()
     main_page->show();
 }
 
+void thread_pause::run()
+{
+//    if(ui->pushButton_Stop->text()=="Pause"){
+//       ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
+//       ui->pushButton_Stop->setText("Resume");
+//       QString message;
+//       message="Stop_Resume show_gif"; //Tell the other user to to stop the game and show gif
+//       send_message(message);
+//       QMovie *gif;
+//       gif = new QMovie(":/new/prefix1/Stop_gif.gif");
+//       ui->label_Loading->setScaledContents(true);
+//       ui->label_Loading->setMovie(gif);
+//       ui->label_Loading->show();
+//       ui->label_Loading->raise();
+//       ui->pushButton_Stop->raise(); //This brings the button to front
+//       ui->pushButton_Exit->raise();
+////       connect(gif, &QMovie::frameChanged, [=](int frameNumber) {
+////           if (frameNumber == gif->frameCount() - 1) {
+////               if (gif->loopCount() == 1) {
+////                   qDebug() << "Animation has played once!";
+////               }
+////           }
+////       });
+//       gif->start();
+//    }
+//    else if(ui->pushButton_Stop->text()=="Resume")
+//        Resume();
+    qDebug()<<"hi";
+}

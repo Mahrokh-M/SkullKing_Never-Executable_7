@@ -9,7 +9,7 @@
 #include <QString>
 #include <QStandardPaths>
 #include <QTcpSocket>
-
+#include<QThread>
 
 
 
@@ -49,11 +49,14 @@ private slots:
     void on_pushButton_Stop_clicked();
 
     void on_pushButton_Exit_clicked();
-
-private:
+protected:
     Ui::mainGame *ui;
 
     QTcpSocket* socket;
+};
+class thread_pause:public QThread,public mainGame{//thread for pausing during the game
+public:
+    void run();
 };
 
 #endif // MAINGAME_H
