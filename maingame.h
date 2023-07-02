@@ -33,7 +33,6 @@ public:
     void connect_pushbutton();
     void compare_cards();
     void end_of_round();
-    void Resume();
     ~mainGame();
 signals:
     void newMessage(QString);
@@ -49,10 +48,13 @@ private slots:
     void on_pushButton_Stop_clicked();
 
     void on_pushButton_Exit_clicked();
+
+    void Resume(int);
 protected:
     Ui::mainGame *ui;
 
     QTcpSocket* socket;
+    int seconds_passed;
 };
 class thread_pause:public QThread,public mainGame{//thread for pausing during the game
 public:

@@ -15,6 +15,7 @@
 #include"QValidator"
 #include"mainmenu.h"
 #include"thread"
+#include <qmath.h>
 
 int Guess;
 int Guess_opponent;
@@ -893,7 +894,7 @@ void mainGame::end_of_round(){
             Score_you-=Round*10;
         }
         else{
-            Score_you-=Guess*10; //calculate special score for opponent
+            Score_you-=qAbs(Person->set_get_num_win()-Guess);
         }
         gifMovie = new QMovie(":/new/prefix1/no point.gif");
     }
@@ -911,7 +912,7 @@ void mainGame::end_of_round(){
             Score_opponent-=Round*10;
         }
         else{
-            Score_opponent-=Guess_opponent*10;
+            Score_opponent-=qAbs(num_win_opponent-Guess_opponent); //Difference between guess and number of won set
         }
     }
 //    Score_you+=special_points;
@@ -992,18 +993,54 @@ void mainGame::end_of_round(){
 
 void mainGame::on_pushButton_Stop_clicked()
 {
-    thread_pause t;
-    t.start();
+    QTimer* t=new QTimer(this);
+
+        if(ui->pushButton_Stop->text()=="Pause"){
+           ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
+           ui->pushButton_Stop->setText("Resume");
+           QString message;
+           message="Stop_Resume show_gif"; //Tell the other user to stop the game and show gif
+           send_message(message);
+           QMovie *gif;
+           gif = new QMovie(":/new/prefix1/Stop_gif.gif");
+           ui->label_Loading->setScaledContents(true);
+           ui->label_Loading->setMovie(gif);
+           ui->label_Loading->show();
+           ui->label_Loading->raise();
+           ui->pushButton_Stop->raise(); //This brings the button to front
+           ui->pushButton_Exit->raise();
+          // int seconds_passed=20;
+
+           connect(t, SIGNAL(timeout()), this, SLOT(Resume(seconds_passed)));
+           t->start(1000);
+           seconds_passed=20;
+           gif->start();
+//           connect(gif, &QMovie::frameChanged, [=](int frameNumber) {
+//               if (frameNumber == gif->frameCount() - 1) {
+//                       Resume();
+//               }
+//        });
+
+        }
+        else if(ui->pushButton_Stop->text()=="Resume"){
+            Resume(0);
+            delete t;
+        }
 
 }
 
-void mainGame::Resume(){
-    QString message;
-    message="Stop_Resume hide_gif"; //Tell the other user to to stop the pause and continue game
-    send_message(message);
-    ui->label_Loading->hide();
-    ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
-    ui->pushButton_Stop->setText("Pause");
+
+void mainGame::Resume(int seconds_passed){
+
+    if(seconds_passed==0){
+       QString message;
+       message="Stop_Resume hide_gif"; //Tell the other user to to stop the pause and continue game
+       send_message(message);
+       ui->label_Loading->hide();
+       ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
+       ui->pushButton_Stop->setText("Pause");
+    }
+    else seconds_passed--;
 }
 
 void mainGame::on_pushButton_Exit_clicked()
