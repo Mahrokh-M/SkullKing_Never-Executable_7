@@ -744,6 +744,7 @@ void mainGame::on_OK_Guess_clicked()
 }
 
 void mainGame::compare_cards(){
+
     if(all_cards[card1].get_value()>all_cards[card2].get_value()){  //Counting opponent points
             if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
                     special_points+=10;}
@@ -767,7 +768,9 @@ void mainGame::compare_cards(){
         is_turn=0;
         begin_set=false;
     }
+
     else if(all_cards[card1].get_value()==all_cards[card2].get_value()){
+        if(all_cards[card1].get_type()==all_cards[card2].get_type()){
             if(all_cards[card1].get_type()=="pirate" && all_cards[card2].get_type()=="pirate"){
                 if(begin_set){
                     special_points+=20;
@@ -804,8 +807,38 @@ void mainGame::compare_cards(){
                         is_turn=0;
                      begin_set=false;}
                     }
-            else{
-
+        }
+        else{
+                 if(all_cards[card1].get_type()=="pirate" && all_cards[card2].get_type()=="queen"){
+                     Person->set_get_num_win()++;
+                     is_turn=1;
+                     begin_set=true;
+                  }
+                 else if(all_cards[card1].get_type()=="pirate" && all_cards[card2].get_type()=="king"){
+                     num_win_opponent++;
+                     is_turn=0;
+                     begin_set=false;
+                  }
+                 else if(all_cards[card1].get_type()=="queen" && all_cards[card2].get_type()=="pirate"){
+                     num_win_opponent++;
+                     is_turn=0;
+                     begin_set=false;
+                 }
+                 else if(all_cards[card1].get_type()=="queen" && all_cards[card2].get_type()=="king"){
+                     Person->set_get_num_win()++;
+                     is_turn=1;
+                     begin_set=true;
+                 }
+                 else if(all_cards[card1].get_type()=="king" && all_cards[card2].get_type()=="pirate"){
+                     Person->set_get_num_win()++;
+                     is_turn=1;
+                     begin_set=true;
+                 }
+                 else if(all_cards[card1].get_type()=="king" && all_cards[card2].get_type()=="queen"){
+                     num_win_opponent++;
+                     is_turn=0;
+                     begin_set=false;
+                 }
                  if(begin_set){
                      if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
                              special_points+=10;}
@@ -813,8 +846,7 @@ void mainGame::compare_cards(){
                              special_points+=15;}
                      if(all_cards[card1].get_type()=="queen" || all_cards[card2].get_type()=="queen"){
                              special_points+=20;}
-                     Person->set_get_num_win()++;
-                      is_turn=1;}
+                 }
                  else{
                      if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
                               opponent_special_points+=10;}
@@ -822,10 +854,10 @@ void mainGame::compare_cards(){
                              opponent_special_points+=15;}
                      if(all_cards[card1].get_type()=="queen" || all_cards[card2].get_type()=="queen"){
                               opponent_special_points+=20;}
-                     num_win_opponent++;
-                     is_turn=0;}
+                     }
        }
     }
+
     Score_you+=special_points;
     Score_opponent+=opponent_special_points;
     special_points=0;
