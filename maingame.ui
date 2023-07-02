@@ -291,9 +291,9 @@ font: 0pt &quot;Segoe UI&quot;;</string>
   <widget class="QLabel" name="label_Loading">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>-20</y>
-     <width>981</width>
+     <width>991</width>
      <height>681</height>
     </rect>
    </property>
@@ -602,6 +602,32 @@ color: rgb(254, 241, 91);</string>
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_Stop">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>90</y>
+     <width>81</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Exit">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>10</y>
+     <width>81</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <zorder>label_background</zorder>
   <zorder>Avatar_you</zorder>
   <zorder>pushButton_1</zorder>
@@ -636,6 +662,8 @@ color: rgb(254, 241, 91);</string>
   <zorder>OK_Guess</zorder>
   <zorder>label_Num_win</zorder>
   <zorder>num_win</zorder>
+  <zorder>pushButton_Stop</zorder>
+  <zorder>pushButton_Exit</zorder>
  </widget>
  <resources/>
  <connections/>

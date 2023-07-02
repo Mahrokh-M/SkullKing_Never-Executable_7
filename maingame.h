@@ -33,6 +33,7 @@ public:
     void connect_pushbutton();
     void compare_cards();
     void end_of_round();
+    void Resume();
     ~mainGame();
 signals:
     void newMessage(QString);
@@ -44,6 +45,8 @@ private slots:
     void onButtonClicked();
 
     void on_OK_Guess_clicked();
+
+    void on_pushButton_Stop_clicked();
 
 private:
     Ui::mainGame *ui;

@@ -67,6 +67,11 @@ mainGame::mainGame(QWidget *parent) :
                                 "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
                                 "border-color: #FF8C00;"
                             "}");
+    ui->pushButton_Stop->hide();
+    ui->pushButton_Exit->setStyleSheet(QString("border-image: url(:/new/prefix1/Exit_Button.png);"));
+    ui->pushButton_Exit->hide();
+    ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
+    ui->pushButton_Stop->setText("Pause");
     ui->Point_you->setText(QString::number(Score_you));
     ui->Point_opponent->setText(QString::number(Score_opponent));
     QString avatar_path;
@@ -215,6 +220,8 @@ void mainGame::readSocket()
         ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
         ui->name_opppnent->setText(opponent_name);
         ui->label_Loading->hide();
+        ui->pushButton_Stop->show();
+        ui->pushButton_Exit->show();
         ui->IP->hide();
         ui->IP_show->hide();
         ui->OK->hide();
@@ -308,6 +315,22 @@ void mainGame::readSocket()
     else if(str.split(" ")[0]=="score_opponent"){
         Score_opponent=str.split(" ")[1].toInt();
     }
+
+    else if(str.split(" ")[0]=="Stop_Resume"){
+        if(str.split(" ")[1]=="show_gif"){
+           QMovie *gif;
+           gif = new QMovie(":/new/prefix1/Stop_gif.gif");
+           ui->label_Loading->setScaledContents(true);
+           ui->label_Loading->setMovie(gif);
+           ui->label_Loading->show();
+           ui->label_Loading->raise();
+           ui->pushButton_Exit->raise();
+           gif->start();
+        }
+        else if(str.split(" ")[1]=="hide_gif"){
+            ui->label_Loading->hide();
+        }
+    }
 }
 
 void mainGame::discardSocket()
@@ -343,6 +366,8 @@ void mainGame::on_OK_clicked()
   socket->connectToHost(ui->lineEdit_enter_IP->text(),8080);
   if(socket->waitForConnected()){
    ui->label_Loading->hide();
+   ui->pushButton_Stop->show();
+   ui->pushButton_Exit->show();
    ui->IP->hide();
    ui->IP_show->hide();
    ui->OK->hide();
@@ -879,3 +904,41 @@ void mainGame::end_of_round(){
     }
 
 }
+
+void mainGame::on_pushButton_Stop_clicked()
+{
+    if(ui->pushButton_Stop->text()=="Pause"){
+       ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
+       ui->pushButton_Stop->setText("Resume");
+       QString message;
+       message="Stop_Resume show_gif"; //Tell the other user to to stop the game and show gif
+       send_message(message);
+       QMovie *gif;
+       gif = new QMovie(":/new/prefix1/Stop_gif.gif");
+       ui->label_Loading->setScaledContents(true);
+       ui->label_Loading->setMovie(gif);
+       ui->label_Loading->show();
+       ui->label_Loading->raise();
+       ui->pushButton_Stop->raise(); //This brings the button to front
+       ui->pushButton_Exit->raise();
+       connect(gif, &QMovie::frameChanged, [=](int frameNumber) {
+           if (frameNumber == gif->frameCount() - 1) {
+               if (gif->loopCount() == 1) {
+                   qDebug() << "Animation has played once!";
+               }
+           }
+       });
+       gif->start();
+    }
+    else if(ui->pushButton_Stop->text()=="Resume")
+        Resume();
+}
+void mainGame::Resume(){
+    QString message;
+    message="Stop_Resume hide_gif"; //Tell the other user to to stop the pause and continue game
+    send_message(message);
+    ui->label_Loading->hide();
+    ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
+    ui->pushButton_Stop->setText("Pause");
+}
+

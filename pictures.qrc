@@ -63,5 +63,9 @@
         <file>Tie.png</file>
         <file>You Lost.png</file>
         <file>You Win.png</file>
+        <file>StopButton.png</file>
+        <file>ResumeButton.png</file>
+        <file>Stop_gif.gif</file>
+        <file>Exit_Button.png</file>
     </qresource>
 </RCC>
