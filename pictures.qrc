@@ -70,5 +70,12 @@
         <file>Change_cards.png</file>
         <file>coin.png</file>
         <file>pic_frame.png</file>
+        <file>Round 1.gif</file>
+        <file>Round 2.gif</file>
+        <file>Round 3.gif</file>
+        <file>Round 4.gif</file>
+        <file>Round 5.gif</file>
+        <file>Round 6.gif</file>
+        <file>Round 7.gif</file>
     </qresource>
 </RCC>
