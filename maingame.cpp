@@ -884,18 +884,36 @@ void mainGame::on_OK_Guess_clicked()//telling other user that you have guessed h
 void mainGame::compare_cards(){//comparing cards and giving points
      which_set_of_round++;
     if(Round==7 && which_set_of_round==2*Round){
-        QScreen *screen = QGuiApplication::primaryScreen();
-        // Capture the screenshot
-        QPixmap screenshot = screen->grabWindow(0);
-        // Save the screenshot to a file
-        QString str1="screenshot";
-        QString str2=QString::number(Person->set_get_History().size()+1);
-        QString str3=".png";
-        QString filename = str1+str2+str3;
-        screenshot.save(filename);
-        // Get the path of the saved file
-        QString path = QFileInfo(filename).absoluteFilePath();
-        new_game_history.set_get_screenshot_path()=path;
+//        QScreen *screen = QGuiApplication::primaryScreen();
+//        // Capture the screenshot
+//        QPixmap screenshot = screen->grabWindow(0);
+//        // Save the screenshot to a file
+//        QString str1="screenshot";
+//        QString str2=QString::number(Person->set_get_History().size()+1);
+//        QString str3=".png";
+//        QString filename = str1+str2+str3;
+//        screenshot.save(filename);
+//        // Get the path of the saved file
+//        QString path = QFileInfo(filename).absoluteFilePath();
+//        new_game_history.set_get_screenshot_path()=path;
+        // Get the geometry of the widget
+        QRect geometry = this->geometry();
+
+        // Get the list of available screens and select the primary screen
+        QList<QScreen*> screens = QApplication::screens();
+        QScreen* primaryScreen = screens.at(0);
+
+        // Take a screenshot of the area within the widget geometry
+        QPixmap screenshot = primaryScreen->grabWindow(0, geometry.x(), geometry.y(), geometry.width(), geometry.height());
+         QString str1="screenshot";
+         QString str2=QString::number(Person->set_get_History().size()+1);
+         QString str3=".png";
+         QString filename = str1+str2+str3;
+         screenshot.save(filename);
+         // Get the path of the saved file
+         QString path = QFileInfo(filename).absoluteFilePath();
+         new_game_history.set_get_screenshot_path()=path;
+
     }
     if(all_cards[card1].get_value()>all_cards[card2].get_value()){  //Counting opponent points
             if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
