@@ -1092,54 +1092,48 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
     ui->Who_starts->show();
     gifMovie->start();
     QEventLoop loop;
-    QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+    QTimer::singleShot(1000, &loop, &QEventLoop::quit);
     loop.exec();
-    if(Round==1){
     QMovie *gif;
+    if(Round==1){
     gif = new QMovie(":/new/prefix1/Round 1.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==2){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 2.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==3){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 3.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==4){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 4.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==5){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 5.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==6){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 6.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
     if(Round==7){
-    QMovie *gif;
     gif = new QMovie(":/new/prefix1/Round 7.gif");
     ui->label_Loading->setScaledContents(true);
     ui->label_Loading->setMovie(gif);
     ui->label_Loading->show();}
-    gifMovie->start();
+    gif->start();
     QEventLoop lOop;
-    QTimer::singleShot(3000, &lOop, &QEventLoop::quit);
-    loop.exec();
+    QTimer::singleShot(1000, &lOop, &QEventLoop::quit);
+    lOop.exec();
     ui->Who_starts->hide();
     ui->Card_you->hide();
     ui->Card_opponent->hide();
