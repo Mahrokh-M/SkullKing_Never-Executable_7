@@ -1291,6 +1291,20 @@ void mainGame::on_pushButton_Exit_clicked()//exit from game
     Person->set_get_History().prepend(new_game_history); //Add the new game to the list of all the user's game
     QString message="Exit Button Clicked";
     send_message(message);
+    QString filePath = "Users.txt";
+    QFile file(filePath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream out(&file);
+        for (auto it = People.begin(); it != People.end(); ++it) {
+            out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+            for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().end(); ++ot){
+                out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+            }
+            out<<"\n";
+        }
+        file.close();
+    }
     ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
     ui->label_result->raise();
     ui->label_result->show();

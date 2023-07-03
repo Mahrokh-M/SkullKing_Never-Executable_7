@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
             tmp.set_get_total_lose()=lose.toInt();
             tmp.set_get_avatar()=avatar.toInt();
             QStringList fields2=fields[1].split("!!");
-            for(int i=1;i!=fields2.size();i++){
+            for(int i=0;i!=fields2.size()-1;i++){
             QString opponent_username=fields2[i].split("/")[0];
             QString opponent_score=fields2[i].split("/")[1];
             QString user_score=fields2[i].split("/")[2];
