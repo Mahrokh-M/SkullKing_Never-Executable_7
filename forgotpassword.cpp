@@ -125,7 +125,11 @@ void ForgotPassword::on_pushButton_clicked()
             {
                 QTextStream out(&file);
                 for (auto it = People.begin(); it != People.end(); ++it) {
-                    out << it->set_get_name() << "/" <<it->set_get_userName() << "/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"\n";
+                    out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+                    for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().begin(); ++ot){
+                        out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+                    }
+                    out<<"\n";
                 }
                 file.close();
             }

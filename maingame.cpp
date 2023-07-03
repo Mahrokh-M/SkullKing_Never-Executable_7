@@ -22,7 +22,7 @@
 #include <QScreen>
 #include <QPixmap>
 #include <QFileInfo>
-
+int pause_clicked_count=0;//he should be able to puase twice
 bool show_guess=false;//after changing cards you shouldn't show lineedit guess
 int Guess;
 int Guess_opponent;
@@ -60,7 +60,11 @@ mainGame::mainGame(QWidget *parent) :
     {
         QTextStream out(&file);
         for (auto it = People.begin(); it != People.end(); ++it) {
-            out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"\n";
+            out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+            for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().begin(); ++ot){
+                out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+            }
+            out<<"\n";
         }
         file.close();
     }
@@ -405,6 +409,20 @@ void mainGame::readSocket()//this function reads all the messages
         QEventLoop loop;
         QTimer::singleShot(3000, &loop, &QEventLoop::quit);
         loop.exec();
+        QString filePath = "Users.txt";
+        QFile file(filePath);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QTextStream out(&file);
+            for (auto it = People.begin(); it != People.end(); ++it) {
+                out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+                for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().begin(); ++ot){
+                    out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+                }
+                out<<"\n";
+            }
+            file.close();
+        }
         this->close();
         MainMenu *main_page=new MainMenu();
         main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
@@ -1094,7 +1112,11 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
             {
                 QTextStream out(&file);
                 for (auto it = People.begin(); it != People.end(); ++it) {
-                    out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"\n";
+                    out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+                    for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().begin(); ++ot){
+                        out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+                    }
+                    out<<"\n";
                 }
                 file.close();
             }
@@ -1105,7 +1127,7 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
         }
         else if(Score_opponent>Score_you){
             new_game_history.set_get_result()="Lose";
-            //You lost and opponent won gif
+            //You lost and opponent won gif           
             ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
 
         }
@@ -1116,6 +1138,20 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
 
         }
         Person->set_get_History().prepend(new_game_history); //Add the new game to the list of all the user's game
+        QString filePath = "Users.txt";
+        QFile file(filePath);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            QTextStream out(&file);
+            for (auto it = People.begin(); it != People.end(); ++it) {
+                out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"||";
+                for (auto ot = it->set_get_History().begin(); ot != it->set_get_History().begin(); ++ot){
+                    out <<ot->set_get_opponent_username()<<"/"<<ot->set_get_opponent_score()<<"/"<<ot->set_get_user_score()<<"/"<<ot->set_get_game_id()<<"/"<<ot->set_get_result()<<"/"<<ot->set_get_screenshot_path()<<"!!";
+                }
+                out<<"\n";
+            }
+            file.close();
+        }
         ui->label_result->raise();
         ui->label_result->show();
         QEventLoop loop;
@@ -1134,6 +1170,8 @@ void mainGame::on_pushButton_Stop_clicked()//pausing the game
     QTimer* t=new QTimer(this);
 
         if(ui->pushButton_Stop->text()=="Pause"){
+           pause_clicked_count++;
+           if(pause_clicked_count<=2){
            ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
            ui->pushButton_Stop->setText("Resume");
            QString message;
@@ -1158,6 +1196,7 @@ void mainGame::on_pushButton_Stop_clicked()//pausing the game
 //                       Resume();
 //               }
 //        });
+           }
 
         }
         else if(ui->pushButton_Stop->text()=="Resume"){

@@ -15,16 +15,16 @@ int main(int argc, char *argv[])
         QTextStream in(&file);
         while (!in.atEnd()) {
             QString line = in.readLine();
-            QStringList fields = line.split("/");
-            QString name = fields[0];
-            QString username = fields[1];
-            QString phonenumber = fields[2];
-            QString email=fields[3];
-            QString password = fields[4];
-            QString money = fields[5];
-            QString win = fields[6];
-            QString lose = fields[7];
-            QString avatar = fields[8];
+            QStringList fields = line.split("||");
+            QString name = fields[0].split("/")[0];
+            QString username = fields[0].split("/")[1];
+            QString phonenumber = fields[0].split("/")[2];
+            QString email=fields[0].split("/")[3];
+            QString password = fields[0].split("/")[4];
+            QString money = fields[0].split("/")[5];
+            QString win = fields[0].split("/")[6];
+            QString lose = fields[0].split("/")[7];
+            QString avatar = fields[0].split("/")[8];
             User tmp;
             tmp.set_get_name()=name;
             tmp.set_get_userName()=username;
@@ -35,9 +35,25 @@ int main(int argc, char *argv[])
             tmp.set_get_total_win()=win.toInt();
             tmp.set_get_total_lose()=lose.toInt();
             tmp.set_get_avatar()=avatar.toInt();
-            People.push_back(tmp);
+            QStringList fields2=fields[1].split("!!");
+            for(int i=1;i!=fields2.size();i++){
+            QString opponent_username=fields2[i].split("/")[0];
+            QString opponent_score=fields2[i].split("/")[1];
+            QString user_score=fields2[i].split("/")[2];
+            QString game_id=fields2[i].split("/")[3];
+            QString result=fields2[i].split("/")[4];
+            QString screenshot_path=fields2[i].split("/")[5];
+            Game_history a;
+            a.set_get_opponent_username()=opponent_username;
+            a.set_get_opponent_score()=opponent_score;
+            a.set_get_user_score()=user_score;
+            a.set_get_game_id()=game_id;
+            a.set_get_result()=result;
+            a.set_get_screenshot_path()=screenshot_path;
+            tmp.set_get_History().push_back(a);
             }
-
+            People.push_back(tmp);
+         }
         file.close();
     }
     Login w;
