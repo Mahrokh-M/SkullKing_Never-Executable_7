@@ -1096,41 +1096,41 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
     loop.exec();
     QMovie *gif;
     if(Round==1){
-    gif = new QMovie(":/new/prefix1/Round 1.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==2){
     gif = new QMovie(":/new/prefix1/Round 2.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==3){
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
+    if(Round==2){
     gif = new QMovie(":/new/prefix1/Round 3.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==4){
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
+    if(Round==3){
     gif = new QMovie(":/new/prefix1/Round 4.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==5){
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
+    if(Round==4){
     gif = new QMovie(":/new/prefix1/Round 5.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==6){
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
+    if(Round==5){
     gif = new QMovie(":/new/prefix1/Round 6.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    if(Round==7){
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
+    if(Round==6){
     gif = new QMovie(":/new/prefix1/Round 7.gif");
-    ui->label_Loading->setScaledContents(true);
-    ui->label_Loading->setMovie(gif);
-    ui->label_Loading->show();}
-    gif->start();
+    ui->Who_starts->setScaledContents(true);
+    ui->Who_starts->setMovie(gif);
+    ui->Who_starts->show();
+     gif->start();}
     QEventLoop lOop;
     QTimer::singleShot(1000, &lOop, &QEventLoop::quit);
     lOop.exec();
