@@ -437,14 +437,16 @@ void mainGame::readSocket()//this function reads all the messages
         int opponent_index=str.split(" ")[1].toInt();
         int random_index = rand() % (Person->set_get_cards().size());
         QString message="card_to_change "+QString::number(Person->set_get_cards()[random_index]);//send message to other user to change his card with the given card
-        send_message(message);
         Person->set_get_cards().erase(Person->set_get_cards().begin()+random_index);
+        Person->set_get_cards().shrink_to_fit();
+        send_message(message);
         Person->set_get_cards().push_back(opponent_index);
         show_guess=true;
         ui->label_decide_change->hide();
         ui->Yes_change->hide();
         ui->No_change->hide();
         ui->Empty_label->hide();
+        hide_pushbuttons();
         show_pushbuttons();
     }
 
@@ -456,6 +458,7 @@ void mainGame::readSocket()//this function reads all the messages
         ui->Yes_change->hide();
         ui->No_change->hide();
         ui->Empty_label->hide();
+        hide_pushbuttons();
         show_pushbuttons();
     }
 }
@@ -808,12 +811,13 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
              break;
          }
        }
-      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41) || (Person->set_get_num_win()==0 && num_win_opponent==0)||(begin_set)){
+      if((all_cards[card1].get_type()==all_cards[card2].get_type())||(all_cards[card1].get_type()!=all_cards[card2].get_type()&&(!flag))||(card1>=32&&card1<=41)||(begin_set)){
          both_players_played++;
          QString message="Opponent_played_card "+QString::number(chosen_card)+" "+QString::number(both_players_played);
          send_message(message);
          int index=Person->set_get_cards().indexOf(chosen_card);
          Person->set_get_cards().erase(Person->set_get_cards().begin()+index);
+         Person->set_get_cards().shrink_to_fit();
          clicked_button->hide();
          ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[chosen_card]));
          ui->Card_you->show();
@@ -860,6 +864,7 @@ void mainGame::on_OK_Guess_clicked()//telling other user that you have guessed h
 }
 
 void mainGame::compare_cards(){//comparing cards and giving points
+     which_set_of_round++;
     if(Round==7 && which_set_of_round==2*Round){
         QScreen *screen = QGuiApplication::primaryScreen();
         // Capture the screenshot
@@ -986,7 +991,6 @@ void mainGame::compare_cards(){//comparing cards and giving points
                      }
        }
     }
-    which_set_of_round++;
     Score_you+=special_points;
     Score_opponent+=opponent_special_points;
     special_points=0;
@@ -1221,8 +1225,9 @@ void mainGame::on_Yes_change_clicked()
 {
     int random_index = rand() % (Person->set_get_cards().size());
     QString message="yes_change "+QString::number(Person->set_get_cards()[random_index]);
-    send_message(message);
     Person->set_get_cards().erase(Person->set_get_cards().begin()+random_index);
+    Person->set_get_cards().shrink_to_fit();
+    send_message(message);
     ui->label_decide_change->hide();
     ui->Yes_change->hide();
     ui->No_change->hide();

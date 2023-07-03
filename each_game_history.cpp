@@ -23,8 +23,8 @@ Each_game_history::Each_game_history(QWidget *parent) :
     ui->opponent_username->setText(selected_game.set_get_opponent_username());
     ui->your_score->setText(selected_game.set_get_user_score());
     ui->opponent_score->setText(selected_game.set_get_opponent_score());
-    if(selected_game.set_get_screenshot_path()==""){
-      ui->label_backoround->setStyleSheet(QString("border-image: url(%1);").arg(selected_game.set_get_screenshot_path()));
+    if(selected_game.set_get_screenshot_path()!=""){
+      ui->label_screenshot->setStyleSheet(QString("border-image: url(%1);").arg(selected_game.set_get_screenshot_path()));
     }
 }
 
