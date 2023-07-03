@@ -18,20 +18,25 @@ History::History(QWidget *parent) :
     scrollArea->setWidget(buttonsWidget);
 //    QLabel *label = new QLabel;
 //    label->setStyleSheet("border-image: url(:/new/prefix1/First_history_page.jpg);");
-    buttonsWidget->setStyleSheet("border-image: url(:/new/prefix1/First_history_page.jpg);");
+    buttonsWidget->setStyleSheet("QWidget {"
+                          "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #FAD0C4, stop:1 #FFA07A);"
+                          "}");
 
     // Create a QVBoxLayout for the QWidget
     QVBoxLayout *buttonsLayout = new QVBoxLayout(buttonsWidget);
     // Add the QScrollArea to your main widget or layout
     main_layout->addWidget(scrollArea);
     ui->pushButton_Back->raise();
+    ui->pushButton_Back->setStyleSheet("QPushButton {background-color: #FFA07A; border: 2px solid #FAD0C4; border-radius: 5px; color: white;} QPushButton:hover {background-color: #FF8C66; }");
+
 
     QVector<Game_history>::Iterator it=Person->set_get_History().begin();
     for(int i=0, j=10; i<Person->set_get_History().size(); i++, j+=35){ //j specifies the distance of each button from top
         QString button_name=it->set_get_game_id();
         // Create a new push button
         QPushButton *button = new QPushButton(button_name, this);
-        // Set the button's size and position
+        button->setStyleSheet("QPushButton {background-color: #FFA07A; border: 2px solid #FAD0C4; border-radius: 5px; color: white;} QPushButton:hover {background-color: #FF8C66; }");
+
         button->setGeometry(10, j, 300, 30);
         // Connect the button's clicked() signal to a slot
         connect(button, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
