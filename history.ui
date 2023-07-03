@@ -17,6 +17,19 @@
    <iconset resource="pictures.qrc">
     <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
   </property>
+  <widget class="QPushButton" name="pushButton_Back">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="pictures.qrc"/>

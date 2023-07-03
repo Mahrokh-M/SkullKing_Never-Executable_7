@@ -69,5 +69,6 @@
         <file>Exit_Button.png</file>
         <file>Change_cards.png</file>
         <file>coin.png</file>
+        <file>pic_frame.png</file>
     </qresource>
 </RCC>

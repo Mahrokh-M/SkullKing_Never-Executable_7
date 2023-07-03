@@ -77,6 +77,7 @@ void MainMenu::on_pushButton_history_clicked()
 {
     this->close();
     History* history_page=new History;
+    history_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     history_page->show();
 }
 

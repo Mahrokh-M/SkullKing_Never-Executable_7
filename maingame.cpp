@@ -17,6 +17,12 @@
 #include"thread"
 #include <qmath.h>
 #include"QFile"
+#include <chrono>
+#include <QApplication>
+#include <QScreen>
+#include <QPixmap>
+#include <QFileInfo>
+
 bool show_guess=false;//after changing cards you shouldn't show lineedit guess
 int Guess;
 int Guess_opponent;
@@ -30,7 +36,7 @@ Card all_cards[42]; //An array of all cards we have in the game
 QString all_paths[42];
 int card1;
 int card2;
-QString opponent_name;
+QString opponent_username;
 int opponent_avatar;
 QStringList reserved_cards; //This list holds the opponent cards during each round
 int both_players_played=0; //To check if both players has played or not
@@ -39,6 +45,8 @@ int Score_you=0;
 int Score_opponent=0;
 int special_points=0; //The extra point you get when you have King or Queen or Pirate
 int opponent_special_points=0;
+int which_set_of_round=0;
+Game_history new_game_history;
 void initializing_paths();
 mainGame::mainGame(QWidget *parent) :
     QWidget(parent),
@@ -145,7 +153,7 @@ mainGame::mainGame(QWidget *parent) :
     if(Person->set_get_avatar()==4)
         avatar_path=":/new/prefix1/avatar4.png";
        ui->Avatar_you->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path));
-       ui->name_you->setText(Person->set_get_name());
+       ui->name_you->setText(Person->set_get_userName());
     srand(time(NULL));
     initializing_paths();
     for (int i = 0; i < 8; i++) {
@@ -262,7 +270,7 @@ void mainGame::readSocket()//this function reads all the messages
    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
     if(str.split(" ")[0]=="Clientconnected"){
         QStringList opponent_information=str.split(" ");
-        opponent_name=opponent_information[1].split(",")[0];
+        opponent_username=opponent_information[1].split(",")[0];
         opponent_avatar=opponent_information[1].split(",")[1].toInt();
         QString avatar_path_opponent;
         if(opponent_avatar==1)
@@ -274,7 +282,7 @@ void mainGame::readSocket()//this function reads all the messages
         if(opponent_avatar==4)
             avatar_path_opponent=":/new/prefix1/avatar4.png";
         ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
-        ui->name_opppnent->setText(opponent_name);
+        ui->name_opppnent->setText(opponent_username);
         ui->label_Loading->hide();
         ui->pushButton_Stop->show();
         ui->pushButton_Exit->show();
@@ -295,7 +303,7 @@ void mainGame::readSocket()//this function reads all the messages
 
     else if(str.split(" ")[0]=="OpponentInformation"){
         QStringList opponent_information=str.split(" ");
-        opponent_name=opponent_information[1].split(",")[0];
+        opponent_username=opponent_information[1].split(",")[0];
         opponent_avatar=opponent_information[1].split(",")[1].toInt();
         card2=opponent_information[1].split(",")[2].toInt();
         card1=opponent_information[1].split(",")[3].toInt();
@@ -321,7 +329,7 @@ void mainGame::readSocket()//this function reads all the messages
         if(opponent_avatar==4)
             avatar_path_opponent=":/new/prefix1/avatar4.png";
         ui->Avatar_opponent->setStyleSheet(QString("border-image: url(%1);").arg(avatar_path_opponent));
-        ui->name_opppnent->setText(opponent_name);
+        ui->name_opppnent->setText(opponent_username);
         ui->Card_you->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card1]));
         ui->Card_opponent->setStyleSheet(QString("border-image: url(%1);").arg(all_paths[card2]));
         hide_pushbuttons();
@@ -381,6 +389,16 @@ void mainGame::readSocket()//this function reads all the messages
     }
 
     else if(str=="Exit Button Clicked"){
+        new_game_history.set_get_user_score()=QString::number(Score_you);
+        new_game_history.set_get_opponent_score()=QString::number(Score_opponent);
+        new_game_history.set_get_opponent_username()=opponent_username;
+        new_game_history.set_get_result()="Win";
+        auto date_of_game = std::chrono::system_clock::now();
+        time_t time = std::chrono::system_clock::to_time_t(date_of_game);
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
+        new_game_history.set_get_game_id()=QString::fromUtf8(buffer);
+        Person->set_get_History().prepend(new_game_history); //Add the new game to the list of all the user's game
         ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
         ui->label_result->raise();
         ui->label_result->show();
@@ -392,18 +410,29 @@ void mainGame::readSocket()//this function reads all the messages
         main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         main_page->show();
     }
+
     else if(str=="change cards"){
         ui->label_decide_change->show();
         ui->Yes_change->show();
         ui->No_change->show();
         ui->Empty_label->show();
     }
+
     else if(str=="no_change"){
         ui->label_decide_change->hide();
         ui->Yes_change->hide();
         ui->No_change->hide();
         ui->Empty_label->hide();
+        QMessageBox messageBox;
+        messageBox.setWindowTitle("Error");
+        messageBox.setIcon(QMessageBox::Information);
+        messageBox.setStyleSheet("QMessageBox { background-color: #c96f30; color: white; font-size: 16px; font-weight: bold; }");
+        QAbstractButton* okButton = messageBox.addButton("Ok", QMessageBox::AcceptRole);
+        okButton->setStyleSheet("background-color: #ff8b3d; color: black; font-size: 16px; font-weight: bold;");
+        messageBox.setText("Your request was rejected!");
+        messageBox.exec();
     }
+
     else if(str.split(" ")[0]=="yes_change"){
         int opponent_index=str.split(" ")[1].toInt();
         int random_index = rand() % (Person->set_get_cards().size());
@@ -418,6 +447,7 @@ void mainGame::readSocket()//this function reads all the messages
         ui->Empty_label->hide();
         show_pushbuttons();
     }
+
     else if(str.split(" ")[0]=="card_to_change"){
         int opponent_index=str.split(" ")[1].toInt();
         Person->set_get_cards().push_back(opponent_index);
@@ -473,7 +503,7 @@ void mainGame::on_OK_clicked()//when client connects
    ui->num_win->show();
    ui->label_Num_win->show();
    hide_pushbuttons();
-   QString str = "Clientconnected "+Person->set_get_name()+","+QString::number(Person->set_get_avatar());
+   QString str = "Clientconnected "+Person->set_get_userName()+","+QString::number(Person->set_get_avatar());
 //   QDataStream socketStream(socket);
 //   socketStream.setVersion(QDataStream::Qt_5_15);
    QByteArray byteArray = str.toUtf8();
@@ -488,7 +518,7 @@ void mainGame::on_OK_clicked()//when client connects
 }
 
 void mainGame::who_start(){ //This funcion gives each player a random card to specify the beginner of the round
-    QString str1 = Person->set_get_name()+","+QString::number(Person->set_get_avatar())+",";
+    QString str1 = Person->set_get_userName()+","+QString::number(Person->set_get_avatar())+",";
     str1.prepend("OpponentInformation ");
     int random_index;
     while(true){
@@ -830,7 +860,20 @@ void mainGame::on_OK_Guess_clicked()//telling other user that you have guessed h
 }
 
 void mainGame::compare_cards(){//comparing cards and giving points
-
+    if(Round==7 && which_set_of_round==2*Round){
+        QScreen *screen = QGuiApplication::primaryScreen();
+        // Capture the screenshot
+        QPixmap screenshot = screen->grabWindow(0);
+        // Save the screenshot to a file
+        QString str1="screenshot";
+        QString str2=QString::number(Person->set_get_History().size()+1);
+        QString str3=".png";
+        QString filename = str1+str2+str3;
+        screenshot.save(filename);
+        // Get the path of the saved file
+        QString path = QFileInfo(filename).absoluteFilePath();
+        new_game_history.set_get_screenshot_path()=path;
+    }
     if(all_cards[card1].get_value()>all_cards[card2].get_value()){  //Counting opponent points
             if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
                     special_points+=10;}
@@ -943,7 +986,7 @@ void mainGame::compare_cards(){//comparing cards and giving points
                      }
        }
     }
-
+    which_set_of_round++;
     Score_you+=special_points;
     Score_opponent+=opponent_special_points;
     special_points=0;
@@ -979,7 +1022,7 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
             Score_you-=Round*10;
         }
         else{
-            Score_you-=qAbs(Person->set_get_num_win()-Guess);
+            Score_you-=qAbs(Person->set_get_num_win()-Guess)*10;
         }
         gifMovie = new QMovie(":/new/prefix1/no point.gif");
     }
@@ -997,7 +1040,7 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
             Score_opponent-=Round*10;
         }
         else{
-            Score_opponent-=qAbs(num_win_opponent-Guess_opponent); //Difference between guess and number of won set
+            Score_opponent-=qAbs(num_win_opponent-Guess_opponent)*10; //Difference between guess and number of won set
         }
     }
     special_points=0;
@@ -1018,6 +1061,7 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
     if(Round!=7){
         Round++;
         compare_count=0;
+        which_set_of_round=0;
         Person->set_get_num_win()=0;
         num_win_opponent=0;
         has_clicked_OK=false;
@@ -1027,7 +1071,18 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
         handing_out_cards();
     }
     else if(Round==7){ //end of game :)
+
+        new_game_history.set_get_user_score()=QString::number(Score_you);
+        new_game_history.set_get_opponent_score()=QString::number(Score_opponent);
+        new_game_history.set_get_opponent_username()=opponent_username;
+        auto date_of_game = std::chrono::system_clock::now();
+        time_t time = std::chrono::system_clock::to_time_t(date_of_game);
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
+        new_game_history.set_get_game_id()=QString::fromUtf8(buffer);
+
         if(Score_you >Score_opponent){
+            new_game_history.set_get_result()="Win";
             Person->set_get_money()=QString::number(Person->set_get_money().toInt()+100);//winner wins 100 coins and then we write the info in file
             QString filePath = "Users.txt";
             QFile file(filePath);
@@ -1040,47 +1095,32 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
                 file.close();
             }
           ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
-           ui->label_result->raise();
-          ui->label_result->show();
-          ui->pushButton_Stop->hide();
-          ui->pushButton_Exit->hide();
-          QEventLoop loop;
-          QTimer::singleShot(3000, &loop, &QEventLoop::quit);
-          loop.exec();
-          this->close();
-          MainMenu *main_page=new MainMenu();
-          main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-          main_page->show();
+          //ui->pushButton_Stop->hide();
+          //ui->pushButton_Exit->hide();
 
         }
         else if(Score_opponent>Score_you){
+            new_game_history.set_get_result()="Lose";
             //You lost and opponent won gif
             ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
-            ui->label_result->raise();
-            ui->label_result->show();
-            QEventLoop loop;
-            QTimer::singleShot(3000, &loop, &QEventLoop::quit);
-            loop.exec();
-            this->close();
-            MainMenu *main_page=new MainMenu();
-            main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-            main_page->show();
 
         }
         else{
+            new_game_history.set_get_result()="Tie";
             //no one win gif
             ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/Tie.png"));
-            ui->label_result->raise();
-            ui->label_result->show();
-            QEventLoop loop;
-            QTimer::singleShot(3000, &loop, &QEventLoop::quit);
-            loop.exec();
-            this->close();
-            MainMenu *main_page=new MainMenu();
-            main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-            main_page->show();
 
         }
+        Person->set_get_History().prepend(new_game_history); //Add the new game to the list of all the user's game
+        ui->label_result->raise();
+        ui->label_result->show();
+        QEventLoop loop;
+        QTimer::singleShot(3000, &loop, &QEventLoop::quit);
+        loop.exec();
+        this->close();
+        MainMenu *main_page=new MainMenu();
+        main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+        main_page->show();
     }
 
 }
@@ -1138,6 +1178,16 @@ void mainGame::Resume(int seconds_passed){//resuming the game
 
 void mainGame::on_pushButton_Exit_clicked()//exit from game
 {
+    new_game_history.set_get_user_score()=QString::number(Score_you);
+    new_game_history.set_get_opponent_score()=QString::number(Score_opponent);
+    new_game_history.set_get_opponent_username()=opponent_username;
+    new_game_history.set_get_result()="Lose";
+    auto date_of_game = std::chrono::system_clock::now();
+    time_t time = std::chrono::system_clock::to_time_t(date_of_game);
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
+    new_game_history.set_get_game_id()=QString::fromUtf8(buffer);
+    Person->set_get_History().prepend(new_game_history); //Add the new game to the list of all the user's game
     QString message="Exit Button Clicked";
     send_message(message);
     ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Lost.png"));
@@ -1167,7 +1217,6 @@ void mainGame::on_change_card_button_clicked()//changing cards request
     ui->Empty_label->show();
 }
 
-
 void mainGame::on_Yes_change_clicked()
 {
     int random_index = rand() % (Person->set_get_cards().size());
@@ -1180,7 +1229,6 @@ void mainGame::on_Yes_change_clicked()
     ui->Empty_label->hide();
 
 }
-
 
 void mainGame::on_No_change_clicked()
 {

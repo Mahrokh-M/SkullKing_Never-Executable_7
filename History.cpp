@@ -1,7 +1,8 @@
 #include "history.h"
 #include "ui_history.h"
 #include <globals.h>
-#include<QPushButton>>
+#include<QPushButton>
+#include "mainmenu.h"
 History::History(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::History)
@@ -23,6 +24,7 @@ History::History(QWidget *parent) :
     QVBoxLayout *buttonsLayout = new QVBoxLayout(buttonsWidget);
     // Add the QScrollArea to your main widget or layout
     main_layout->addWidget(scrollArea);
+    ui->pushButton_Back->raise();
 
     QVector<Game_history>::Iterator it=Person->set_get_History().begin();
     for(int i=0, j=10; i<Person->set_get_History().size(); i++, j+=35){ //j specifies the distance of each button from top
@@ -48,6 +50,7 @@ Game_history::Game_history() {
     opponent_score = "";
     result="";
     game_id="";
+    screenshot_path="";
 }
 Game_history::Game_history(QString opponent_username, QString opponent_score, QString user_score, QString result, QString game_id) {
     this->opponent_username = opponent_username;
@@ -56,20 +59,23 @@ Game_history::Game_history(QString opponent_username, QString opponent_score, QS
     this->result=result;
     this->game_id=game_id;
 }
-QString Game_history::set_get_opponent_username() {
+QString& Game_history::set_get_opponent_username() {
     return opponent_username;
 }
-QString Game_history::set_get_opponent_score() {
+QString& Game_history::set_get_opponent_score() {
     return opponent_score;
 }
-QString Game_history::set_get_user_score() {
+QString& Game_history::set_get_user_score() {
     return user_score;
 }
-QString Game_history::set_get_result() {
+QString& Game_history::set_get_result() {
     return result;
 }
-QString Game_history::set_get_game_id() {
+QString& Game_history::set_get_game_id() {
     return game_id;
+}
+QString& Game_history::set_get_screenshot_path(){
+    return screenshot_path;
 }
 void History::onButtonClicked() //All these pushbuttons have same slot, that gets the id of the selected game and then open the related ui
 {
@@ -82,6 +88,16 @@ void History::onButtonClicked() //All these pushbuttons have same slot, that get
         chosen_game_id=clicked_buttonText;
         this->close();
         Each_game_history* a=new Each_game_history;
+        a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         a->show();
     }
 }
+
+void History::on_pushButton_Back_clicked()
+{
+    this->close();
+    MainMenu *main_page=new MainMenu();
+    main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    main_page->show();
+}
+

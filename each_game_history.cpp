@@ -7,6 +7,7 @@ Each_game_history::Each_game_history(QWidget *parent) :
     ui(new Ui::Each_game_history)
 {
     ui->setupUi(this);
+    qDebug()<<Person->set_get_userName();
     Game_history selected_game;
     for(auto it=Person->set_get_History().begin(); it!=Person->set_get_History().end(); it++){
         if(it->set_get_game_id()==chosen_game_id)
@@ -22,9 +23,21 @@ Each_game_history::Each_game_history(QWidget *parent) :
     ui->opponent_username->setText(selected_game.set_get_opponent_username());
     ui->your_score->setText(selected_game.set_get_user_score());
     ui->opponent_score->setText(selected_game.set_get_opponent_score());
+    if(selected_game.set_get_screenshot_path()==""){
+      ui->label_backoround->setStyleSheet(QString("border-image: url(%1);").arg(selected_game.set_get_screenshot_path()));
+    }
 }
 
 Each_game_history::~Each_game_history()
 {
     delete ui;
 }
+
+void Each_game_history::on_pushButton_back_clicked()
+{
+    this->close();
+    History *prev_page=new History();
+    prev_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    prev_page->show();
+}
+
