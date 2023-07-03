@@ -16,7 +16,7 @@
 #include"mainmenu.h"
 #include"thread"
 #include <qmath.h>
-
+bool show_guess=false;//after changing cards you shouldn't show lineedit guess
 int Guess;
 int Guess_opponent;
 int num_win_opponent=0;
@@ -50,7 +50,52 @@ mainGame::mainGame(QWidget *parent) :
     ui->label_result->hide();
     ui->num_win->hide();
     ui->label_Num_win->hide();
+    ui->change_card_button->hide();
+    ui->label_decide_change->hide();
+    ui->Yes_change->hide();
+    ui->No_change->hide();
+    ui->Empty_label->hide();
     ui->OK_Guess->setStyleSheet("QPushButton {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
+                                "border-style: solid;"
+                                "border-width: 2px;"
+                                "border-radius: 10px;"
+                                "border-color: #FFA500;"
+                                "color: black;"
+                                "font-size: 18px;"
+                                "padding: 6px 12px;"
+                            "}"
+
+                            "QPushButton:hover {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFDAB9, stop:1 #FFA500);"
+                                "border-color: #FFA500;"
+                            "}"
+
+                            "QPushButton:pressed {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
+                                "border-color: #FF8C00;"
+                            "}");
+    ui->Yes_change->setStyleSheet("QPushButton {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
+                                "border-style: solid;"
+                                "border-width: 2px;"
+                                "border-radius: 10px;"
+                                "border-color: #FFA500;"
+                                "color: black;"
+                                "font-size: 18px;"
+                                "padding: 6px 12px;"
+                            "}"
+
+                            "QPushButton:hover {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFDAB9, stop:1 #FFA500);"
+                                "border-color: #FFA500;"
+                            "}"
+
+                            "QPushButton:pressed {"
+                                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FF8C00, stop:1 #FFA500);"
+                                "border-color: #FF8C00;"
+                            "}");
+    ui->No_change->setStyleSheet("QPushButton {"
                                 "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFA500, stop:1 #FF8C00);"
                                 "border-style: solid;"
                                 "border-width: 2px;"
@@ -73,6 +118,7 @@ mainGame::mainGame(QWidget *parent) :
     ui->pushButton_Stop->hide();
     ui->pushButton_Exit->setStyleSheet(QString("border-image: url(:/new/prefix1/Exit_Button.png);"));
     ui->pushButton_Exit->hide();
+    ui->change_card_button->setStyleSheet(QString("border-image: url(:/new/prefix1/Change_cards.png);"));
     ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/StopButton.png);"));
     ui->pushButton_Stop->setText("Pause");
     ui->Point_you->setText(QString::number(Score_you));
@@ -197,14 +243,9 @@ mainGame::~mainGame()
     delete ui;
 }
 
-void mainGame::readSocket()
+void mainGame::readSocket()//this function reads all the messages
 {
     QByteArray buffer;
-
-//    QDataStream socketStream(socket);
-//    socketStream.setVersion(QDataStream::Qt_5_15);
-
-//    socketStream.startTransaction();
     buffer=socket->readAll();
    QString str = QString("%1").arg(QString::fromStdString(buffer.toStdString()));
     if(str.split(" ")[0]=="Clientconnected"){
@@ -231,6 +272,7 @@ void mainGame::readSocket()
         ui->lineEdit_enter_IP->hide();
         ui->num_win->show();
         ui->label_Num_win->show();
+        ui->change_card_button->show();
         who_start();
     }
 
@@ -289,11 +331,6 @@ void mainGame::readSocket()
         ui->Card_opponent->show();
         if(both_players_played==2){
             both_players_played=0;
-//            if(card1>card2)
-//                begin_set=true;
-//            else if(card2>card1)
-//                begin_set=false;
-
             QString message="call compare function";
             send_message(message);
             compare_cards();
@@ -307,10 +344,6 @@ void mainGame::readSocket()
 
     else if(str=="call compare function"){
         both_players_played=0;
-//        if(card1>card2)
-//            begin_set=true;
-//        else if(card2>card1)
-//            begin_set=false;
         compare_cards();
 
     }
@@ -347,6 +380,42 @@ void mainGame::readSocket()
         main_page->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         main_page->show();
     }
+    else if(str=="change cards"){
+        ui->label_decide_change->show();
+        ui->Yes_change->show();
+        ui->No_change->show();
+        ui->Empty_label->show();
+    }
+    else if(str=="no_change"){
+        ui->label_decide_change->hide();
+        ui->Yes_change->hide();
+        ui->No_change->hide();
+        ui->Empty_label->hide();
+    }
+    else if(str.split(" ")[0]=="yes_change"){
+        int opponent_index=str.split(" ")[1].toInt();
+        int random_index = rand() % (Person->set_get_cards().size());
+        QString message="card_to_change "+QString::number(Person->set_get_cards()[random_index]);//send message to other user to change his card with the given card
+        send_message(message);
+        Person->set_get_cards().erase(Person->set_get_cards().begin()+random_index);
+        Person->set_get_cards().push_back(opponent_index);
+        show_guess=true;
+        ui->label_decide_change->hide();
+        ui->Yes_change->hide();
+        ui->No_change->hide();
+        ui->Empty_label->hide();
+        show_pushbuttons();
+    }
+    else if(str.split(" ")[0]=="card_to_change"){
+        int opponent_index=str.split(" ")[1].toInt();
+        Person->set_get_cards().push_back(opponent_index);
+        show_guess=true;
+        ui->label_decide_change->hide();
+        ui->Yes_change->hide();
+        ui->No_change->hide();
+        ui->Empty_label->hide();
+        show_pushbuttons();
+    }
 }
 
 void mainGame::discardSocket()
@@ -377,13 +446,14 @@ void mainGame::displayError(QAbstractSocket::SocketError socketError)
     }
 }
 
-void mainGame::on_OK_clicked()
+void mainGame::on_OK_clicked()//when client connects
 {
   socket->connectToHost(ui->lineEdit_enter_IP->text(),8080);
   if(socket->waitForConnected()){
    ui->label_Loading->hide();
    ui->pushButton_Stop->show();
    ui->pushButton_Exit->show();
+   ui->change_card_button->show();
    ui->IP->hide();
    ui->IP_show->hide();
    ui->OK->hide();
@@ -474,7 +544,7 @@ void mainGame::send_message(QString input_message){ //This function recieves a m
 
 }
 
-void mainGame::handing_out_cards(){
+void mainGame::handing_out_cards(){//giving random cards to each player
           for(int i=0;i<42;i++){
               all_cards[i].set_get_isReserved()=false;
           }
@@ -511,7 +581,7 @@ void mainGame::handing_out_cards(){
 
 }
 
-void initializing_paths(){
+void initializing_paths(){//setting paths for each photo in an array so that the all cards array can find the address to each card's photo
     all_paths[0]=":/new/prefix1/Treasure1.png";
     all_paths[1]=":/new/prefix1/Treasure2.png";
     all_paths[2]=":/new/prefix1/Treasure3.png";
@@ -556,7 +626,7 @@ void initializing_paths(){
     all_paths[41]=":/new/prefix1/Queen.png";
 }
 
-void mainGame::hide_pushbuttons(){
+void mainGame::hide_pushbuttons(){//hiding all cards pushbuttons
     ui->pushButton_1->hide();
     ui->pushButton_2->hide();
     ui->pushButton_3->hide();
@@ -573,7 +643,7 @@ void mainGame::hide_pushbuttons(){
     ui->pushButton_14->hide();
 }
 
-void mainGame::show_pushbuttons(){
+void mainGame::show_pushbuttons(){//setting pictures for card pushbuttons from the middle
     //7,8,6,9,5,10,4,11,3,12,2,13,1,14 order of choosing pushbutton to show cards
       int last_card_shown=0;
       if(last_card_shown < Person->set_get_cards().size()){
@@ -660,11 +730,14 @@ void mainGame::show_pushbuttons(){
         ui->pushButton_14->show();
         last_card_shown++;
       }
-      ui->OK_Guess->show();
-      ui->lineEdit_Enter_guess->show();
+      if(!show_guess){
+        ui->OK_Guess->show();
+        ui->lineEdit_Enter_guess->show();}
+      else
+        show_guess=false;
 }
 
-void mainGame::connect_pushbutton(){
+void mainGame::connect_pushbutton(){//connecting card pushbuttons to one slot
     connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
     connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
@@ -716,7 +789,7 @@ void mainGame::onButtonClicked(){ //delete chosen card from user's cards list an
   }
 }
 
-void mainGame::on_OK_Guess_clicked()
+void mainGame::on_OK_Guess_clicked()//telling other user that you have guessed how many rounds you will win
 {
     QMessageBox messageBox;
     messageBox.setWindowTitle("Error");
@@ -744,7 +817,7 @@ void mainGame::on_OK_Guess_clicked()
     }
 }
 
-void mainGame::compare_cards(){
+void mainGame::compare_cards(){//comparing cards and giving points
 
     if(all_cards[card1].get_value()>all_cards[card2].get_value()){  //Counting opponent points
             if(all_cards[card1].get_type()=="pirate" || all_cards[card2].get_type()=="pirate"){
@@ -877,7 +950,7 @@ void mainGame::compare_cards(){
     }
 }
 
-void mainGame::end_of_round(){
+void mainGame::end_of_round(){//things to do at the end of each round and the end of game
        QMovie *gifMovie;
     if(Person->set_get_num_win()==Guess){
         if(Guess==0){
@@ -991,7 +1064,7 @@ void mainGame::end_of_round(){
 
 }
 
-void mainGame::on_pushButton_Stop_clicked()
+void mainGame::on_pushButton_Stop_clicked()//pausing the game
 {
     QTimer* t=new QTimer(this);
 
@@ -1029,8 +1102,7 @@ void mainGame::on_pushButton_Stop_clicked()
 
 }
 
-
-void mainGame::Resume(int seconds_passed){
+void mainGame::Resume(int seconds_passed){//resuming the game
 
     if(seconds_passed==0){
        QString message;
@@ -1043,7 +1115,7 @@ void mainGame::Resume(int seconds_passed){
     else seconds_passed--;
 }
 
-void mainGame::on_pushButton_Exit_clicked()
+void mainGame::on_pushButton_Exit_clicked()//exit from game
 {
     QString message="Exit Button Clicked";
     send_message(message);
@@ -1059,32 +1131,43 @@ void mainGame::on_pushButton_Exit_clicked()
     main_page->show();
 }
 
-void thread_pause::run()
+void mainGame::on_change_card_button_clicked()//changing cards request
 {
-//    if(ui->pushButton_Stop->text()=="Pause"){
-//       ui->pushButton_Stop->setStyleSheet(QString("color:transparent; border-image: url(:/new/prefix1/ResumeButton.png);"));
-//       ui->pushButton_Stop->setText("Resume");
-//       QString message;
-//       message="Stop_Resume show_gif"; //Tell the other user to to stop the game and show gif
-//       send_message(message);
-//       QMovie *gif;
-//       gif = new QMovie(":/new/prefix1/Stop_gif.gif");
-//       ui->label_Loading->setScaledContents(true);
-//       ui->label_Loading->setMovie(gif);
-//       ui->label_Loading->show();
-//       ui->label_Loading->raise();
-//       ui->pushButton_Stop->raise(); //This brings the button to front
-//       ui->pushButton_Exit->raise();
-////       connect(gif, &QMovie::frameChanged, [=](int frameNumber) {
-////           if (frameNumber == gif->frameCount() - 1) {
-////               if (gif->loopCount() == 1) {
-////                   qDebug() << "Animation has played once!";
-////               }
-////           }
-////       });
-//       gif->start();
-//    }
-//    else if(ui->pushButton_Stop->text()=="Resume")
-//        Resume();
-    qDebug()<<"hi";
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Error");
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setStyleSheet("QMessageBox { background-color: #c96f30; color: white; font-size: 16px; font-weight: bold; }");
+    QAbstractButton* okButton = messageBox.addButton("Ok", QMessageBox::AcceptRole);
+    okButton->setStyleSheet("background-color: #ff8b3d; color: black; font-size: 16px; font-weight: bold;");
+    messageBox.setText("Your request was sent!");
+    messageBox.exec();
+    QString message="change cards";
+    send_message(message);
+    ui->Empty_label->show();
 }
+
+
+void mainGame::on_Yes_change_clicked()
+{
+    int random_index = rand() % (Person->set_get_cards().size());
+    QString message="yes_change "+QString::number(Person->set_get_cards()[random_index]);
+    send_message(message);
+    Person->set_get_cards().erase(Person->set_get_cards().begin()+random_index);
+    ui->label_decide_change->hide();
+    ui->Yes_change->hide();
+    ui->No_change->hide();
+    ui->Empty_label->hide();
+
+}
+
+
+void mainGame::on_No_change_clicked()
+{
+    ui->label_decide_change->hide();
+    ui->Yes_change->hide();
+    ui->No_change->hide();
+    ui->Empty_label->hide();
+    QString message="no_change";
+    send_message(message);
+}
+

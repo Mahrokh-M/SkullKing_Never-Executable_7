@@ -67,5 +67,6 @@
         <file>ResumeButton.png</file>
         <file>Stop_gif.gif</file>
         <file>Exit_Button.png</file>
+        <file>Change_cards.png</file>
     </qresource>
 </RCC>

@@ -50,15 +50,18 @@ private slots:
     void on_pushButton_Exit_clicked();
 
     void Resume(int);
+    void on_change_card_button_clicked();
+
+    void on_Yes_change_clicked();
+
+    void on_No_change_clicked();
+
 protected:
     Ui::mainGame *ui;
 
     QTcpSocket* socket;
     int seconds_passed;
 };
-class thread_pause:public QThread,public mainGame{//thread for pausing during the game
-public:
-    void run();
-};
+
 
 #endif // MAINGAME_H
