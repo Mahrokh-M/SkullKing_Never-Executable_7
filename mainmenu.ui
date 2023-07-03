@@ -18,7 +18,7 @@
     <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">border-image: url(:/new/prefix1/981.jpg);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="pushButton_edit">
@@ -29,6 +29,9 @@
       <width>211</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -85,16 +88,62 @@
      <string>Exit</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>25</height>
-    </rect>
-   </property>
+   <widget class="QLabel" name="Coin_label">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>20</y>
+      <width>71</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/coin.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="num_coin_label">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>70</y>
+      <width>111</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 28pt &quot;Segoe Print&quot;;
+color: rgb(255, 211, 0);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Background">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-10</y>
+      <width>811</width>
+      <height>621</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/new/prefix1/981.jpg);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>Background</zorder>
+   <zorder>pushButton_edit</zorder>
+   <zorder>pushButton_start</zorder>
+   <zorder>pushButton_history</zorder>
+   <zorder>pushButton_exit</zorder>
+   <zorder>Coin_label</zorder>
+   <zorder>num_coin_label</zorder>
   </widget>
  </widget>
  <resources>

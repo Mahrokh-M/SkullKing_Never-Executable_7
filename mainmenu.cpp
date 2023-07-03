@@ -3,16 +3,15 @@
 #include "edit_information.h"
 #include "login.h"
 #include"selection.h"
+#include"globals.h"
 MainMenu::MainMenu(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
+    ui->num_coin_label->setText(Person->set_get_money());
     ui->pushButton_start->setStyleSheet("QPushButton {"
                                        " border-image: url(:/new/prefix1/push button background.jpg);"
-                                       " background-repeat: no-repeat;"
-                                       " background-position: center;"
-                                       " border: none;"
                                        "padding: 3px 3px;"
                                        "font: 20pt Lucida Calligraphy;"
                                        "color: rgb(255, 255, 255);"
@@ -22,22 +21,14 @@ MainMenu::MainMenu(QWidget *parent)
                                        );
     ui->pushButton_edit->setStyleSheet("QPushButton {"
                                        " border-image: url(:/new/prefix1/push button background.jpg);"
-                                       " background-repeat: no-repeat;"
-                                       " background-position: center;"
-                                       " border: none;"
                                        "padding: 3px 3px;"
                                        "font: 20pt Lucida Calligraphy;"
                                        "color: rgb(255, 255, 255);"
                                        "border-radius: 25px;}"
-
-
                                        "QPushButton:hover{ outline: 3px solid rgb(196, 106, 27);}");
 
     ui->pushButton_history->setStyleSheet("QPushButton {"
                                        " border-image: url(:/new/prefix1/push button background.jpg);"
-                                       " background-repeat: no-repeat;"
-                                       " background-position: center;"
-                                       " border: none;"
                                        "padding: 3px 3px;"
                                        "font: 20pt Lucida Calligraphy;"
                                        "color: rgb(255, 255, 255);"
@@ -47,9 +38,6 @@ MainMenu::MainMenu(QWidget *parent)
                                        );
     ui->pushButton_exit->setStyleSheet("QPushButton {"
                                        " border-image: url(:/new/prefix1/push button background.jpg);"
-                                       " background-repeat: no-repeat;"
-                                       " background-position: center;"
-                                       " border: none;"
                                        "padding: 3px 3px;"
                                        "font: 20pt Lucida Calligraphy;"
                                        "color: rgb(255, 255, 255);"

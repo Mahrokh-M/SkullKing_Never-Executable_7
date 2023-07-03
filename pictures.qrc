@@ -68,5 +68,6 @@
         <file>Stop_gif.gif</file>
         <file>Exit_Button.png</file>
         <file>Change_cards.png</file>
+        <file>coin.png</file>
     </qresource>
 </RCC>

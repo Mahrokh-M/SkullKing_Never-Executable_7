@@ -16,6 +16,7 @@
 #include"mainmenu.h"
 #include"thread"
 #include <qmath.h>
+#include"QFile"
 bool show_guess=false;//after changing cards you shouldn't show lineedit guess
 int Guess;
 int Guess_opponent;
@@ -44,6 +45,17 @@ mainGame::mainGame(QWidget *parent) :
     ui(new Ui::mainGame)
 {
     ui->setupUi(this);
+    Person->set_get_money()=QString::number(Person->set_get_money().toInt()-50);//each person loses 50 coins and then we write the info in file
+    QString filePath = "Users.txt";
+    QFile file(filePath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream out(&file);
+        for (auto it = People.begin(); it != People.end(); ++it) {
+            out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"\n";
+        }
+        file.close();
+    }
     QIntValidator* validator = new QIntValidator();
     ui->lineEdit_Enter_guess->setValidator(validator);
     ui->Who_starts->hide();
@@ -988,8 +1000,6 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
             Score_opponent-=qAbs(num_win_opponent-Guess_opponent); //Difference between guess and number of won set
         }
     }
-//    Score_you+=special_points;
-//    Score_opponent+=opponent_special_points;
     special_points=0;
     opponent_special_points=0;
     ui->Point_you->setText(QString::number(Score_you));
@@ -1018,6 +1028,17 @@ void mainGame::end_of_round(){//things to do at the end of each round and the en
     }
     else if(Round==7){ //end of game :)
         if(Score_you >Score_opponent){
+            Person->set_get_money()=QString::number(Person->set_get_money().toInt()+100);//winner wins 100 coins and then we write the info in file
+            QString filePath = "Users.txt";
+            QFile file(filePath);
+            if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                QTextStream out(&file);
+                for (auto it = People.begin(); it != People.end(); ++it) {
+                    out << it->set_get_name() <<"/" <<it->set_get_userName() <<"/"<<it->set_get_phoneNumber()<< "/"<<it->set_get_email()<<"/"<<it->set_get_password()<< "/"<<it->set_get_money()<< "/"<<it->set_get_total_win()<< "/"<<it->set_get_total_lose()<<"/"<<it->set_get_avatar()<<"\n";
+                }
+                file.close();
+            }
           ui->label_result->setStyleSheet(QString("border-image: url(%1);").arg(":/new/prefix1/You Win.png"));
            ui->label_result->raise();
           ui->label_result->show();
