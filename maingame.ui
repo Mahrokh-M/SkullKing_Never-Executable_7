@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pictures.qrc">
+    <normaloff>:/new/prefix1/Skull.jpg</normaloff>:/new/prefix1/Skull.jpg</iconset>
+  </property>
   <widget class="QLabel" name="label_background">
    <property name="geometry">
     <rect>
@@ -315,9 +319,10 @@ font: 0pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(255, 255, 255);
-font: 700 24pt &quot;Tw Cen MT&quot;;
+font: 700 22pt &quot;Tw Cen MT&quot;;
 border-radius:10px;
-background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));</string>
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));
+padding:2px;</string>
    </property>
    <property name="text">
     <string/>
@@ -364,7 +369,9 @@ background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 
     <string notr="true">color: rgb(255, 255, 255);
 font: 700 24pt &quot;Tw Cen MT&quot;;
 border-radius:10px;
-background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));</string>
+background-color: qlineargradient(spread:repeat, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(184, 121, 255, 255), stop:1 rgba(143, 255, 236, 255));
+padding:2px;
+</string>
    </property>
    <property name="placeholderText">
     <string>Enter Server IP</string>
@@ -743,6 +750,8 @@ font: 700 16pt &quot;Segoe Script&quot;;</string>
   <zorder>Yes_change</zorder>
   <zorder>No_change</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

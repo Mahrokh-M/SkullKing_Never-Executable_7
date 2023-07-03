@@ -3,6 +3,7 @@
 #include "maingame.h"
 #include"server.h"
 #include"globals.h"
+#include"mainmenu.h"
 Selection::Selection(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Selection)
@@ -22,6 +23,19 @@ Selection::Selection(QWidget *parent) :
                               "    background-color: #7b4331;"
                               "}");
     ui->Client->setStyleSheet("QPushButton {"
+                              "    border-radius: 10px;"
+                              "    background-color: #3b1e10;"
+                              "    color: #fbf7eb;"
+                              "    font-weight: bold;"
+                              "    font-size: 20px;"
+                              "}"
+                              "QPushButton:hover {"
+                              "    background-color: #5a2f1c;"
+                              "}"
+                              "QPushButton:pressed {"
+                              "    background-color: #7b4331;"
+                              "}");
+    ui->Exit->setStyleSheet("QPushButton {"
                               "    border-radius: 10px;"
                               "    background-color: #3b1e10;"
                               "    color: #fbf7eb;"
@@ -66,6 +80,17 @@ void Selection::on_Client_clicked()
     a->show();
 }
 
+
+
+
+
+void Selection::on_Exit_clicked()
+{
+    this->close();
+    MainMenu*a=new MainMenu();
+    a->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    a->show();
+}
 
 
 

@@ -21,6 +21,8 @@ private slots:
 
     void on_Client_clicked();
 
+    void on_Exit_clicked();
+
 private:
     Ui::Selection *ui;
 };
